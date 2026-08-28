@@ -3,28 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>แรงไฟฟ้า — แรงในธรรมชาติ</title>
 
 <style>
 /* =========================================================
    FONT
-   ไฟล์ฟอนต์ต้องชื่อ:
-   CHHongdae Demo.ttf
-   และอยู่โฟลเดอร์เดียวกับ index.html
-========================================================= */
+   ========================================================= */
 
-@font-face{
-  font-family:'CHHongdae';
-  src:url('./CHHongdae%20Demo.ttf') format('truetype');
-  font-weight:400;
-  font-style:normal;
-  font-display:swap;
+@font-face {
+  font-family: 'CHHongdae';
+  src: url('CHHongdae Demo.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* =========================================================
-   ROOT
-========================================================= */
+   VARIABLES
+   ========================================================= */
 
 :root{
   --mint-soft:#A8E6CF;
@@ -32,11 +28,20 @@
   --choc-cocoa:#8D6E63;
   --choc-dark:#4E342E;
   --bg-cream:#F7F9F6;
+
+  --card-bg-1:rgba(52,42,35,.74);
+  --card-bg-2:rgba(34,27,23,.82);
+  --card-border:rgba(168,230,207,.22);
+
+  --ink-cream:#FBF4EC;
+  --ink-soft:#DCCBBF;
+  --mint-bright:#8FF0C2;
+  --gold-soft:#E6BE94;
 }
 
 /* =========================================================
-   RESET
-========================================================= */
+   BASE
+   ========================================================= */
 
 *{
   margin:0;
@@ -57,56 +62,44 @@ body{
   font-family:'CHHongdae',sans-serif;
 }
 
-/* ใช้ฟอนต์ CHHongdae ทั้งหน้า */
 h1,
 h2,
 .mega,
 .eyebrow,
 .num-mark,
-.member,
-p,
-button,
-label{
+.member{
   font-family:'CHHongdae',sans-serif;
 }
 
 h1,
 h2,
 .mega{
-  font-weight:400;
+  font-weight:700;
 }
 
 b{
   color:var(--mint-deep);
-  font-weight:400;
+  font-weight:700;
 }
-
-/* =========================================================
-   TYPOGRAPHY
-========================================================= */
 
 .eyebrow{
   display:block;
   text-transform:uppercase;
-  letter-spacing:.12em;
-  font-size:.78rem;
+  letter-spacing:.1em;
+  font-size:.9rem;
   color:var(--mint-deep);
-  font-weight:400;
+  font-weight:600;
   margin-bottom:.7rem;
 }
 
 .num-mark{
-  font-weight:400;
+  font-weight:600;
   color:var(--choc-cocoa);
-  font-size:.9rem;
+  font-size:1rem;
   letter-spacing:.04em;
   margin-bottom:.4rem;
   opacity:.85;
 }
-
-/* =========================================================
-   DUST
-========================================================= */
 
 #dust{
   position:fixed;
@@ -118,14 +111,14 @@ b{
 
 /* =========================================================
    PROGRESS
-========================================================= */
+   ========================================================= */
 
 .progress{
   position:fixed;
   top:0;
   left:0;
   right:0;
-  height:3px;
+  height:4px;
   background:rgba(141,110,99,.15);
   z-index:60;
 }
@@ -144,8 +137,8 @@ b{
 }
 
 /* =========================================================
-   DECK / SLIDES
-========================================================= */
+   SLIDES
+   ========================================================= */
 
 .deck{
   position:relative;
@@ -162,7 +155,10 @@ b{
   align-items:center;
   justify-content:center;
 
-  padding:clamp(1.5rem,4vw,4rem);
+  padding:
+    clamp(1.5rem,4vw,4rem)
+    clamp(1rem,5vw,5rem)
+    6rem;
 
   opacity:0;
   visibility:hidden;
@@ -202,7 +198,7 @@ b{
 
 .slide-inner{
   width:100%;
-  max-width:1180px;
+  max-width:1450px;
 }
 
 .slide-inner.center{
@@ -214,9 +210,13 @@ b{
 
 .slide-inner.split{
   display:grid;
-  grid-template-columns:1fr;
-  gap:2rem;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(2.5rem,6vw,6rem);
   align-items:center;
+}
+
+.slide-inner.split.reverse .col-art{
+  order:2;
 }
 
 .col-text{
@@ -227,18 +227,18 @@ b{
 }
 
 .col-text h2{
-  font-size:clamp(1.65rem,3.2vw,2.5rem);
+  font-size:clamp(2rem,3.5vw,3.2rem);
   line-height:1.25;
-  margin-bottom:.9rem;
-  max-width:20ch;
+  margin-bottom:1rem;
+  max-width:22ch;
   text-wrap:balance;
 }
 
 .col-text p{
-  font-size:1rem;
-  line-height:1.85;
+  font-size:1.15rem;
+  line-height:1.9;
   color:var(--choc-cocoa);
-  max-width:38ch;
+  max-width:42ch;
   text-wrap:pretty;
 }
 
@@ -246,12 +246,13 @@ b{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:1rem;
+  justify-content:center;
+  gap:1.3rem;
 }
 
 .col-art canvas{
   width:100%;
-  max-width:420px;
+  max-width:600px;
   aspect-ratio:1/1;
 
   background:
@@ -261,36 +262,37 @@ b{
       transparent 65%
     );
 
-  border-radius:20px;
+  border-radius:24px;
 }
 
 /* =========================================================
    HERO
-========================================================= */
+   ========================================================= */
 
 .mega{
-  font-size:clamp(3rem,8vw,5.5rem);
+  font-size:clamp(3.5rem,8vw,7rem);
   line-height:1.05;
   text-wrap:balance;
 }
 
 .mega.small{
-  font-size:clamp(2rem,4.5vw,3rem);
-  max-width:20ch;
+  font-size:clamp(2.8rem,5vw,4.8rem);
+  max-width:22ch;
   text-wrap:balance;
 }
 
 .lede{
   margin-top:1rem;
   color:var(--choc-cocoa);
-  font-size:1.08rem;
-  max-width:38ch;
+  font-size:1.25rem;
+  line-height:1.8;
+  max-width:42ch;
   text-wrap:pretty;
 }
 
 /* =========================================================
-   CUTE HERO BLOBS
-========================================================= */
+   HERO BLOBS
+   ========================================================= */
 
 .hero-blobs{
   position:absolute;
@@ -335,11 +337,11 @@ b{
 
 /* =========================================================
    LIGHTNING HERO
-========================================================= */
+   ========================================================= */
 
 .bolt-stage{
-  width:150px;
-  height:150px;
+  width:180px;
+  height:180px;
   margin-top:2rem;
 
   display:flex;
@@ -351,8 +353,10 @@ b{
 
 .bolt-glow{
   position:absolute;
-  width:150px;
-  height:150px;
+
+  width:180px;
+  height:180px;
+
   border-radius:50%;
 
   background:
@@ -362,21 +366,22 @@ b{
       transparent 70%
     );
 
-  animation:boltPulse 2.6s ease-in-out infinite;
+  animation:
+    boltPulse 2.6s ease-in-out infinite;
 }
 
 .bolt-svg{
   position:relative;
-  width:70px;
-  height:100px;
+
+  width:85px;
+  height:120px;
 
   animation:
     boltBounce 1.8s ease-in-out infinite;
 
   filter:
     drop-shadow(
-      0 8px 14px
-      rgba(78,52,46,.25)
+      0 8px 14px rgba(78,52,46,.25)
     );
 }
 
@@ -408,12 +413,12 @@ b{
 
 /* =========================================================
    CONTROLS
-========================================================= */
+   ========================================================= */
 
 .toggle-row,
 .slider-row{
   display:flex;
-  gap:.6rem;
+  gap:.7rem;
   flex-wrap:wrap;
   justify-content:center;
   margin-top:.4rem;
@@ -422,19 +427,25 @@ b{
 .chip{
   font-family:'CHHongdae',sans-serif;
 
-  font-size:.9rem;
-  font-weight:400;
+  font-size:1rem;
+  font-weight:500;
 
   background:var(--bg-cream);
-  border:1.5px solid var(--choc-cocoa);
+
+  border:
+    1.5px solid
+    var(--choc-cocoa);
+
   color:var(--choc-cocoa);
 
-  padding:.55rem 1.15rem;
+  padding:.7rem 1.3rem;
+
   border-radius:999px;
 
   cursor:pointer;
 
-  transition:all .25s ease;
+  transition:
+    all .25s ease;
 }
 
 .chip:hover{
@@ -446,77 +457,95 @@ b{
   background:var(--mint-deep);
   border-color:var(--mint-deep);
   color:#fff;
-  font-weight:400;
+  font-weight:600;
 }
 
 .slider-row label{
-  font-size:.9rem;
+  font-size:1rem;
   color:var(--choc-cocoa);
 
   display:flex;
   align-items:center;
-  gap:.6rem;
+  gap:.7rem;
 }
 
 .slider-row input[type=range]{
   accent-color:var(--mint-deep);
-  width:160px;
+  width:220px;
 }
 
 /* =========================================================
    SUMMARY
-========================================================= */
+   ========================================================= */
 
 .virtues{
   display:grid;
-  gap:1.6rem;
-  grid-template-columns:1fr;
+  gap:2rem;
 
-  margin-top:2.2rem;
-  max-width:900px;
+  grid-template-columns:
+    repeat(3,1fr);
+
+  margin-top:2.5rem;
+
+  max-width:1100px;
 }
 
 .virtue{
-  border-top:2px solid var(--mint-soft);
-  padding-top:1rem;
+  border-top:
+    2px solid
+    var(--mint-soft);
+
+  padding-top:1.1rem;
+
   text-align:center;
 }
 
 .virtue p{
-  font-size:.95rem;
-  line-height:1.7;
+  font-size:1.05rem;
+  line-height:1.8;
   color:var(--choc-cocoa);
   text-wrap:pretty;
 }
 
 /* =========================================================
    MEMBERS
-========================================================= */
+   ========================================================= */
 
 .member-list{
-  margin-top:2.2rem;
+  margin-top:2.5rem;
 
   display:flex;
   flex-wrap:wrap;
+
   justify-content:center;
 
-  gap:1rem;
-  max-width:640px;
+  gap:1.2rem;
+
+  max-width:900px;
 }
 
 .member{
   display:flex;
   align-items:center;
-  gap:.7rem;
 
-  font-weight:400;
-  font-size:1.2rem;
+  gap:.8rem;
+
+  font-weight:600;
+  font-size:1.4rem;
 
   background:#fff;
-  border:2px solid var(--mint-soft);
+
+  border:
+    2px solid
+    var(--mint-soft);
+
   border-radius:999px;
 
-  padding:.6rem 1.3rem .6rem .6rem;
+  padding:
+    .75rem
+    1.6rem
+    .75rem
+    .75rem;
 
   color:var(--choc-dark);
 
@@ -548,19 +577,28 @@ b{
   animation-delay:.6s;
 }
 
+.member:nth-child(6){
+  animation-delay:.75s;
+}
+
+.member:nth-child(7){
+  animation-delay:.9s;
+}
+
 .member-num{
   font-family:'CHHongdae',sans-serif;
 
-  font-size:.85rem;
-  font-weight:400;
+  font-size:1rem;
+  font-weight:700;
 
   color:#fff;
+
   background:var(--mint-deep);
 
   border-radius:50%;
 
-  width:30px;
-  height:30px;
+  width:40px;
+  height:40px;
 
   display:flex;
   align-items:center;
@@ -596,13 +634,13 @@ b{
 }
 
 /* =========================================================
-   NAV UI
-========================================================= */
+   NAV
+   ========================================================= */
 
 .nav-ui{
   position:fixed;
 
-  bottom:1.6rem;
+  bottom:1.5rem;
   left:50%;
 
   transform:translateX(-50%);
@@ -610,23 +648,26 @@ b{
   display:flex;
   align-items:center;
 
-  gap:1.1rem;
+  gap:1.2rem;
 
   z-index:60;
 }
 
 .nav-btn{
-  width:38px;
-  height:38px;
+  width:46px;
+  height:46px;
 
   border-radius:50%;
 
-  border:1.5px solid var(--choc-cocoa);
+  border:
+    1.5px solid
+    var(--choc-cocoa);
 
   background:#fff;
+
   color:var(--choc-cocoa);
 
-  font-size:1rem;
+  font-size:1.2rem;
 
   cursor:pointer;
 
@@ -641,12 +682,12 @@ b{
 
 .dots{
   display:flex;
-  gap:.4rem;
+  gap:.45rem;
 }
 
 .dot{
-  width:6px;
-  height:6px;
+  width:7px;
+  height:7px;
 
   border-radius:50%;
 
@@ -660,335 +701,350 @@ b{
 
 .dot.active{
   background:var(--mint-deep);
-  width:18px;
-  border-radius:3px;
+
+  width:20px;
+
+  border-radius:4px;
 }
 
 .slide-count{
   position:fixed;
 
-  top:1.4rem;
-  right:clamp(1.2rem,4vw,3rem);
+  top:1.3rem;
+  right:clamp(1rem,4vw,3rem);
 
   z-index:60;
 
   font-family:'CHHongdae',sans-serif;
 
-  font-weight:400;
+  font-weight:600;
+
   color:var(--choc-cocoa);
-  font-size:.9rem;
+
+  font-size:1rem;
 }
 
 /* =========================================================
-   TABLET / IPAD
-   768px ขึ้นไป
-========================================================= */
+   MOBILE
+   ========================================================= */
 
-@media(min-width:700px){
-
-  .virtues{
-    grid-template-columns:
-      repeat(3,1fr);
-  }
-
-}
-
-@media(min-width:860px){
-
-  .slide-inner.split{
-    grid-template-columns:
-      1fr 1fr;
-
-    gap:
-      clamp(2.5rem,5vw,5rem);
-  }
-
-  .slide-inner.split.reverse .col-art{
-    order:2;
-  }
-
-}
-
-/* =========================================================
-   IPAD / DESKTOP
-   ขยายเนื้อหา + รูปให้ชัดขึ้น
-========================================================= */
-
-@media(min-width:1024px){
+@media (max-width:699px){
 
   .slide{
     padding:
-      clamp(2rem,4vw,5rem);
+      1.2rem
+      .8rem
+      6rem;
   }
 
   .slide-inner{
-    max-width:1400px;
+    width:100%;
+    max-width:100%;
   }
 
   .slide-inner.split{
-    gap:clamp(3rem,6vw,7rem);
+    grid-template-columns:1fr;
+    gap:1.2rem;
+  }
+
+  .slide-inner.split.reverse .col-art{
+    order:0;
+  }
+
+  .col-text{
+    width:100%;
   }
 
   .col-text h2{
-    font-size:
-      clamp(2rem,3.2vw,3.2rem);
+    font-size:clamp(
+      2.3rem,
+      10vw,
+      3.4rem
+    );
 
-    line-height:1.28;
+    line-height:1.25;
+
+    max-width:100%;
+
+    margin-bottom:1rem;
   }
 
   .col-text p{
-    font-size:1.18rem;
+    font-size:1.25rem;
     line-height:1.9;
-    max-width:44ch;
+
+    max-width:96%;
   }
 
   .eyebrow{
-    font-size:1rem;
+    font-size:1.05rem;
+    margin-bottom:.7rem;
   }
 
   .num-mark{
-    font-size:1rem;
-  }
-
-  .col-art canvas{
-    max-width:560px;
-  }
-
-  .chip{
-    font-size:1rem;
-    padding:.65rem 1.35rem;
-  }
-
-  .slider-row label{
-    font-size:1rem;
-  }
-
-  .slider-row input[type=range]{
-    width:210px;
+    font-size:1.05rem;
   }
 
   .mega{
-    font-size:
-      clamp(4rem,8vw,7rem);
+    font-size:clamp(
+      4rem,
+      17vw,
+      6rem
+    );
   }
 
   .mega.small{
-    font-size:
-      clamp(2.8rem,4.5vw,4rem);
+    font-size:clamp(
+      3rem,
+      12vw,
+      4.5rem
+    );
   }
 
   .lede{
     font-size:1.25rem;
+    line-height:1.85;
+    max-width:96%;
+  }
+
+  .col-art{
+    gap:1rem;
+  }
+
+  .col-art canvas{
+    width:min(94vw,560px);
+    max-width:560px;
+  }
+
+  .chip{
+    font-size:1.1rem;
+    padding:.8rem 1.35rem;
+  }
+
+  .slider-row label{
+    font-size:1.1rem;
+  }
+
+  .slider-row input[type=range]{
+    width:200px;
+  }
+
+  .virtues{
+    grid-template-columns:1fr;
+    width:96%;
+    gap:1.4rem;
+    margin-top:2rem;
   }
 
   .virtue p{
-    font-size:1.05rem;
+    font-size:1.15rem;
+    line-height:1.8;
+  }
+
+  .member-list{
+    width:96%;
+    max-width:600px;
+    gap:1rem;
   }
 
   .member{
-    font-size:1.35rem;
+    font-size:1.45rem;
+
+    padding:
+      .8rem
+      1.5rem
+      .8rem
+      .8rem;
   }
 
+  .member-num{
+    width:42px;
+    height:42px;
+    font-size:1rem;
+  }
+
+  .nav-ui{
+    bottom:1rem;
+    gap:.8rem;
+  }
+
+  .nav-btn{
+    width:48px;
+    height:48px;
+    font-size:1.2rem;
+  }
+
+  .slide-count{
+    font-size:1rem;
+  }
 }
 
-/* =========================================================
-   LARGE DESKTOP
-   จอใหญ่จริง ๆ
-========================================================= */
 
-@media(min-width:1400px){
+/* =========================================================
+   iPAD PORTRAIT + TABLET
+   ========================================================= */
+
+@media (min-width:700px) and (max-width:1199px){
+
+  .slide{
+    padding:
+      2rem
+      2.5rem
+      6rem;
+  }
 
   .slide-inner{
-    max-width:1550px;
+    max-width:1100px;
   }
 
   .slide-inner.split{
-    gap:8rem;
+    grid-template-columns:1fr 1fr;
+
+    gap:2.5rem;
+  }
+
+  .col-text h2{
+    font-size:clamp(
+      2.5rem,
+      5vw,
+      3.7rem
+    );
+
+    line-height:1.25;
+
+    max-width:100%;
+  }
+
+  .col-text p{
+    font-size:1.35rem;
+    line-height:1.9;
+
+    max-width:100%;
+  }
+
+  .eyebrow{
+    font-size:1.1rem;
+  }
+
+  .num-mark{
+    font-size:1.1rem;
+  }
+
+  .mega{
+    font-size:clamp(
+      4.5rem,
+      9vw,
+      7rem
+    );
+  }
+
+  .mega.small{
+    font-size:clamp(
+      3.5rem,
+      7vw,
+      5.5rem
+    );
+  }
+
+  .lede{
+    font-size:1.35rem;
+    line-height:1.85;
+  }
+
+  .col-art canvas{
+    width:min(46vw,620px);
+    max-width:620px;
+  }
+
+  .chip{
+    font-size:1.15rem;
+    padding:.85rem 1.5rem;
+  }
+
+  .slider-row label{
+    font-size:1.1rem;
+  }
+
+  .slider-row input[type=range]{
+    width:230px;
+  }
+
+  .virtues{
+    max-width:1050px;
+    gap:2.2rem;
+  }
+
+  .virtue p{
+    font-size:1.2rem;
+    line-height:1.85;
+  }
+
+  .member-list{
+    max-width:950px;
+    gap:1.3rem;
+  }
+
+  .member{
+    font-size:1.55rem;
+  }
+
+  .member-num{
+    width:44px;
+    height:44px;
+  }
+
+  .nav-btn{
+    width:50px;
+    height:50px;
+    font-size:1.25rem;
+  }
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width:1200px){
+
+  .slide{
+    padding:
+      3rem
+      5rem
+      6rem;
+  }
+
+  .slide-inner{
+    max-width:1500px;
+  }
+
+  .col-text h2{
+    font-size:3.2rem;
+  }
+
+  .col-text p{
+    font-size:1.25rem;
   }
 
   .col-art canvas{
     max-width:650px;
   }
 
-  .col-text h2{
-    font-size:3.5rem;
+  .eyebrow{
+    font-size:1rem;
   }
 
-  .col-text p{
+  .lede{
     font-size:1.3rem;
   }
-
 }
 
-/* =========================================================
-   PHONE
-   ขยายฟอนต์ให้ใหญ่ขึ้น
-========================================================= */
-
-@media(max-width:699px){
-
-  .slide{
-    padding:
-      1.5rem 1.2rem 5.2rem;
-  }
-
-  .slide-inner{
-    max-width:100%;
-  }
-
-  .slide-inner.split{
-    gap:1.25rem;
-  }
-
-  .col-text h2{
-    font-size:
-      clamp(1.9rem,7vw,2.35rem);
-
-    line-height:1.3;
-
-    max-width:19ch;
-
-    margin-bottom:.8rem;
-  }
-
-  .col-text p{
-    font-size:1.08rem;
-    line-height:1.85;
-    max-width:34ch;
-  }
-
-  .eyebrow{
-    font-size:.88rem;
-    margin-bottom:.55rem;
-  }
-
-  .num-mark{
-    font-size:.95rem;
-  }
-
-  .mega{
-    font-size:
-      clamp(3.5rem,15vw,5rem);
-  }
-
-  .mega.small{
-    font-size:
-      clamp(2.35rem,9vw,3rem);
-  }
-
-  .lede{
-    font-size:1.08rem;
-    line-height:1.8;
-  }
-
-  .col-art canvas{
-    max-width:
-      min(88vw,390px);
-  }
-
-  .chip{
-    font-size:.98rem;
-    padding:.6rem 1rem;
-  }
-
-  .slider-row label{
-    font-size:.98rem;
-  }
-
-  .slider-row input[type=range]{
-    width:145px;
-  }
-
-  .virtues{
-    gap:1rem;
-    margin-top:1.5rem;
-  }
-
-  .virtue{
-    padding-top:.7rem;
-  }
-
-  .virtue p{
-    font-size:1rem;
-    line-height:1.7;
-  }
-
-  .member-list{
-    margin-top:1.5rem;
-    gap:.7rem;
-  }
-
-  .member{
-    font-size:1.1rem;
-    padding:.5rem 1rem .5rem .5rem;
-  }
-
-  .member-num{
-    width:29px;
-    height:29px;
-    font-size:.82rem;
-  }
-
-  .nav-ui{
-    bottom:.8rem;
-  }
-
-  .slide-count{
-    top:1rem;
-    right:1rem;
-    font-size:.85rem;
-  }
-
-}
-
-/* =========================================================
-   SMALL PHONE
-========================================================= */
-
-@media(max-width:420px){
-
-  .slide{
-    padding:
-      1.25rem 1rem 4.8rem;
-  }
-
-  .col-text h2{
-    font-size:1.75rem;
-  }
-
-  .col-text p{
-    font-size:1rem;
-    line-height:1.8;
-  }
-
-  .col-art canvas{
-    max-width:82vw;
-  }
-
-  .mega{
-    font-size:3.2rem;
-  }
-
-  .mega.small{
-    font-size:2.15rem;
-  }
-
-  .lede{
-    font-size:1rem;
-  }
-
-  .chip{
-    font-size:.9rem;
-    padding:.5rem .85rem;
-  }
-
-}
 
 /* =========================================================
    REDUCED MOTION
-========================================================= */
+   ========================================================= */
 
-@media(prefers-reduced-motion:reduce){
+@media (prefers-reduced-motion:reduce){
 
   .slide{
     transition:opacity .3s ease;
@@ -1000,8 +1056,8 @@ b{
   .member{
     animation:none;
   }
-
 }
+
 </style>
 </head>
 
@@ -1016,912 +1072,860 @@ b{
   </div>
 </div>
 
-<div
-  class="deck"
-  id="deck"
->
+<div class="deck" id="deck">
 
-<!-- =======================================================
-     0 : TITLE
-======================================================= -->
+  <!-- =====================================================
+       0 : TITLE
+       ===================================================== -->
 
-<section
-  class="slide"
-  data-anim="title"
->
+  <section
+    class="slide"
+    data-anim="title">
 
-  <div class="hero-blobs">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
-
-  <div class="slide-inner center">
-
-    <span class="eyebrow">
-      บทที่ 2 · แรงในธรรมชาติ
-    </span>
-
-    <h1 class="mega">
-      แรงไฟฟ้า
-    </h1>
-
-    <p class="lede">
-      จากแท่งอำพันในกรีกโบราณ
-      สู่สนามไฟฟ้าที่มองไม่เห็น
-    </p>
-
-    <div class="bolt-stage">
-
-      <div class="bolt-glow"></div>
-
-      <svg
-        class="bolt-svg"
-        viewBox="0 0 70 100"
-        fill="none"
-      >
-
-        <path
-          d="M40 2 L10 55 L32 55 L26 98 L62 42 L38 42 Z"
-          fill="#3B7A57"
-        />
-
-        <path
-          d="M40 2 L10 55 L32 55 L26 98 L62 42 L38 42 Z"
-          fill="none"
-          stroke="#A8E6CF"
-          stroke-width="3"
-          stroke-linejoin="round"
-        />
-
-      </svg>
-
+    <div class="hero-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
     </div>
 
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     1 : ความเป็นมา
-======================================================= -->
-
-<section
-  class="slide"
-  data-anim="history"
->
-
-  <div class="slide-inner split">
-
-    <div class="col-text">
-
-      <div class="num-mark">
-        2.2
-      </div>
+    <div class="slide-inner center">
 
       <span class="eyebrow">
-        ความเป็นมา
+        บทที่ 2 · แรงในธรรมชาติ
       </span>
 
-      <h2>
-        อำพันที่ถูกถู
-        แล้วดูดฟางเบา ๆ
-      </h2>
+      <h1 class="mega">
+        แรงไฟฟ้า
+      </h1>
 
-      <p>
-        ชาวกรีกโบราณสังเกตว่าแท่งอำพันที่ถูกถูด้วยผ้าขนสัตว์สามารถดูดวัตถุเบา ๆ ได้
-        ต่อมาพบว่าแท่งแก้วและแท่งยางก็ทำแบบเดียวกัน —
-        นี่คือปรากฏการณ์แรกของ
-        <b>แรงไฟฟ้า</b>
+      <p class="lede">
+        จากแท่งอำพันในกรีกโบราณ
+        สู่สนามไฟฟ้าที่มองไม่เห็น
       </p>
 
-    </div>
+      <div class="bolt-stage">
 
-    <div class="col-art">
+        <div class="bolt-glow"></div>
 
-      <canvas
-        id="cvHistory"
-        width="600"
-        height="600"
-      ></canvas>
+        <svg
+          class="bolt-svg"
+          viewBox="0 0 70 100"
+          fill="none">
 
-    </div>
+          <path
+            d="M40 2 L10 55 L32 55 L26 98 L62 42 L38 42 Z"
+            fill="#3B7A57"/>
 
-  </div>
+          <path
+            d="M40 2 L10 55 L32 55 L26 98 L62 42 L38 42 Z"
+            fill="none"
+            stroke="#A8E6CF"
+            stroke-width="3"
+            stroke-linejoin="round"/>
 
-</section>
-
-
-<!-- =======================================================
-     2 : แรงไฟฟ้าคืออะไร
-======================================================= -->
-
-<section
-  class="slide"
-  data-anim="basic"
->
-
-  <div class="slide-inner split">
-
-    <div class="col-text">
-
-      <div class="num-mark">
-        2.2.1 — I
-      </div>
-
-      <span class="eyebrow">
-        แรงไฟฟ้า (Electric Force)
-      </span>
-
-      <h2>
-        ผลัก หรือ ดึงดูด
-        ขึ้นอยู่กับชนิดประจุ
-      </h2>
-
-      <p>
-        ประจุชนิดเดียวกัน
-        <b>ผลัก</b>
-        กัน ·
-        ประจุต่างชนิดกัน
-        <b>ดึงดูด</b>
-        กัน —
-        ต่างจากแรงโน้มถ่วงที่ดึงดูดอย่างเดียว
-      </p>
-
-    </div>
-
-    <div class="col-art">
-
-      <canvas
-        id="cvForce"
-        width="600"
-        height="600"
-      ></canvas>
-
-      <div class="toggle-row">
-
-        <button
-          class="chip active"
-          data-mode="repel"
-        >
-          ประจุเหมือนกัน
-        </button>
-
-        <button
-          class="chip"
-          data-mode="attract"
-        >
-          ประจุต่างกัน
-        </button>
+        </svg>
 
       </div>
 
     </div>
 
-  </div>
-
-</section>
+  </section>
 
 
-<!-- =======================================================
-     3 : ปัจจัยที่มีผล
-======================================================= -->
+  <!-- =====================================================
+       1 : HISTORY
+       ===================================================== -->
 
-<section
-  class="slide"
-  data-anim="factors"
->
+  <section
+    class="slide"
+    data-anim="history">
 
-  <div class="slide-inner split reverse">
+    <div class="slide-inner split">
 
-    <div class="col-art">
+      <div class="col-text">
 
-      <canvas
-        id="cvFactors"
-        width="600"
-        height="600"
-      ></canvas>
+        <div class="num-mark">
+          2.2
+        </div>
 
-      <div class="slider-row">
+        <span class="eyebrow">
+          ความเป็นมา
+        </span>
 
-        <label>
-          ระยะห่าง
+        <h2>
+          อำพันที่ถูกถู
+          แล้วดูดฟางเบา ๆ
+        </h2>
 
-          <input
-            type="range"
-            id="distSlider"
-            min="30"
-            max="100"
-            value="65"
-          >
+        <p>
+          ชาวกรีกโบราณสังเกตว่าแท่งอำพันที่ถูกถู
+          ด้วยผ้าขนสัตว์สามารถดูดวัตถุเบา ๆ ได้
+          ต่อมาพบว่าแท่งแก้วและแท่งยางก็ทำแบบเดียวกัน
+          — นี่คือปรากฏการณ์แรกของ
+          <b>แรงไฟฟ้า</b>
+        </p>
 
-        </label>
+      </div>
+
+      <div class="col-art">
+        <canvas
+          id="cvHistory"
+          width="600"
+          height="600">
+        </canvas>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       2 : BASIC FORCE
+       ===================================================== -->
+
+  <section
+    class="slide"
+    data-anim="basic">
+
+    <div class="slide-inner split">
+
+      <div class="col-text">
+
+        <div class="num-mark">
+          2.2.1 — I
+        </div>
+
+        <span class="eyebrow">
+          แรงไฟฟ้า (Electric Force)
+        </span>
+
+        <h2>
+          ผลัก หรือ ดึงดูด
+          ขึ้นอยู่กับชนิดประจุ
+        </h2>
+
+        <p>
+          ประจุชนิดเดียวกัน
+          <b>ผลัก</b>
+          กัน · ประจุต่างชนิดกัน
+          <b>ดึงดูด</b>
+          กัน — ต่างจากแรงโน้มถ่วงที่ดึงดูดอย่างเดียว
+        </p>
+
+      </div>
+
+      <div class="col-art">
+
+        <canvas
+          id="cvForce"
+          width="600"
+          height="600">
+        </canvas>
+
+        <div class="toggle-row">
+
+          <button
+            class="chip active"
+            data-mode="repel">
+            ประจุเหมือนกัน
+          </button>
+
+          <button
+            class="chip"
+            data-mode="attract">
+            ประจุต่างกัน
+          </button>
+
+        </div>
 
       </div>
 
     </div>
 
-    <div class="col-text">
+  </section>
 
-      <div class="num-mark">
-        2.2.1 — II
+
+  <!-- =====================================================
+       3 : FACTORS
+       ===================================================== -->
+
+  <section
+    class="slide"
+    data-anim="factors">
+
+    <div class="slide-inner split reverse">
+
+      <div class="col-art">
+
+        <canvas
+          id="cvFactors"
+          width="600"
+          height="600">
+        </canvas>
+
+        <div class="slider-row">
+
+          <label>
+            ระยะห่าง
+
+            <input
+              type="range"
+              id="distSlider"
+              min="30"
+              max="100"
+              value="65">
+
+          </label>
+
+        </div>
+
       </div>
 
-      <span class="eyebrow">
-        ปัจจัยที่มีผลต่อแรงไฟฟ้า
-      </span>
+      <div class="col-text">
 
-      <h2>
-        ประจุมากขึ้น แรงมากขึ้น
-        ·
-        ระยะห่างมากขึ้น แรงลดลง
-      </h2>
+        <div class="num-mark">
+          2.2.1 — II
+        </div>
 
-      <p>
-        ลองลากแถบเลื่อนเพื่อดูว่าความแรงของแรงไฟฟ้า
-        (ความหนาของเส้น)
-        เปลี่ยนไปอย่างไรเมื่อระยะห่างเปลี่ยน
-      </p>
+        <span class="eyebrow">
+          ปัจจัยที่มีผลต่อแรงไฟฟ้า
+        </span>
 
-    </div>
+        <h2>
+          ประจุมากขึ้น แรงมากขึ้น
+          · ระยะห่างมากขึ้น แรงลดลง
+        </h2>
 
-  </div>
+        <p>
+          ลองลากแถบเลื่อนเพื่อดูว่า
+          ความแรงของแรงไฟฟ้า
+          (ความหนาของเส้น)
+          เปลี่ยนไปอย่างไรเมื่อระยะห่างเปลี่ยน
+        </p>
 
-</section>
-
-
-<!-- =======================================================
-     4 : อนุภาคย่อยอะตอม
-======================================================= -->
-
-<section
-  class="slide"
-  data-anim="atom"
->
-
-  <div class="slide-inner split">
-
-    <div class="col-text">
-
-      <div class="num-mark">
-        2.2.1 — III
       </div>
 
-      <span class="eyebrow">
-        อนุภาคย่อยของอะตอม
-      </span>
+    </div>
 
-      <h2>
-        โปรตอน นิวตรอน อิเล็กตรอน
-      </h2>
+  </section>
 
-      <p>
-        <b>โปรตอน</b>
-        (+)
-        และ
-        <b>นิวตรอน</b>
-        (เป็นกลาง)
-        อยู่ในนิวเคลียส ส่วน
-        <b>อิเล็กตรอน</b>
-        (−)
-        เคลื่อนที่อยู่รอบนอก
-      </p>
+
+  <!-- =====================================================
+       4 : ATOM
+       ===================================================== -->
+
+  <section
+    class="slide"
+    data-anim="atom">
+
+    <div class="slide-inner split">
+
+      <div class="col-text">
+
+        <div class="num-mark">
+          2.2.1 — III
+        </div>
+
+        <span class="eyebrow">
+          อนุภาคย่อยของอะตอม
+        </span>
+
+        <h2>
+          โปรตอน นิวตรอน อิเล็กตรอน
+        </h2>
+
+        <p>
+          <b>โปรตอน</b>
+          (+) และ
+          <b>นิวตรอน</b>
+          (เป็นกลาง)
+          อยู่ในนิวเคลียส ส่วน
+          <b>อิเล็กตรอน</b>
+          (−) เคลื่อนที่อยู่รอบนอก
+        </p>
+
+      </div>
+
+      <div class="col-art">
+
+        <canvas
+          id="cvAtom"
+          width="600"
+          height="600">
+        </canvas>
+
+      </div>
 
     </div>
 
-    <div class="col-art">
-
-      <canvas
-        id="cvAtom"
-        width="600"
-        height="600"
-      ></canvas>
-
-    </div>
-
-  </div>
-
-</section>
+  </section>
 
 
-<!-- =======================================================
-     5 : สภาพทางไฟฟ้าของวัตถุ
-======================================================= -->
+  <!-- =====================================================
+       5 : CHARGE STATE
+       ===================================================== -->
 
-<section
-  class="slide"
-  data-anim="charge-state"
->
+  <section
+    class="slide"
+    data-anim="charge-state">
 
-  <div class="slide-inner split reverse">
+    <div class="slide-inner split reverse">
 
-    <div class="col-art">
+      <div class="col-art">
 
-      <canvas
-        id="cvChargeState"
-        width="600"
-        height="600"
-      ></canvas>
+        <canvas
+          id="cvChargeState"
+          width="600"
+          height="600">
+        </canvas>
 
-      <div class="toggle-row">
+        <div class="toggle-row">
 
-        <button
-          class="chip"
-          data-cs="lose"
-        >
+          <button
+            class="chip"
+            data-cs="lose">
+            สูญเสียอิเล็กตรอน
+          </button>
+
+          <button
+            class="chip active"
+            data-cs="neutral">
+            ปกติ
+          </button>
+
+          <button
+            class="chip"
+            data-cs="gain">
+            ได้รับอิเล็กตรอน
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="col-text">
+
+        <div class="num-mark">
+          2.2.1 — IV
+        </div>
+
+        <span class="eyebrow">
+          สภาพทางไฟฟ้าของวัตถุ
+        </span>
+
+        <h2>
           สูญเสียอิเล็กตรอน
-        </button>
-
-        <button
-          class="chip active"
-          data-cs="neutral"
-        >
-          ปกติ
-        </button>
-
-        <button
-          class="chip"
-          data-cs="gain"
-        >
-          ได้รับอิเล็กตรอน
-        </button>
-
-      </div>
-
-    </div>
-
-    <div class="col-text">
-
-      <div class="num-mark">
-        2.2.1 — IV
-      </div>
-
-      <span class="eyebrow">
-        สภาพทางไฟฟ้าของวัตถุ
-      </span>
-
-      <h2>
-        สูญเสียอิเล็กตรอน
-        =
-        ประจุบวก
-      </h2>
-
-      <p>
-        วัตถุปกติมีโปรตอนเท่ากับอิเล็กตรอน
-        (เป็นกลาง)
-        หากสูญเสียอิเล็กตรอนจะกลายเป็นบวก
-        หากได้รับเพิ่มจะกลายเป็นลบ
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     6 : สนามไฟฟ้า
-======================================================= -->
-
-<section
-  class="slide"
-  data-anim="field"
->
-
-  <div class="slide-inner split">
-
-    <div class="col-text">
-
-      <div class="num-mark">
-        2.2.1 — V
-      </div>
-
-      <span class="eyebrow">
-        สนามไฟฟ้า (Electric Field)
-      </span>
-
-      <h2>
-        บริเวณรอบประจุ
-        ที่ส่งแรงออกไปได้
-      </h2>
-
-      <p>
-        เส้นสนามไฟฟ้าพุ่ง
-        <b>ออก</b>
-        จากประจุบวก
-        และพุ่ง
-        <b>เข้า</b>
-        หาประจุลบ
-        ทิศทางคือทิศที่ประจุทดสอบ +q
-        จะถูกผลัก
-      </p>
-
-    </div>
-
-    <div class="col-art">
-
-      <canvas
-        id="cvField"
-        width="600"
-        height="600"
-      ></canvas>
-
-      <div class="toggle-row">
-
-        <button
-          class="chip active"
-          data-charge="pos"
-        >
-          ประจุบวก
-        </button>
-
-        <button
-          class="chip"
-          data-charge="neg"
-        >
-          ประจุลบ
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     7 : เส้นสนามไฟฟ้าคู่ประจุ
-======================================================= -->
-
-<section
-  class="slide"
-  data-anim="field-pair"
->
-
-  <div class="slide-inner split reverse">
-
-    <div class="col-art">
-
-      <canvas
-        id="cvFieldPair"
-        width="600"
-        height="600"
-      ></canvas>
-
-      <div class="toggle-row">
-
-        <button
-          class="chip active"
-          data-pair="diff"
-        >
-          ต่างชนิด (ดึงดูด)
-        </button>
-
-        <button
-          class="chip"
-          data-pair="same"
-        >
-          ชนิดเดียวกัน (ผลัก)
-        </button>
-
-      </div>
-
-    </div>
-
-    <div class="col-text">
-
-      <div class="num-mark">
-        2.2.1 — VI
-      </div>
-
-      <span class="eyebrow">
-        เส้นสนามไฟฟ้าของคู่ประจุ
-      </span>
-
-      <h2>
-        เส้นโค้งเล่าเรื่องแรงที่มองไม่เห็น
-      </h2>
-
-      <p>
-        ประจุต่างชนิด
-        เส้นสนามลู่เข้าหากัน
-        ·
-        ประจุชนิดเดียวกัน
-        เส้นสนามเบนออกจากกัน
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     8 : การเคลื่อนที่ในสนามไฟฟ้า
-======================================================= -->
-
-<section
-  class="slide"
-  data-anim="parabola"
->
-
-  <div class="slide-inner split">
-
-    <div class="col-text">
-
-      <div class="num-mark">
-        2.2.2
-      </div>
-
-      <span class="eyebrow">
-        แรงไฟฟ้าต่ออนุภาคที่มีประจุ
-      </span>
-
-      <h2>
-        วิ่งเข้าสนามด้วยความเร็วต้น
-        =
-        โค้งพาราโบลา
-      </h2>
-
-      <p>
-        ประจุบวกเบนแบบพาราโบลาคว่ำ
-        (ตามสนาม)
-        ส่วนประจุลบเบนแบบพาราโบลาหงาย
-        (ทวนสนาม)
-        —
-        คล้ายการเคลื่อนที่แบบโพรเจกไทล์
-      </p>
-
-    </div>
-
-    <div class="col-art">
-
-      <canvas
-        id="cvParabola"
-        width="600"
-        height="600"
-      ></canvas>
-
-      <div class="toggle-row">
-
-        <button
-          class="chip"
-          id="btnFire"
-        >
-          ▶ ปล่อยอนุภาค
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     9 : เครื่องถ่ายเอกสาร
-======================================================= -->
-
-<section
-  class="slide"
-  data-anim="copier"
->
-
-  <div class="slide-inner split reverse">
-
-    <div class="col-art">
-
-      <canvas
-        id="cvCopier"
-        width="600"
-        height="600"
-      ></canvas>
-
-    </div>
-
-    <div class="col-text">
-
-      <div class="num-mark">
-        2.2.3 — I
-      </div>
-
-      <span class="eyebrow">
-        ประโยชน์ของแรงไฟฟ้า
-      </span>
-
-      <h2>
-        เครื่องถ่ายเอกสาร
-      </h2>
-
-      <p>
-        ลูกกลิ้งมีประจุบวก
-        แสงที่สะท้อนจากบริเวณสีขาวทำให้ประจุหายไป
-        เหลือประจุบวกเฉพาะลายเส้น
-        ผงหมึกประจุลบจึงเกาะติดตามลาย
-        แล้วถูกกดลงกระดาษและอบด้วยความร้อน
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     10 : ฟ้าแลบฟ้าผ่า
-======================================================= -->
-
-<section
-  class="slide"
-  data-anim="lightning"
->
-
-  <div class="slide-inner split">
-
-    <div class="col-text">
-
-      <div class="num-mark">
-        2.2.3 — II
-      </div>
-
-      <span class="eyebrow">
-        ปรากฏการณ์ทางธรรมชาติ
-      </span>
-
-      <h2>
-        ฟ้าแลบ และ ฟ้าผ่า
-      </h2>
-
-      <p>
-        การเสียดสีของหยดน้ำและฝุ่นในก้อนเมฆสะสมประจุ
-        จนเกิดความต่างศักย์สูงมาก
-        แล้วถ่ายโอนประจุผ่านอากาศ —
-        <b>ฟ้าแลบ</b>
-        คือเมฆสู่เมฆ
-        ส่วน
-        <b>ฟ้าผ่า</b>
-        คือเมฆสู่พื้นดิน
-      </p>
-
-    </div>
-
-    <div class="col-art">
-
-      <canvas
-        id="cvLightning"
-        width="600"
-        height="600"
-      ></canvas>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     11 : สายล่อฟ้า
-======================================================= -->
-
-<section
-  class="slide"
-  data-anim="rod"
->
-
-  <div class="slide-inner split reverse">
-
-    <div class="col-art">
-
-      <canvas
-        id="cvRod"
-        width="600"
-        height="600"
-      ></canvas>
-
-    </div>
-
-    <div class="col-text">
-
-      <div class="num-mark">
-        2.2.3 — III
-      </div>
-
-      <span class="eyebrow">
-        การป้องกัน
-      </span>
-
-      <h2>
-        สายล่อฟ้า
-        (Lightning Rod)
-      </h2>
-
-      <p>
-        ปลายแหลมบนยอดอาคารรวบรวมประจุจากฟ้าผ่า
-        แล้วนำลงสู่พื้นดินผ่านสายไฟและแผ่นโลหะที่ฝังดิน
-        ป้องกันความเสียหายต่อตัวอาคาร
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     12 : สรุป
-======================================================= -->
-
-<section
-  class="slide"
-  data-anim="summary"
->
-
-  <div class="slide-inner center">
-
-    <span class="eyebrow">
-      สรุป
-    </span>
-
-    <h2 class="mega small">
-      แรงที่มองไม่เห็น
-      แต่กำหนดโลกรอบตัวเรา
-    </h2>
-
-    <div class="virtues">
-
-      <div class="virtue">
-
-        <div class="num-mark">
-          I.
-        </div>
+          = ประจุบวก
+        </h2>
 
         <p>
-          ประจุเหมือนกันผลัก
-          ต่างกันดึงดูด
-        </p>
-
-      </div>
-
-      <div class="virtue">
-
-        <div class="num-mark">
-          II.
-        </div>
-
-        <p>
-          สนามไฟฟ้าคือแรงต่อหน่วยประจุ
-          มีทิศทาง
-        </p>
-
-      </div>
-
-      <div class="virtue">
-
-        <div class="num-mark">
-          III.
-        </div>
-
-        <p>
-          ตั้งแต่เครื่องถ่ายเอกสารถึงสายฟ้า
-          ล้วนอธิบายได้ด้วยหลักเดียวกัน
+          วัตถุปกติมีโปรตอนเท่ากับอิเล็กตรอน
+          (เป็นกลาง)
+          หากสูญเสียอิเล็กตรอนจะกลายเป็นบวก
+          หากได้รับเพิ่มจะกลายเป็นลบ
         </p>
 
       </div>
 
     </div>
 
-  </div>
-
-</section>
+  </section>
 
 
-<!-- =======================================================
-     13 : MEMBERS
-======================================================= -->
+  <!-- =====================================================
+       6 : ELECTRIC FIELD
+       ===================================================== -->
 
-<section
-  class="slide"
-  data-anim="members"
->
+  <section
+    class="slide"
+    data-anim="field">
 
-  <div class="hero-blobs">
+    <div class="slide-inner split">
 
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
+      <div class="col-text">
 
-  </div>
+        <div class="num-mark">
+          2.2.1 — V
+        </div>
 
-  <div class="slide-inner center">
-
-    <span class="eyebrow">
-      จัดทำโดย
-    </span>
-
-    <h2 class="mega small">
-      รายชื่อสมาชิก
-    </h2>
-
-    <div class="member-list">
-
-      <div class="member">
-        <span class="member-num">
-          04
+        <span class="eyebrow">
+          สนามไฟฟ้า (Electric Field)
         </span>
-      ศศิธร วงษ์สิน
+
+        <h2>
+          บริเวณรอบประจุ
+          ที่ส่งแรงออกไปได้
+        </h2>
+
+        <p>
+          เส้นสนามไฟฟ้าพุ่ง
+          <b>ออก</b>
+          จากประจุบวก
+          และพุ่ง
+          <b>เข้า</b>
+          หาประจุลบ
+          ทิศทางคือทิศที่ประจุทดสอบ
+          +q จะถูกผลัก
+        </p>
+
       </div>
 
-      <div class="member">
-        <span class="member-num">
-          05
-        </span>
-      ธันรดา คำแสน
+      <div class="col-art">
+
+        <canvas
+          id="cvField"
+          width="600"
+          height="600">
+        </canvas>
+
+        <div class="toggle-row">
+
+          <button
+            class="chip active"
+            data-charge="pos">
+            ประจุบวก
+          </button>
+
+          <button
+            class="chip"
+            data-charge="neg">
+            ประจุลบ
+          </button>
+
+        </div>
+
       </div>
 
-      <div class="member">
-        <span class="member-num">
-          25
-        </span>
-      ณิชตา แก้วกัณตา
-      </div>
-
-      <div class="member">
-        <span class="member-num">
-          32
-        </span>
-      ปุณณภา เชียงกา
-      </div>
-       
-<div class="member">
-        <span class="member-num">
-          33
-        </span>
-      ภวิษย์พร เชิดเชื้อ
-      </div>
-       
     </div>
 
-  </div>
+  </section>
 
-</section>
+
+  <!-- =====================================================
+       7 : FIELD PAIR
+       ===================================================== -->
+
+  <section
+    class="slide"
+    data-anim="field-pair">
+
+    <div class="slide-inner split reverse">
+
+      <div class="col-art">
+
+        <canvas
+          id="cvFieldPair"
+          width="600"
+          height="600">
+        </canvas>
+
+        <div class="toggle-row">
+
+          <button
+            class="chip active"
+            data-pair="diff">
+            ต่างชนิด (ดึงดูด)
+          </button>
+
+          <button
+            class="chip"
+            data-pair="same">
+            ชนิดเดียวกัน (ผลัก)
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="col-text">
+
+        <div class="num-mark">
+          2.2.1 — VI
+        </div>
+
+        <span class="eyebrow">
+          เส้นสนามไฟฟ้าของคู่ประจุ
+        </span>
+
+        <h2>
+          เส้นโค้งเล่าเรื่องแรงที่มองไม่เห็น
+        </h2>
+
+        <p>
+          ประจุต่างชนิด
+          เส้นสนามลู่เข้าหากัน
+          · ประจุชนิดเดียวกัน
+          เส้นสนามเบนออกจากกัน
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       8 : PARABOLA
+       ===================================================== -->
+
+  <section
+    class="slide"
+    data-anim="parabola">
+
+    <div class="slide-inner split">
+
+      <div class="col-text">
+
+        <div class="num-mark">
+          2.2.2
+        </div>
+
+        <span class="eyebrow">
+          แรงไฟฟ้าต่ออนุภาคที่มีประจุ
+        </span>
+
+        <h2>
+          วิ่งเข้าสนามด้วยความเร็วต้น
+          = โค้งพาราโบลา
+        </h2>
+
+        <p>
+          ประจุบวกเบนแบบพาราโบลาคว่ำ
+          (ตามสนาม)
+          ส่วนประจุลบเบนแบบพาราโบลาหงาย
+          (ทวนสนาม)
+          — คล้ายการเคลื่อนที่แบบโพรเจกไทล์
+        </p>
+
+      </div>
+
+      <div class="col-art">
+
+        <canvas
+          id="cvParabola"
+          width="600"
+          height="600">
+        </canvas>
+
+        <div class="toggle-row">
+
+          <button
+            class="chip"
+            id="btnFire">
+            ▶ ปล่อยอนุภาค
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       9 : COPIER
+       ===================================================== -->
+
+  <section
+    class="slide"
+    data-anim="copier">
+
+    <div class="slide-inner split reverse">
+
+      <div class="col-art">
+
+        <canvas
+          id="cvCopier"
+          width="600"
+          height="600">
+        </canvas>
+
+      </div>
+
+      <div class="col-text">
+
+        <div class="num-mark">
+          2.2.3 — I
+        </div>
+
+        <span class="eyebrow">
+          ประโยชน์ของแรงไฟฟ้า
+        </span>
+
+        <h2>
+          เครื่องถ่ายเอกสาร
+        </h2>
+
+        <p>
+          ลูกกลิ้งมีประจุบวก
+          แสงที่สะท้อนจากบริเวณสีขาวทำให้ประจุหายไป
+          เหลือประจุบวกเฉพาะลายเส้น
+          ผงหมึกประจุลบจึงเกาะติดตามลาย
+          แล้วถูกกดลงกระดาษและอบด้วยความร้อน
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       10 : LIGHTNING
+       ===================================================== -->
+
+  <section
+    class="slide"
+    data-anim="lightning">
+
+    <div class="slide-inner split">
+
+      <div class="col-text">
+
+        <div class="num-mark">
+          2.2.3 — II
+        </div>
+
+        <span class="eyebrow">
+          ปรากฏการณ์ทางธรรมชาติ
+        </span>
+
+        <h2>
+          ฟ้าแลบ และ ฟ้าผ่า
+        </h2>
+
+        <p>
+          การเสียดสีของหยดน้ำและฝุ่นในก้อนเมฆ
+          สะสมประจุจนเกิดความต่างศักย์สูงมาก
+          แล้วถ่ายโอนประจุผ่านอากาศ
+          — <b>ฟ้าแลบ</b>
+          คือเมฆสู่เมฆ
+          ส่วน
+          <b>ฟ้าผ่า</b>
+          คือเมฆสู่พื้นดิน
+        </p>
+
+      </div>
+
+      <div class="col-art">
+
+        <canvas
+          id="cvLightning"
+          width="600"
+          height="600">
+        </canvas>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       11 : LIGHTNING ROD
+       ===================================================== -->
+
+  <section
+    class="slide"
+    data-anim="rod">
+
+    <div class="slide-inner split reverse">
+
+      <div class="col-art">
+
+        <canvas
+          id="cvRod"
+          width="600"
+          height="600">
+        </canvas>
+
+      </div>
+
+      <div class="col-text">
+
+        <div class="num-mark">
+          2.2.3 — III
+        </div>
+
+        <span class="eyebrow">
+          การป้องกัน
+        </span>
+
+        <h2>
+          สายล่อฟ้า (Lightning Rod)
+        </h2>
+
+        <p>
+          ปลายแหลมบนยอดอาคารรวบรวมประจุจากฟ้าผ่า
+          แล้วนำลงสู่พื้นดินผ่านสายไฟ
+          และแผ่นโลหะที่ฝังดิน
+          ป้องกันความเสียหายต่อตัวอาคาร
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       12 : SUMMARY
+       ===================================================== -->
+
+  <section
+    class="slide"
+    data-anim="summary">
+
+    <div class="slide-inner center">
+
+      <span class="eyebrow">
+        สรุป
+      </span>
+
+      <h2 class="mega small">
+        แรงที่มองไม่เห็น
+        แต่กำหนดโลกรอบตัวเรา
+      </h2>
+
+      <div class="virtues">
+
+        <div class="virtue">
+
+          <div class="num-mark">
+            I.
+          </div>
+
+          <p>
+            ประจุเหมือนกันผลัก
+            ต่างกันดึงดูด
+          </p>
+
+        </div>
+
+        <div class="virtue">
+
+          <div class="num-mark">
+            II.
+          </div>
+
+          <p>
+            สนามไฟฟ้าคือแรงต่อหน่วยประจุ
+            มีทิศทาง
+          </p>
+
+        </div>
+
+        <div class="virtue">
+
+          <div class="num-mark">
+            III.
+          </div>
+
+          <p>
+            ตั้งแต่เครื่องถ่ายเอกสารถึงสายฟ้า
+            ล้วนอธิบายได้ด้วยหลักเดียวกัน
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       13 : MEMBERS
+       ===================================================== -->
+
+  <section
+    class="slide"
+    data-anim="members">
+
+    <div class="hero-blobs">
+
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+
+    </div>
+
+    <div class="slide-inner center">
+
+      <span class="eyebrow">
+        จัดทำโดย
+      </span>
+
+      <h2 class="mega small">
+        รายชื่อสมาชิก
+      </h2>
+
+      <div class="member-list">
+
+        <div class="member">
+          <span class="member-num">01</span>
+          สมาชิก
+        </div>
+
+        <div class="member">
+          <span class="member-num">02</span>
+          สมาชิก
+        </div>
+
+        <div class="member">
+          <span class="member-num">03</span>
+          สมาชิก
+        </div>
+
+        <div class="member">
+          <span class="member-num">04</span>
+          สมาชิก
+        </div>
+
+        <div class="member">
+          <span class="member-num">05</span>
+          สมาชิก
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
 
 </div>
 
 
 <!-- =======================================================
      NAVIGATION
-======================================================= -->
+     ======================================================= -->
 
 <div class="nav-ui">
 
   <button
     class="nav-btn"
     id="prevBtn"
-    aria-label="ก่อนหน้า"
-  >
+    aria-label="ก่อนหน้า">
     ←
   </button>
 
   <div
     class="dots"
-    id="dots"
-  ></div>
+    id="dots">
+  </div>
 
   <button
     class="nav-btn"
     id="nextBtn"
-    aria-label="ถัดไป"
-  >
+    aria-label="ถัดไป">
     →
   </button>
 
@@ -1929,15 +1933,15 @@ b{
 
 <div
   class="slide-count"
-  id="slideCount"
-></div>
+  id="slideCount">
+</div>
 
 
 <script>
 
 /* =========================================================
    PALETTE
-========================================================= */
+   ========================================================= */
 
 const C = {
 
@@ -1967,7 +1971,7 @@ const reduceMotion =
 
 /* =========================================================
    SLIDE NAVIGATION
-========================================================= */
+   ========================================================= */
 
 const slides =
   Array.from(
@@ -2006,9 +2010,7 @@ slides.forEach((s,i)=>{
 
 
 const dots =
-  Array.from(
-    dotsWrap.children
-  );
+  Array.from(dotsWrap.children);
 
 
 function go(i,isInit){
@@ -2016,12 +2018,16 @@ function go(i,isInit){
   if(
     i < 0 ||
     i >= slides.length
-  ) return;
+  ){
+    return;
+  }
 
   if(
     i === current &&
     !isInit
-  ) return;
+  ){
+    return;
+  }
 
   slides[current]
     .classList
@@ -2031,7 +2037,7 @@ function go(i,isInit){
     Math.max(
       0,
       Math.min(
-        slides.length - 1,
+        slides.length-1,
         i
       )
     );
@@ -2041,18 +2047,19 @@ function go(i,isInit){
     .add('active');
 
   dots.forEach(
-    (d,idx)=>{
+    (d,idx)=>
       d.classList.toggle(
         'active',
         idx === current
-      );
-    }
+      )
   );
 
   progressFill.style.width =
-    ((current+1) /
+    (
+      (current+1) /
       slides.length *
-      100) + '%';
+      100
+    ) + '%';
 
   slideCount.textContent =
     (current+1) +
@@ -2070,13 +2077,8 @@ function go(i,isInit){
       .dataset
       .anim
   );
-
 }
 
-
-/* =========================================================
-   NAV BUTTONS
-========================================================= */
 
 document
   .getElementById('nextBtn')
@@ -2084,6 +2086,7 @@ document
     'click',
     ()=>go(current+1)
   );
+
 
 document
   .getElementById('prevBtn')
@@ -2093,10 +2096,6 @@ document
   );
 
 
-/* =========================================================
-   KEYBOARD
-========================================================= */
-
 window.addEventListener(
   'keydown',
   e=>{
@@ -2105,14 +2104,12 @@ window.addEventListener(
       e.key === 'ArrowRight' ||
       e.key === ' '
     ){
-      e.preventDefault();
       go(current+1);
     }
 
     if(
       e.key === 'ArrowLeft'
     ){
-      e.preventDefault();
       go(current-1);
     }
 
@@ -2122,10 +2119,9 @@ window.addEventListener(
 
 /* =========================================================
    TOUCH
-========================================================= */
+   ========================================================= */
 
 let touchX = null;
-
 
 window.addEventListener(
   'touchstart',
@@ -2140,18 +2136,21 @@ window.addEventListener(
   'touchend',
   e=>{
 
-    if(touchX === null)
+    if(touchX === null){
       return;
+    }
 
     const dx =
-      e.changedTouches[0].clientX
-      - touchX;
+      e.changedTouches[0].clientX -
+      touchX;
 
-    if(dx < -40)
+    if(dx < -40){
       go(current+1);
+    }
 
-    if(dx > 40)
+    if(dx > 40){
       go(current-1);
+    }
 
     touchX = null;
 
@@ -2161,7 +2160,7 @@ window.addEventListener(
 
 /* =========================================================
    AMBIENT DUST
-========================================================= */
+   ========================================================= */
 
 (function dust(){
 
@@ -2171,9 +2170,7 @@ window.addEventListener(
   const ctx =
     canvas.getContext('2d');
 
-  let W,H;
-
-  let particles = [];
+  let W,H,particles=[];
 
 
   function resize(){
@@ -2240,63 +2237,69 @@ window.addEventListener(
       C.goldBright;
 
 
-    particles.forEach(
-      p=>{
+    particles.forEach(p=>{
 
-        ctx.globalAlpha =
-          p.alpha;
+      ctx.globalAlpha =
+        p.alpha;
 
-        ctx.beginPath();
+      ctx.beginPath();
 
-        ctx.arc(
-          p.x,
-          p.y,
-          p.r,
-          0,
-          Math.PI*2
-        );
+      ctx.arc(
+        p.x,
+        p.y,
+        p.r,
+        0,
+        Math.PI*2
+      );
 
-        ctx.fill();
+      ctx.fill();
 
-        p.y -= p.speed;
+      p.y -= p.speed;
 
-        if(p.y < -5){
+      if(p.y < -5){
 
-          p.y = H+5;
+        p.y =
+          H+5;
 
-          p.x =
-            Math.random()*W;
-
-        }
+        p.x =
+          Math.random()*W;
 
       }
-    );
+
+    });
 
 
     ctx.globalAlpha = 1;
 
 
-    if(n)
-      requestAnimationFrame(tick);
+    if(n){
+      requestAnimationFrame(
+        tick
+      );
+    }
 
   }
 
 
-  requestAnimationFrame(tick);
+  requestAnimationFrame(
+    tick
+  );
 
 })();
 
 
 /* =========================================================
-   CANVAS HELPER
-========================================================= */
+   CANVAS SETUP
+   ========================================================= */
 
 function setupCanvas(id){
 
   const cv =
     document.getElementById(id);
 
-  if(!cv) return null;
+  if(!cv){
+    return null;
+  }
 
 
   const dpr =
@@ -2307,8 +2310,8 @@ function setupCanvas(id){
 
 
   const size =
-    cv.getBoundingClientRect().width
-    || 420;
+    cv.getBoundingClientRect()
+      .width || 420;
 
 
   cv.width =
@@ -2339,7 +2342,7 @@ function setupCanvas(id){
 
 /* =========================================================
    DRAW CHARGE
-========================================================= */
+   ========================================================= */
 
 function drawCharge(
   ctx,
@@ -2397,30 +2400,38 @@ function drawCharge(
     Math.PI*2
   );
 
-  ctx.fillStyle = grad;
+  ctx.fillStyle =
+    grad;
 
   ctx.fill();
 
 
-  ctx.strokeStyle = '#fff';
+  ctx.strokeStyle =
+    '#fff';
 
-  ctx.lineWidth = 1.6;
+  ctx.lineWidth =
+    1.6;
 
   ctx.stroke();
 
 
-  ctx.fillStyle = '#fff';
+  ctx.fillStyle =
+    '#fff';
 
   ctx.font =
-    `400 ${r*.9}px CHHongdae, sans-serif`;
+    `700 ${r*.9}px CHHongdae`;
 
-  ctx.textAlign = 'center';
+  ctx.textAlign =
+    'center';
 
-  ctx.textBaseline = 'middle';
+  ctx.textBaseline =
+    'middle';
 
 
   ctx.fillText(
-    positive ? '+' : '−',
+    positive
+      ? '+'
+      : '−',
     x,
     y+1
   );
@@ -2430,7 +2441,7 @@ function drawCharge(
 
 /* =========================================================
    ARROW
-========================================================= */
+   ========================================================= */
 
 function arrow(
   ctx,
@@ -2441,11 +2452,14 @@ function arrow(
   color
 ){
 
-  ctx.strokeStyle = color;
+  ctx.strokeStyle =
+    color;
 
-  ctx.fillStyle = color;
+  ctx.fillStyle =
+    color;
 
-  ctx.lineWidth = 2;
+  ctx.lineWidth =
+    2;
 
 
   ctx.beginPath();
@@ -2478,13 +2492,27 @@ function arrow(
   );
 
   ctx.lineTo(
-    x2-8*Math.cos(ang-.4),
-    y2-8*Math.sin(ang-.4)
+    x2 -
+      8*Math.cos(
+        ang-.4
+      ),
+
+    y2 -
+      8*Math.sin(
+        ang-.4
+      )
   );
 
   ctx.lineTo(
-    x2-8*Math.cos(ang+.4),
-    y2-8*Math.sin(ang+.4)
+    x2 -
+      8*Math.cos(
+        ang+.4
+      ),
+
+    y2 -
+      8*Math.sin(
+        ang+.4
+      )
   );
 
   ctx.closePath();
@@ -2496,21 +2524,25 @@ function arrow(
 
 /* =========================================================
    ANIMATIONS
-========================================================= */
+   ========================================================= */
 
 const anims = {};
 
 
 /* =========================================================
    HISTORY
-========================================================= */
+   ========================================================= */
 
 anims.history = ()=>{
 
   const s =
-    setupCanvas('cvHistory');
+    setupCanvas(
+      'cvHistory'
+    );
 
-  if(!s) return;
+  if(!s){
+    return;
+  }
 
   const {
     ctx,
@@ -2538,8 +2570,6 @@ anims.history = ()=>{
     const cy =
       size/2;
 
-
-    /* amber rod */
 
     ctx.save();
 
@@ -2576,8 +2606,8 @@ anims.history = ()=>{
     );
 
 
-    ctx.fillStyle = grad;
-
+    ctx.fillStyle =
+      grad;
 
     ctx.beginPath();
 
@@ -2594,8 +2624,6 @@ anims.history = ()=>{
     ctx.restore();
 
 
-    /* cloth */
-
     const clothX =
       cx +
       Math.sin(t*3)*70;
@@ -2607,7 +2635,8 @@ anims.history = ()=>{
     ctx.strokeStyle =
       'rgba(59,122,87,.4)';
 
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth =
+      1.5;
 
 
     ctx.save();
@@ -2618,7 +2647,6 @@ anims.history = ()=>{
     );
 
     ctx.rotate(-.15);
-
 
     ctx.fillRect(
       -22,
@@ -2637,37 +2665,29 @@ anims.history = ()=>{
     ctx.restore();
 
 
-    /* floating bits */
-
     for(let i=0;i<6;i++){
 
-      const a =
-        t*1.3+i*1.1;
-
       const bx =
-        cx+
-        95+
-        Math.cos(a)*10-
+        cx+95+
+        Math.cos(
+          t*1.3+i*1.1
+        )*10-
         i*4;
-
-      const by =
-        cy-40+
-        ((t*40+i*20)%120)-
-        60;
-
 
       ctx.fillStyle =
         C.oxblood;
 
-      ctx.globalAlpha = .7;
-
+      ctx.globalAlpha =
+        .7;
 
       ctx.beginPath();
 
       ctx.arc(
         bx,
-        cy+
-          Math.sin(t*2+i)*30,
+        cy +
+          Math.sin(
+            t*2+i
+          )*30,
         2.2,
         0,
         Math.PI*2
@@ -2675,13 +2695,16 @@ anims.history = ()=>{
 
       ctx.fill();
 
-      ctx.globalAlpha = 1;
+      ctx.globalAlpha =
+        1;
 
     }
 
 
     rafHandle =
-      requestAnimationFrame(frame);
+      requestAnimationFrame(
+        frame
+      );
 
   }
 
@@ -2693,42 +2716,52 @@ anims.history = ()=>{
 
 /* =========================================================
    BASIC FORCE
-========================================================= */
+   ========================================================= */
 
 anims.basic = ()=>{
 
   const s =
-    setupCanvas('cvForce');
+    setupCanvas(
+      'cvForce'
+    );
 
-  if(!s) return;
+  if(!s){
+    return;
+  }
+
 
   const {
     ctx,
     size
   } = s;
 
+
   let t = 0;
 
-  let mode = 'repel';
+  let mode =
+    'repel';
 
 
   document
-    .querySelectorAll('[data-mode]')
+    .querySelectorAll(
+      '[data-mode]'
+    )
     .forEach(btn=>{
 
       btn.onclick = ()=>{
 
         document
-          .querySelectorAll('[data-mode]')
-          .forEach(b=>
-            b.classList.remove(
-              'active'
-            )
+          .querySelectorAll(
+            '[data-mode]'
+          )
+          .forEach(
+            b=>
+              b.classList
+                .remove('active')
           );
 
-        btn.classList.add(
-          'active'
-        );
+        btn.classList
+          .add('active');
 
         mode =
           btn.dataset.mode;
@@ -2760,9 +2793,7 @@ anims.basic = ()=>{
     const gap =
       mode === 'repel'
         ? 70+wobble
-        : 40-Math.abs(
-            wobble*.5
-          );
+        : 40-Math.abs(wobble*.5);
 
 
     const cx =
@@ -2776,8 +2807,7 @@ anims.basic = ()=>{
       cx+gap;
 
 
-    const pos1 =
-      true;
+    const pos1 = true;
 
     const pos2 =
       mode === 'repel'
@@ -2792,6 +2822,7 @@ anims.basic = ()=>{
       32,
       pos1
     );
+
 
     drawCharge(
       ctx,
@@ -2846,7 +2877,9 @@ anims.basic = ()=>{
 
 
     rafHandle =
-      requestAnimationFrame(frame);
+      requestAnimationFrame(
+        frame
+      );
 
   }
 
@@ -2858,14 +2891,19 @@ anims.basic = ()=>{
 
 /* =========================================================
    FACTORS
-========================================================= */
+   ========================================================= */
 
 anims.factors = ()=>{
 
   const s =
-    setupCanvas('cvFactors');
+    setupCanvas(
+      'cvFactors'
+    );
 
-  if(!s) return;
+  if(!s){
+    return;
+  }
+
 
   const {
     ctx,
@@ -2906,7 +2944,7 @@ anims.factors = ()=>{
     const strength =
       Math.max(
         .15,
-        1-
+        1 -
         (gap-30)/70
       );
 
@@ -2918,6 +2956,7 @@ anims.factors = ()=>{
       30,
       true
     );
+
 
     drawCharge(
       ctx,
@@ -2932,10 +2971,12 @@ anims.factors = ()=>{
       C.goldBright;
 
     ctx.lineWidth =
-      1+strength*8;
+      1 +
+      strength*8;
 
     ctx.globalAlpha =
-      .5+strength*.5;
+      .5+
+      strength*.5;
 
 
     ctx.beginPath();
@@ -2953,14 +2994,15 @@ anims.factors = ()=>{
     ctx.stroke();
 
 
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha =
+      1;
 
 
     ctx.fillStyle =
       'rgba(78,52,46,.6)';
 
     ctx.font =
-      '400 12px CHHongdae';
+      '12px CHHongdae';
 
     ctx.textAlign =
       'center';
@@ -2972,6 +3014,7 @@ anims.factors = ()=>{
         strength*100
       )+
       '%',
+
       cx,
       cy+60
     );
@@ -2989,21 +3032,28 @@ anims.factors = ()=>{
 
 /* =========================================================
    ATOM
-========================================================= */
+   ========================================================= */
 
 anims.atom = ()=>{
 
   const s =
-    setupCanvas('cvAtom');
+    setupCanvas(
+      'cvAtom'
+    );
 
-  if(!s) return;
+  if(!s){
+    return;
+  }
+
 
   const {
     ctx,
     size
   } = s;
 
+
   let t = 0;
+
 
   const cx =
     size/2;
@@ -3016,6 +3066,7 @@ anims.atom = ()=>{
 
     t += .015;
 
+
     ctx.clearRect(
       0,
       0,
@@ -3023,8 +3074,6 @@ anims.atom = ()=>{
       size
     );
 
-
-    /* nucleus */
 
     const nucleus = [
 
@@ -3049,8 +3098,6 @@ anims.atom = ()=>{
     );
 
 
-    /* electron orbits */
-
     for(let i=0;i<3;i++){
 
       const rx =
@@ -3063,7 +3110,8 @@ anims.atom = ()=>{
       ctx.strokeStyle =
         'rgba(59,122,87,.3)';
 
-      ctx.lineWidth = 1;
+      ctx.lineWidth =
+        1;
 
 
       ctx.save();
@@ -3104,21 +3152,6 @@ anims.atom = ()=>{
         Math.sin(a)*ry;
 
 
-      ctx.restore();
-
-
-      ctx.save();
-
-      ctx.translate(
-        cx,
-        cy
-      );
-
-      ctx.rotate(
-        i*.7
-      );
-
-
       drawCharge(
         ctx,
         ex,
@@ -3137,7 +3170,7 @@ anims.atom = ()=>{
       'rgba(78,52,46,.55)';
 
     ctx.font =
-      '400 11px CHHongdae';
+      '11px CHHongdae';
 
     ctx.textAlign =
       'center';
@@ -3151,7 +3184,9 @@ anims.atom = ()=>{
 
 
     rafHandle =
-      requestAnimationFrame(frame);
+      requestAnimationFrame(
+        frame
+      );
 
   }
 
@@ -3163,14 +3198,19 @@ anims.atom = ()=>{
 
 /* =========================================================
    CHARGE STATE
-========================================================= */
+   ========================================================= */
 
 anims['charge-state'] = ()=>{
 
   const s =
-    setupCanvas('cvChargeState');
+    setupCanvas(
+      'cvChargeState'
+    );
 
-  if(!s) return;
+  if(!s){
+    return;
+  }
+
 
   const {
     ctx,
@@ -3190,29 +3230,28 @@ anims['charge-state'] = ()=>{
 
 
   document
-    .querySelectorAll('[data-cs]')
+    .querySelectorAll(
+      '[data-cs]'
+    )
     .forEach(btn=>{
 
       btn.onclick = ()=>{
 
         document
-          .querySelectorAll('[data-cs]')
+          .querySelectorAll(
+            '[data-cs]'
+          )
           .forEach(
             b=>
-              b.classList.remove(
-                'active'
-              )
+              b.classList
+                .remove('active')
           );
 
-
-        btn.classList.add(
-          'active'
-        );
-
+        btn.classList
+          .add('active');
 
         state =
           btn.dataset.cs;
-
 
         draw();
 
@@ -3250,8 +3289,6 @@ anims['charge-state'] = ()=>{
           : 'ประจุสุทธิ = 0 (เป็นกลาง)';
 
 
-    /* nucleus */
-
     for(
       let i=0;
       i<baseE;
@@ -3259,7 +3296,7 @@ anims['charge-state'] = ()=>{
     ){
 
       const a =
-        i/baseE*
+        i/baseE *
         Math.PI*2;
 
 
@@ -3275,8 +3312,6 @@ anims['charge-state'] = ()=>{
 
     }
 
-
-    /* electrons */
 
     for(
       let i=0;
@@ -3314,7 +3349,7 @@ anims['charge-state'] = ()=>{
 
 
     ctx.font =
-      '400 13px CHHongdae';
+      '700 13px CHHongdae';
 
     ctx.textAlign =
       'center';
@@ -3336,14 +3371,19 @@ anims['charge-state'] = ()=>{
 
 /* =========================================================
    FIELD
-========================================================= */
+   ========================================================= */
 
 anims.field = ()=>{
 
   const s =
-    setupCanvas('cvField');
+    setupCanvas(
+      'cvField'
+    );
 
-  if(!s) return;
+  if(!s){
+    return;
+  }
+
 
   const {
     ctx,
@@ -3365,25 +3405,25 @@ anims.field = ()=>{
 
 
   document
-    .querySelectorAll('[data-charge]')
+    .querySelectorAll(
+      '[data-charge]'
+    )
     .forEach(btn=>{
 
       btn.onclick = ()=>{
 
         document
-          .querySelectorAll('[data-charge]')
+          .querySelectorAll(
+            '[data-charge]'
+          )
           .forEach(
             b=>
-              b.classList.remove(
-                'active'
-              )
+              b.classList
+                .remove('active')
           );
 
-
-        btn.classList.add(
-          'active'
-        );
-
+        btn.classList
+          .add('active');
 
         charge =
           btn.dataset.charge;
@@ -3396,6 +3436,7 @@ anims.field = ()=>{
   function frame(){
 
     t += .02;
+
 
     ctx.clearRect(
       0,
@@ -3418,36 +3459,36 @@ anims.field = ()=>{
     ){
 
       const a =
-        i/n*
+        i/n *
         Math.PI*2;
-
-
-      const r1 =
-        positive
-          ? 44
-          : 150;
-
-
-      const r2 =
-        positive
-          ? 150
-          : 44;
 
 
       const pulse =
         (t*40)%106;
 
 
-      const rr1 =
-        positive
-          ? 44+pulse
-          : 150-pulse;
+      let rr1;
+
+      let rr2;
 
 
-      const rr2 =
-        positive
-          ? rr1+14
-          : rr1-14;
+      if(positive){
+
+        rr1 =
+          44+ pulse;
+
+        rr2 =
+          rr1+14;
+
+      }else{
+
+        rr1 =
+          150-pulse;
+
+        rr2 =
+          rr1-14;
+
+      }
 
 
       const x1 =
@@ -3490,7 +3531,9 @@ anims.field = ()=>{
 
 
     rafHandle =
-      requestAnimationFrame(frame);
+      requestAnimationFrame(
+        frame
+      );
 
   }
 
@@ -3502,14 +3545,19 @@ anims.field = ()=>{
 
 /* =========================================================
    FIELD PAIR
-========================================================= */
+   ========================================================= */
 
 anims['field-pair'] = ()=>{
 
   const s =
-    setupCanvas('cvFieldPair');
+    setupCanvas(
+      'cvFieldPair'
+    );
 
-  if(!s) return;
+  if(!s){
+    return;
+  }
+
 
   const {
     ctx,
@@ -3529,29 +3577,28 @@ anims['field-pair'] = ()=>{
 
 
   document
-    .querySelectorAll('[data-pair]')
+    .querySelectorAll(
+      '[data-pair]'
+    )
     .forEach(btn=>{
 
       btn.onclick = ()=>{
 
         document
-          .querySelectorAll('[data-pair]')
+          .querySelectorAll(
+            '[data-pair]'
+          )
           .forEach(
             b=>
-              b.classList.remove(
-                'active'
-              )
+              b.classList
+                .remove('active')
           );
 
-
-        btn.classList.add(
-          'active'
-        );
-
+        btn.classList
+          .add('active');
 
         pair =
           btn.dataset.pair;
-
 
         draw();
 
@@ -3591,7 +3638,8 @@ anims['field-pair'] = ()=>{
     ctx.strokeStyle =
       'rgba(59,122,87,.5)';
 
-    ctx.lineWidth = 1.6;
+    ctx.lineWidth =
+      1.6;
 
 
     for(
@@ -3600,8 +3648,9 @@ anims['field-pair'] = ()=>{
       i++
     ){
 
-      if(i === 0)
+      if(i===0){
         continue;
+      }
 
 
       const off =
@@ -3674,14 +3723,19 @@ anims['field-pair'] = ()=>{
 
 /* =========================================================
    PARABOLA
-========================================================= */
+   ========================================================= */
 
 anims.parabola = ()=>{
 
   const s =
-    setupCanvas('cvParabola');
+    setupCanvas(
+      'cvParabola'
+    );
 
-  if(!s) return;
+  if(!s){
+    return;
+  }
+
 
   const {
     ctx,
@@ -3693,7 +3747,9 @@ anims.parabola = ()=>{
 
 
   document
-    .getElementById('btnFire')
+    .getElementById(
+      'btnFire'
+    )
     .onclick = ()=>{
 
       particles.push({
@@ -3707,7 +3763,7 @@ anims.parabola = ()=>{
         vy:0,
 
         positive:
-          particles.length%2 === 0,
+          particles.length%2===0,
 
         trail:[]
 
@@ -3725,8 +3781,6 @@ anims.parabola = ()=>{
       size
     );
 
-
-    /* field arrows */
 
     ctx.strokeStyle =
       'rgba(59,122,87,.25)';
@@ -3754,7 +3808,7 @@ anims.parabola = ()=>{
       'rgba(78,52,46,.5)';
 
     ctx.font =
-      '400 11px CHHongdae';
+      '11px CHHongdae';
 
     ctx.textAlign =
       'center';
@@ -3767,38 +3821,34 @@ anims.parabola = ()=>{
     );
 
 
-    particles.forEach(
-      p=>{
+    particles.forEach(p=>{
 
-        const g =
-          p.positive
-            ? .12
-            : -.12;
-
-
-        p.vy += g;
-
-        p.x += p.vx;
-
-        p.y += p.vy;
+      const g =
+        p.positive
+          ? .12
+          : -.12;
 
 
-        p.trail.push({
-          x:p.x,
-          y:p.y
-        });
+      p.vy += g;
+
+      p.x += p.vx;
+
+      p.y += p.vy;
 
 
-        if(
-          p.trail.length > 60
-        ){
+      p.trail.push({
+        x:p.x,
+        y:p.y
+      });
 
-          p.trail.shift();
 
-        }
-
+      if(
+        p.trail.length>60
+      ){
+        p.trail.shift();
       }
-    );
+
+    });
 
 
     particles =
@@ -3810,51 +3860,52 @@ anims.parabola = ()=>{
       );
 
 
-    particles.forEach(
-      p=>{
+    particles.forEach(p=>{
 
-        ctx.beginPath();
-
-
-        p.trail.forEach(
-          (pt,i)=>
-            i === 0
-              ? ctx.moveTo(
-                  pt.x,
-                  pt.y
-                )
-              : ctx.lineTo(
-                  pt.x,
-                  pt.y
-                )
-        );
+      ctx.beginPath();
 
 
-        ctx.strokeStyle =
-          p.positive
-            ? 'rgba(141,110,99,.6)'
-            : 'rgba(59,122,87,.6)';
+      p.trail.forEach(
+        (pt,i)=>
+          i===0
+            ? ctx.moveTo(
+                pt.x,
+                pt.y
+              )
+            : ctx.lineTo(
+                pt.x,
+                pt.y
+              )
+      );
 
 
-        ctx.lineWidth = 2;
+      ctx.strokeStyle =
+        p.positive
+          ? 'rgba(141,110,99,.6)'
+          : 'rgba(59,122,87,.6)';
 
-        ctx.stroke();
+
+      ctx.lineWidth =
+        2;
+
+      ctx.stroke();
 
 
-        drawCharge(
-          ctx,
-          p.x,
-          p.y,
-          12,
-          p.positive
-        );
+      drawCharge(
+        ctx,
+        p.x,
+        p.y,
+        12,
+        p.positive
+      );
 
-      }
-    );
+    });
 
 
     rafHandle =
-      requestAnimationFrame(frame);
+      requestAnimationFrame(
+        frame
+      );
 
   }
 
@@ -3866,14 +3917,19 @@ anims.parabola = ()=>{
 
 /* =========================================================
    COPIER
-========================================================= */
+   ========================================================= */
 
 anims.copier = ()=>{
 
   const s =
-    setupCanvas('cvCopier');
+    setupCanvas(
+      'cvCopier'
+    );
 
-  if(!s) return;
+  if(!s){
+    return;
+  }
+
 
   const {
     ctx,
@@ -3905,10 +3961,10 @@ anims.copier = ()=>{
 
 
     const stage =
-      Math.floor(t/2)%4;
+      Math.floor(
+        t/2
+      )%4;
 
-
-    /* drum */
 
     ctx.save();
 
@@ -3921,7 +3977,8 @@ anims.copier = ()=>{
     ctx.strokeStyle =
       C.goldBright;
 
-    ctx.lineWidth = 2;
+    ctx.lineWidth =
+      2;
 
 
     ctx.beginPath();
@@ -3938,7 +3995,7 @@ anims.copier = ()=>{
 
 
     ctx.fillStyle =
-      stage === 0
+      stage===0
         ? 'rgba(59,122,87,.5)'
         : 'rgba(59,122,87,.15)';
 
@@ -3956,10 +4013,8 @@ anims.copier = ()=>{
     ctx.fill();
 
 
-    /* light */
-
     ctx.fillStyle =
-      stage === 1
+      stage===1
         ? C.goldBright
         : 'rgba(59,122,87,.3)';
 
@@ -3978,7 +4033,7 @@ anims.copier = ()=>{
 
 
     ctx.font =
-      '400 11px CHHongdae';
+      '11px CHHongdae';
 
     ctx.fillStyle =
       'rgba(78,52,46,.6)';
@@ -3994,10 +4049,8 @@ anims.copier = ()=>{
     );
 
 
-    /* toner */
-
     ctx.fillStyle =
-      stage === 2
+      stage===2
         ? C.verdigris
         : 'rgba(59,122,87,.3)';
 
@@ -4022,10 +4075,8 @@ anims.copier = ()=>{
     );
 
 
-    /* paper */
-
     ctx.fillStyle =
-      stage === 3
+      stage===3
         ? 'rgba(78,52,46,.9)'
         : 'rgba(78,52,46,.35)';
 
@@ -4069,7 +4120,7 @@ anims.copier = ()=>{
       C.goldBright;
 
     ctx.font =
-      '400 12px CHHongdae';
+      '700 12px CHHongdae';
 
     ctx.textAlign =
       'center';
@@ -4083,7 +4134,9 @@ anims.copier = ()=>{
 
 
     rafHandle =
-      requestAnimationFrame(frame);
+      requestAnimationFrame(
+        frame
+      );
 
   }
 
@@ -4095,14 +4148,19 @@ anims.copier = ()=>{
 
 /* =========================================================
    LIGHTNING
-========================================================= */
+   ========================================================= */
 
 anims.lightning = ()=>{
 
   const s =
-    setupCanvas('cvLightning');
+    setupCanvas(
+      'cvLightning'
+    );
 
-  if(!s) return;
+  if(!s){
+    return;
+  }
+
 
   const {
     ctx,
@@ -4152,8 +4210,6 @@ anims.lightning = ()=>{
     );
 
 
-    /* clouds */
-
     ctx.fillStyle =
       'rgba(59,122,87,.18)';
 
@@ -4188,22 +4244,19 @@ anims.lightning = ()=>{
 
 
     const active =
-      Math.floor(t)%3 === 0;
+      Math.floor(t)%3===0;
 
 
     if(active){
 
       ctx.save();
 
-
       ctx.globalAlpha =
         .15+
         flash*.2;
 
-
       ctx.fillStyle =
         C.goldBright;
-
 
       ctx.fillRect(
         0,
@@ -4211,7 +4264,6 @@ anims.lightning = ()=>{
         size,
         size
       );
-
 
       ctx.restore();
 
@@ -4228,7 +4280,7 @@ anims.lightning = ()=>{
 
       pts.forEach(
         (p,i)=>
-          i === 0
+          i===0
             ? ctx.moveTo(
                 p[0],
                 p[1]
@@ -4243,7 +4295,8 @@ anims.lightning = ()=>{
       ctx.strokeStyle =
         C.goldBright;
 
-      ctx.lineWidth = 3;
+      ctx.lineWidth =
+        3;
 
       ctx.lineJoin =
         'round';
@@ -4254,11 +4307,13 @@ anims.lightning = ()=>{
       ctx.shadowColor =
         C.goldBright;
 
-      ctx.shadowBlur = 14;
+      ctx.shadowBlur =
+        14;
 
       ctx.stroke();
 
-      ctx.shadowBlur = 0;
+      ctx.shadowBlur =
+        0;
 
     }
 
@@ -4267,7 +4322,7 @@ anims.lightning = ()=>{
       'rgba(78,52,46,.5)';
 
     ctx.font =
-      '400 11px CHHongdae';
+      '11px CHHongdae';
 
     ctx.textAlign =
       'center';
@@ -4281,7 +4336,9 @@ anims.lightning = ()=>{
 
 
     rafHandle =
-      requestAnimationFrame(frame);
+      requestAnimationFrame(
+        frame
+      );
 
   }
 
@@ -4293,14 +4350,19 @@ anims.lightning = ()=>{
 
 /* =========================================================
    LIGHTNING ROD
-========================================================= */
+   ========================================================= */
 
 anims.rod = ()=>{
 
   const s =
-    setupCanvas('cvRod');
+    setupCanvas(
+      'cvRod'
+    );
 
-  if(!s) return;
+  if(!s){
+    return;
+  }
+
 
   const {
     ctx,
@@ -4334,8 +4396,6 @@ anims.rod = ()=>{
     );
 
 
-    /* building */
-
     ctx.fillStyle =
       'rgba(59,122,87,.15)';
 
@@ -4348,12 +4408,11 @@ anims.rod = ()=>{
     );
 
 
-    /* rod */
-
     ctx.strokeStyle =
       C.goldBright;
 
-    ctx.lineWidth = 3;
+    ctx.lineWidth =
+      3;
 
 
     ctx.beginPath();
@@ -4371,12 +4430,11 @@ anims.rod = ()=>{
     ctx.stroke();
 
 
-    /* wire */
-
     ctx.strokeStyle =
       'rgba(59,122,87,.5)';
 
-    ctx.lineWidth = 2;
+    ctx.lineWidth =
+      2;
 
 
     ctx.beginPath();
@@ -4394,8 +4452,6 @@ anims.rod = ()=>{
     ctx.stroke();
 
 
-    /* ground plate */
-
     ctx.fillStyle =
       'rgba(59,122,87,.4)';
 
@@ -4408,16 +4464,12 @@ anims.rod = ()=>{
     );
 
 
-    /* traveling charge */
-
     const p =
       (t*.6)%1;
 
 
     const cxp =
-      topX+
-      p*80;
-
+      topX+p*80;
 
     const cyp =
       roofY+
@@ -4437,7 +4489,7 @@ anims.rod = ()=>{
       'rgba(78,52,46,.55)';
 
     ctx.font =
-      '400 11px CHHongdae';
+      '11px CHHongdae';
 
     ctx.textAlign =
       'center';
@@ -4451,7 +4503,9 @@ anims.rod = ()=>{
 
 
     rafHandle =
-      requestAnimationFrame(frame);
+      requestAnimationFrame(
+        frame
+      );
 
   }
 
@@ -4463,7 +4517,7 @@ anims.rod = ()=>{
 
 /* =========================================================
    START ANIMATION
-========================================================= */
+   ========================================================= */
 
 function startAnim(name){
 
@@ -4476,7 +4530,7 @@ function startAnim(name){
 
 /* =========================================================
    INIT
-========================================================= */
+   ========================================================= */
 
 go(0,true);
 
