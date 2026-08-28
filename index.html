@@ -1,1 +1,4790 @@
+<!DOCTYPE html>
+
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แรงไฟฟ้า — แรงในธรรมชาติ</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --pink:#F6C6D9;
+  --pink-light:#FCE8F0;
+  --pink-deep:#D889A7;
+
+  --green:#B9DEC8;
+  --green-light:#E5F3EA;
+  --green-deep:#6E9E7E;
+
+  --yellow:#F8E5A8;
+  --yellow-light:#FFF6D8;
+
+  --brown:#9A7667;
+  --brown-light:#C8A99B;
+  --brown-dark:#5D443B;
+
+  --cream:#FFF9F0;
+  --paper:#FFFDF8;
+  --white:#FFFFFF;
+
+  --shadow:rgba(93,68,59,.16);
+  --shadow-soft:rgba(93,68,59,.10);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,
+body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+body{
+  background:
+    radial-gradient(circle at 10% 10%,rgba(246,198,217,.55),transparent 25%),
+    radial-gradient(circle at 90% 20%,rgba(185,222,200,.55),transparent 25%),
+    radial-gradient(circle at 50% 100%,rgba(248,229,168,.45),transparent 30%),
+    var(--cream);
+  color:var(--brown-dark);
+  font-family:'Prompt','Mali',sans-serif;
+}
+
+/* =========================
+   GLOBAL DECORATION
+========================= */
+
+#dust{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  opacity:.7;
+}
+
+.decor{
+  position:absolute;
+  pointer-events:none;
+  z-index:0;
+}
+
+.decor.star{
+  width:18px;
+  height:18px;
+  color:var(--yellow);
+  font-family:'Mali';
+  font-weight:700;
+  font-size:1.2rem;
+}
+
+.decor.plus{
+  color:var(--pink-deep);
+  font-family:'Prompt';
+  font-weight:700;
+  font-size:1.5rem;
+}
+
+.decor.minus{
+  color:var(--green-deep);
+  font-family:'Prompt';
+  font-weight:700;
+  font-size:1.5rem;
+}
+
+.decor.dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--pink);
+}
+
+.decor.leaf{
+  width:22px;
+  height:12px;
+  background:var(--green);
+  border-radius:100% 0 100% 0;
+  transform:rotate(-25deg);
+}
+
+.decor.flower{
+  font-size:1.4rem;
+  color:var(--pink-deep);
+  font-family:'Mali';
+}
+
+.d1{top:13%;left:5%;}
+.d2{top:20%;right:7%;}
+.d3{bottom:18%;left:8%;}
+.d4{bottom:13%;right:8%;}
+.d5{top:38%;left:3%;}
+.d6{top:50%;right:4%;}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:5px;
+  background:rgba(154,118,103,.12);
+  z-index:100;
+}
+
+.progress-fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(
+    90deg,
+    var(--pink-deep),
+    var(--green-deep),
+    var(--yellow)
+  );
+  transition:width .5s cubic-bezier(.2,.7,.1,1);
+  border-radius:0 5px 5px 0;
+}
+
+/* =========================
+   DECK / SLIDES
+========================= */
+
+.deck{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+}
+
+.slide{
+  position:absolute;
+  inset:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:
+    clamp(2rem,4vw,4.5rem)
+    clamp(1.5rem,5vw,5rem);
+
+  opacity:0;
+  visibility:hidden;
+
+  clip-path:polygon(
+    0 0,
+    0 0,
+    0 100%,
+    0 100%
+  );
+
+  transition:
+    clip-path .85s cubic-bezier(.65,0,.35,1),
+    opacity .5s ease,
+    visibility 0s linear .85s;
+
+  pointer-events:none;
+}
+
+.slide.active{
+  opacity:1;
+  visibility:visible;
+
+  clip-path:polygon(
+    0 0,
+    100% 0,
+    100% 100%,
+    0 100%
+  );
+
+  transition:
+    clip-path .85s cubic-bezier(.65,0,.35,1),
+    opacity .3s ease;
+
+  pointer-events:auto;
+}
+
+/* =========================
+   CONTENT CARD
+========================= */
+
+.slide-inner{
+  position:relative;
+  z-index:3;
+
+  width:100%;
+  max-width:1280px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.90),
+      rgba(255,249,240,.93)
+    );
+
+  border:2px solid rgba(200,169,155,.42);
+  border-radius:32px;
+
+  box-shadow:
+    0 22px 55px var(--shadow),
+    inset 0 0 0 7px rgba(255,255,255,.35);
+
+  padding:clamp(2rem,4vw,4rem);
+
+  overflow:hidden;
+}
+
+.slide-inner::before{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:var(--pink-light);
+  right:-80px;
+  top:-80px;
+  opacity:.75;
+}
+
+.slide-inner::after{
+  content:"";
+  position:absolute;
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  background:var(--green-light);
+  left:-70px;
+  bottom:-70px;
+  opacity:.8;
+}
+
+.slide-inner.center{
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.slide-inner.split{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:2rem;
+  align-items:center;
+}
+
+@media(min-width:860px){
+  .slide-inner.split{
+    grid-template-columns:1fr 1fr;
+    gap:clamp(2rem,5vw,5rem);
+  }
+
+  .slide-inner.split.reverse .col-art{
+    order:2;
+  }
+}
+
+/* =========================
+   TEXT
+========================= */
+
+.col-text{
+  position:relative;
+  z-index:5;
+
+  text-align:center;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.col-text h2{
+  font-family:'Mali','Prompt',sans-serif;
+  font-weight:700;
+
+  color:var(--brown-dark);
+
+  font-size:clamp(
+    1.7rem,
+    3.4vw,
+    3rem
+  );
+
+  line-height:1.3;
+
+  margin-bottom:1rem;
+
+  max-width:22ch;
+
+  text-wrap:balance;
+}
+
+.col-text p{
+  font-size:clamp(
+    1rem,
+    1.4vw,
+    1.2rem
+  );
+
+  line-height:1.9;
+
+  color:var(--brown);
+
+  max-width:48ch;
+
+  text-wrap:pretty;
+}
+
+h1,
+h2,
+.mega,
+.eyebrow,
+.num-mark{
+  font-family:'Mali','Prompt',sans-serif;
+}
+
+h1,
+h2,
+.mega{
+  font-weight:700;
+}
+
+b{
+  color:var(--green-deep);
+  font-weight:700;
+}
+
+.eyebrow{
+  display:block;
+
+  letter-spacing:.08em;
+
+  font-size:clamp(
+    .78rem,
+    1vw,
+    1rem
+  );
+
+  color:var(--pink-deep);
+
+  font-weight:700;
+
+  margin-bottom:.7rem;
+}
+
+.num-mark{
+  font-weight:700;
+  color:var(--brown-light);
+
+  font-size:.9rem;
+
+  letter-spacing:.04em;
+
+  margin-bottom:.4rem;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero-blobs{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+}
+
+.blob{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(35px);
+}
+
+.blob-1{
+  width:360px;
+  height:360px;
+
+  background:var(--pink);
+
+  top:-120px;
+  left:-80px;
+
+  opacity:.55;
+}
+
+.blob-2{
+  width:320px;
+  height:320px;
+
+  background:var(--green);
+
+  bottom:-100px;
+  right:-80px;
+
+  opacity:.55;
+}
+
+.blob-3{
+  width:200px;
+  height:200px;
+
+  background:var(--yellow);
+
+  bottom:20%;
+  left:8%;
+
+  opacity:.45;
+}
+
+.mega{
+  position:relative;
+  z-index:5;
+
+  font-size:clamp(
+    3.4rem,
+    9vw,
+    7rem
+  );
+
+  line-height:1.05;
+
+  color:var(--brown-dark);
+
+  text-shadow:
+    3px 4px 0 rgba(246,198,217,.65);
+}
+
+.mega.small{
+  font-size:clamp(
+    2rem,
+    5vw,
+    4rem
+  );
+
+  max-width:20ch;
+}
+
+.lede{
+  position:relative;
+  z-index:5;
+
+  margin-top:1rem;
+
+  color:var(--brown);
+
+  font-size:clamp(
+    1rem,
+    1.5vw,
+    1.25rem
+  );
+
+  max-width:48ch;
+
+  line-height:1.8;
+}
+
+/* =========================
+   LIGHTNING HERO
+========================= */
+
+.bolt-stage{
+  width:190px;
+  height:190px;
+
+  margin-top:2rem;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  position:relative;
+}
+
+.bolt-glow{
+  position:absolute;
+
+  width:190px;
+  height:190px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(248,229,168,.8),
+      rgba(246,198,217,.3),
+      transparent 70%
+    );
+
+  animation:boltPulse 2.6s ease-in-out infinite;
+}
+
+.bolt-svg{
+  position:relative;
+
+  width:90px;
+  height:120px;
+
+  animation:boltBounce 1.8s ease-in-out infinite;
+
+  filter:
+    drop-shadow(
+      0 8px 12px rgba(93,68,59,.2)
+    );
+}
+
+@keyframes boltPulse{
+  0%,100%{
+    transform:scale(1);
+    opacity:.7;
+  }
+
+  50%{
+    transform:scale(1.12);
+    opacity:1;
+  }
+}
+
+@keyframes boltBounce{
+  0%,100%{
+    transform:translateY(0) rotate(-4deg);
+  }
+
+  50%{
+    transform:translateY(-14px) rotate(4deg);
+  }
+}
+
+/* =========================
+   CANVAS
+========================= */
+
+.col-art{
+  position:relative;
+  z-index:5;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1.2rem;
+
+  min-width:0;
+}
+
+.col-art canvas{
+  display:block;
+
+  width:100%;
+  max-width:520px;
+
+  aspect-ratio:1/1;
+
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(185,222,200,.35),
+      rgba(246,198,217,.13),
+      transparent 70%
+    );
+
+  border-radius:28px;
+
+  border:2px dashed rgba(154,118,103,.25);
+
+  box-shadow:
+    inset 0 0 30px rgba(255,255,255,.45);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.toggle-row,
+.slider-row{
+  position:relative;
+  z-index:10;
+
+  display:flex;
+
+  gap:.7rem;
+
+  flex-wrap:wrap;
+
+  justify-content:center;
+
+  margin-top:.3rem;
+}
+
+.chip{
+  font-family:'Prompt',sans-serif;
+
+  font-size:clamp(
+    .82rem,
+    1.2vw,
+    1rem
+  );
+
+  font-weight:500;
+
+  background:var(--paper);
+
+  border:2px solid var(--brown-light);
+
+  color:var(--brown-dark);
+
+  padding:.65rem 1.15rem;
+
+  border-radius:999px;
+
+  cursor:pointer;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.chip:hover{
+  transform:translateY(-2px);
+
+  border-color:var(--pink-deep);
+
+  box-shadow:
+    0 7px 14px var(--shadow-soft);
+}
+
+.chip.active{
+  background:var(--pink);
+
+  border-color:var(--pink-deep);
+
+  color:var(--brown-dark);
+
+  font-weight:700;
+
+  box-shadow:
+    0 5px 12px rgba(216,137,167,.25);
+}
+
+.slider-row label{
+  font-size:clamp(
+    .85rem,
+    1.2vw,
+    1rem
+  );
+
+  color:var(--brown);
+
+  display:flex;
+
+  align-items:center;
+
+  gap:.7rem;
+}
+
+.slider-row input[type=range]{
+  accent-color:var(--pink-deep);
+
+  width:clamp(
+    160px,
+    20vw,
+    250px
+  );
+}
+
+/* =========================
+   SUMMARY
+========================= */
+
+.virtues{
+  position:relative;
+  z-index:5;
+
+  display:grid;
+
+  gap:1.5rem;
+
+  grid-template-columns:1fr;
+
+  margin-top:2.5rem;
+
+  max-width:1000px;
+}
+
+@media(min-width:700px){
+  .virtues{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+.virtue{
+  background:rgba(255,255,255,.65);
+
+  border:2px solid rgba(200,169,155,.35);
+
+  border-radius:22px;
+
+  padding:1.4rem;
+
+  text-align:center;
+
+  box-shadow:
+    0 10px 20px var(--shadow-soft);
+}
+
+.virtue:nth-child(1){
+  border-top:6px solid var(--pink);
+}
+
+.virtue:nth-child(2){
+  border-top:6px solid var(--green);
+}
+
+.virtue:nth-child(3){
+  border-top:6px solid var(--yellow);
+}
+
+.virtue p{
+  font-size:clamp(
+    .9rem,
+    1.2vw,
+    1.05rem
+  );
+
+  line-height:1.8;
+
+  color:var(--brown);
+}
+
+/* =========================
+   MEMBERS
+========================= */
+
+.member-list{
+  position:relative;
+  z-index:5;
+
+  margin-top:2.5rem;
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  justify-content:center;
+
+  gap:1rem;
+
+  max-width:900px;
+}
+
+.member{
+  display:flex;
+
+  align-items:center;
+
+  gap:.7rem;
+
+  font-family:'Mali',sans-serif;
+
+  font-weight:600;
+
+  font-size:clamp(
+    .95rem,
+    1.5vw,
+    1.2rem
+  );
+
+  background:rgba(255,255,255,.88);
+
+  border:2px solid var(--green);
+
+  border-radius:999px;
+
+  padding:.65rem 1.3rem .65rem .65rem;
+
+  color:var(--brown-dark);
+
+  box-shadow:
+    0 8px 18px var(--shadow-soft);
+
+  animation:jiggle 2.4s ease-in-out infinite;
+}
+
+.member:nth-child(1){
+  animation-delay:0s;
+  border-color:var(--pink);
+}
+
+.member:nth-child(2){
+  animation-delay:.15s;
+  border-color:var(--green);
+}
+
+.member:nth-child(3){
+  animation-delay:.3s;
+  border-color:var(--yellow);
+}
+
+.member:nth-child(4){
+  animation-delay:.45s;
+  border-color:var(--pink);
+}
+
+.member:nth-child(5){
+  animation-delay:.6s;
+  border-color:var(--green);
+}
+
+.member-num{
+  font-family:'Prompt',sans-serif;
+
+  font-size:.78rem;
+
+  font-weight:700;
+
+  color:var(--brown-dark);
+
+  background:var(--yellow);
+
+  border-radius:50%;
+
+  width:34px;
+  height:34px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  flex-shrink:0;
+}
+
+@keyframes jiggle{
+  0%,100%{
+    transform:rotate(-3deg) translateY(0);
+  }
+
+  25%{
+    transform:rotate(3deg) translateY(-6px);
+  }
+
+  50%{
+    transform:rotate(-2deg) translateY(0);
+  }
+
+  75%{
+    transform:rotate(2deg) translateY(-3px);
+  }
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.nav-ui{
+  position:fixed;
+
+  bottom:1.3rem;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  display:flex;
+
+  align-items:center;
+
+  gap:1rem;
+
+  z-index:200;
+
+  background:rgba(255,253,248,.9);
+
+  border:2px solid rgba(200,169,155,.3);
+
+  padding:.45rem .7rem;
+
+  border-radius:999px;
+
+  box-shadow:
+    0 8px 25px var(--shadow-soft);
+
+  backdrop-filter:blur(10px);
+}
+
+.nav-btn{
+  width:42px;
+  height:42px;
+
+  border-radius:50%;
+
+  border:2px solid var(--brown-light);
+
+  background:var(--paper);
+
+  color:var(--brown-dark);
+
+  font-size:1.1rem;
+
+  cursor:pointer;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    border-color .2s ease;
+}
+
+.nav-btn:hover{
+  transform:scale(1.08);
+
+  background:var(--pink);
+
+  border-color:var(--pink-deep);
+}
+
+.dots{
+  display:flex;
+
+  gap:.4rem;
+
+  max-width:150px;
+
+  overflow:hidden;
+}
+
+.dot{
+  width:7px;
+  height:7px;
+
+  flex-shrink:0;
+
+  border-radius:50%;
+
+  background:rgba(154,118,103,.3);
+
+  cursor:pointer;
+
+  transition:all .25s ease;
+}
+
+.dot.active{
+  background:var(--pink-deep);
+
+  width:20px;
+
+  border-radius:4px;
+}
+
+.slide-count{
+  position:fixed;
+
+  top:1rem;
+  right:1.5rem;
+
+  z-index:200;
+
+  font-family:'Mali',sans-serif;
+
+  font-weight:700;
+
+  color:var(--brown);
+
+  font-size:.9rem;
+
+  background:rgba(255,253,248,.85);
+
+  border:1px solid rgba(200,169,155,.3);
+
+  padding:.3rem .7rem;
+
+  border-radius:999px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+  .slide{
+    padding:
+      1.4rem
+      .9rem
+      5.8rem;
+  }
+
+  .slide-inner{
+    max-height:calc(100vh - 7rem);
+
+    overflow-y:auto;
+
+    padding:
+      1.8rem
+      1.2rem;
+
+    border-radius:25px;
+  }
+
+  .slide-inner.split{
+    gap:1.1rem;
+  }
+
+  .col-text h2{
+    font-size:clamp(
+      1.7rem,
+      7vw,
+      2.35rem
+    );
+  }
+
+  .col-text p{
+    font-size:1.05rem;
+    line-height:1.85;
+  }
+
+  .col-art canvas{
+    max-width:390px;
+  }
+
+  .mega{
+    font-size:clamp(
+      3.3rem,
+      16vw,
+      5rem
+    );
+  }
+
+  .mega.small{
+    font-size:clamp(
+      2rem,
+      10vw,
+      3rem
+    );
+  }
+
+  .lede{
+    font-size:1rem;
+  }
+
+  .chip{
+    font-size:.9rem;
+
+    padding:.65rem .95rem;
+  }
+
+  .member{
+    width:100%;
+
+    justify-content:flex-start;
+
+    font-size:1rem;
+  }
+
+  .virtues{
+    margin-top:1.5rem;
+  }
+
+  .nav-ui{
+    bottom:.7rem;
+
+    gap:.6rem;
+
+    padding:.35rem .55rem;
+  }
+
+  .nav-btn{
+    width:40px;
+    height:40px;
+  }
+
+  .dots{
+    max-width:90px;
+  }
+
+  .slide-count{
+    top:.7rem;
+    right:.7rem;
+  }
+}
+
+/* =========================
+   IPAD / TABLET
+========================= */
+
+@media(min-width:701px) and (max-width:1200px){
+
+  .slide{
+    padding:
+      2rem
+      2rem
+      6rem;
+  }
+
+  .slide-inner{
+    max-width:1100px;
+
+    padding:
+      2.5rem
+      2rem;
+  }
+
+  .col-text h2{
+    font-size:clamp(
+      2rem,
+      4vw,
+      3rem
+    );
+  }
+
+  .col-text p{
+    font-size:1.15rem;
+    line-height:1.9;
+  }
+
+  .col-art canvas{
+    max-width:500px;
+  }
+
+  .chip{
+    font-size:1rem;
+    padding:.75rem 1.2rem;
+  }
+}
+
+/* =========================
+   IPAD LANDSCAPE
+   NAV MOVES TO RIGHT
+========================= */
+
+@media(
+  min-width:900px
+) and (
+  orientation:landscape
+) and (
+  max-height:800px
+){
+
+  .slide{
+    padding:
+      1.3rem
+      6.2rem
+      1.3rem
+      1.5rem;
+  }
+
+  .slide-inner{
+    max-height:calc(100vh - 2.6rem);
+
+    padding:
+      1.6rem
+      2rem;
+  }
+
+  .col-text h2{
+    font-size:clamp(
+      1.8rem,
+      3vw,
+      2.5rem
+    );
+  }
+
+  .col-text p{
+    font-size:1rem;
+    line-height:1.65;
+  }
+
+  .col-art{
+    gap:.7rem;
+  }
+
+  .col-art canvas{
+    max-width:min(42vh,430px);
+  }
+
+  /*
+    สำคัญ:
+    ย้ายปุ่มนำทางไปขวา
+    ไม่ให้ทับปุ่มประจุ / ปล่อยอนุภาค
+  */
+
+  .nav-ui{
+    left:auto;
+    right:.7rem;
+
+    top:50%;
+    bottom:auto;
+
+    transform:translateY(-50%);
+
+    flex-direction:column;
+
+    border-radius:24px;
+
+    padding:.55rem .4rem;
+
+    gap:.55rem;
+  }
+
+  .dots{
+    flex-direction:column;
+    max-height:100px;
+    max-width:none;
+  }
+
+  .dot.active{
+    width:7px;
+    height:20px;
+  }
+
+  .slide-count{
+    top:.6rem;
+    right:3rem;
+  }
+}
+
+/* =========================
+   LARGE DESKTOP
+========================= */
+
+@media(min-width:1400px){
+
+  .slide{
+    padding:4rem;
+  }
+
+  .slide-inner{
+    max-width:1450px;
+
+    padding:4rem 5rem;
+  }
+
+  .col-text h2{
+    font-size:3.1rem;
+  }
+
+  .col-text p{
+    font-size:1.25rem;
+  }
+
+  .col-art canvas{
+    max-width:600px;
+  }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  .slide{
+    transition:opacity .3s ease;
+
+    clip-path:none !important;
+  }
+
+  .bolt-svg,
+  .bolt-glow,
+  .member{
+    animation:none;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<canvas id="dust"></canvas>
+
+<div class="progress">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- =====================================================
+     0 : TITLE
+===================================================== -->
+
+<section class="slide" data-anim="title">
+
+  <div class="hero-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="decor star d1">𓊆ྀི❤︎𓊇ྀི</div>
+  <div class="decor plus d2">⋆˚꩜｡ּ</div>
+  <div class="decor minus d3">𓏲๋࣭࣪˖🪼.ᐟ</div>
+  <div class="decor dot d4">˚⊱🪷⊰˚</div>
+  <div class="decor leaf d5">ㅤ♡ྀི ₊</div>
+  <div class="decor flower d6">✿</div>
+
+  <div class="slide-inner center">
+
+```
+<span class="eyebrow">
+  บทที่ 2 · แรงในธรรมชาติ
+</span>
+
+<h1 class="mega">
+  แรงไฟฟ้า
+</h1>
+
+<p class="lede">
+  จากแท่งอำพันในกรีกโบราณ
+  สู่สนามไฟฟ้าที่มองไม่เห็น
+</p>
+
+<div class="bolt-stage">
+
+  <div class="bolt-glow"></div>
+
+  <svg
+    class="bolt-svg"
+    viewBox="0 0 70 100"
+    fill="none"
+  >
+    <path
+      d="M40 2 L10 55 L32 55 L26 98 L62 42 L38 42 Z"
+      fill="#D889A7"
+    />
+
+    <path
+      d="M40 2 L10 55 L32 55 L26 98 L62 42 L38 42 Z"
+      fill="none"
+      stroke="#F8E5A8"
+      stroke-width="3"
+      stroke-linejoin="round"
+    />
+  </svg>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     1 : HISTORY
+===================================================== -->
+
+<section class="slide" data-anim="history">
+
+  <div class="decor star d1">𓏲 ๋࣭ ࣪ ˖🎐</div>
+  <div class="decor plus d2">>ᴗ<</div>
+  <div class="decor leaf d3">𓏵‧₊˚ ┊</div>
+  <div class="decor dot d4">𖾕𖾝꙼ᩚ𛲕𖾟</div>
+
+  <div class="slide-inner split">
+
+```
+<div class="col-text">
+
+  <div class="num-mark">2.2</div>
+
+  <span class="eyebrow">
+    ความเป็นมา
+  </span>
+
+  <h2>
+    อำพันที่ถูกถู
+    แล้วดูดฟางเบา ๆ
+  </h2>
+
+  <p>
+    ชาวกรีกโบราณสังเกตว่าแท่งอำพันที่ถูกถูด้วยผ้าขนสัตว์
+    สามารถดูดวัตถุเบา ๆ ได้
+    ต่อมาพบว่าแท่งแก้วและแท่งยางก็ทำแบบเดียวกัน —
+    นี่คือปรากฏการณ์แรกของ <b>แรงไฟฟ้า</b>
+  </p>
+
+</div>
+
+<div class="col-art">
+
+  <canvas
+    id="cvHistory"
+    width="600"
+    height="600"
+  ></canvas>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     2 : ELECTRIC FORCE
+===================================================== -->
+
+<section class="slide" data-anim="basic">
+
+  <div class="decor flower d1">✿</div>
+  <div class="decor minus d2">˚˖𓍢ִ໋🦢˚</div>
+  <div class="decor plus d3">಄</div>
+
+  <div class="slide-inner split">
+
+```
+<div class="col-text">
+
+  <div class="num-mark">
+    2.2.1 — I
+  </div>
+
+  <span class="eyebrow">
+    แรงไฟฟ้า (Electric Force)
+  </span>
+
+  <h2>
+    ผลัก หรือ ดึงดูด
+    ขึ้นอยู่กับชนิดประจุ
+  </h2>
+
+  <p>
+    ประจุชนิดเดียวกัน <b>ผลัก</b> กัน ·
+    ประจุต่างชนิดกัน <b>ดึงดูด</b> กัน —
+    ต่างจากแรงโน้มถ่วงที่ดึงดูดอย่างเดียว
+  </p>
+
+</div>
+
+<div class="col-art">
+
+  <canvas
+    id="cvForce"
+    width="600"
+    height="600"
+  ></canvas>
+
+  <div class="toggle-row">
+
+    <button
+      class="chip active"
+      data-mode="repel"
+    >
+      ประจุเหมือนกัน
+    </button>
+
+    <button
+      class="chip"
+      data-mode="attract"
+    >
+      ประจุต่างกัน
+    </button>
+
+  </div>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     3 : FACTORS
+===================================================== -->
+
+<section class="slide" data-anim="factors">
+
+  <div class="decor star d1"> ⋆. 𐙚</div>
+  <div class="decor leaf d2">-`♡´-</div>
+  <div class="decor plus d4">˚˖𓍢ִ໋❀</div>
+
+  <div class="slide-inner split reverse">
+
+```
+<div class="col-art">
+
+  <canvas
+    id="cvFactors"
+    width="600"
+    height="600"
+  ></canvas>
+
+  <div class="slider-row">
+
+    <label>
+      ระยะห่าง
+
+      <input
+        type="range"
+        id="distSlider"
+        min="30"
+        max="100"
+        value="65"
+      >
+
+    </label>
+
+  </div>
+
+</div>
+
+<div class="col-text">
+
+  <div class="num-mark">
+    2.2.1 — II
+  </div>
+
+  <span class="eyebrow">
+    ปัจจัยที่มีผลต่อแรงไฟฟ้า
+  </span>
+
+  <h2>
+    ประจุมากขึ้น แรงมากขึ้น
+    · ระยะห่างมากขึ้น แรงลดลง
+  </h2>
+
+  <p>
+    ลองลากแถบเลื่อนเพื่อดูว่า
+    ความแรงของแรงไฟฟ้า
+    (ความหนาของเส้น)
+    เปลี่ยนไปอย่างไร
+    เมื่อระยะห่างเปลี่ยน
+  </p>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     4 : ATOM
+===================================================== -->
+
+<section class="slide" data-anim="atom">
+
+  <div class="decor flower d1">✿</div>
+  <div class="decor plus d2">𓏵</div>
+  <div class="decor minus d3">૮₍˃̵֊ ˂̵ ₎ა</div>
+
+  <div class="slide-inner split">
+
+```
+<div class="col-text">
+
+  <div class="num-mark">
+    2.2.1 — III
+  </div>
+
+  <span class="eyebrow">
+    อนุภาคย่อยของอะตอม
+  </span>
+
+  <h2>
+    โปรตอน นิวตรอน
+    อิเล็กตรอน
+  </h2>
+
+  <p>
+    <b>โปรตอน</b> (+)
+    และ <b>นิวตรอน</b> (เป็นกลาง)
+    อยู่ในนิวเคลียส
+    ส่วน <b>อิเล็กตรอน</b> (−)
+    เคลื่อนที่อยู่รอบนอก
+  </p>
+
+</div>
+
+<div class="col-art">
+
+  <canvas
+    id="cvAtom"
+    width="600"
+    height="600"
+  ></canvas>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     5 : CHARGE STATE
+===================================================== -->
+
+<section class="slide" data-anim="charge-state">
+
+  <div class="decor star d1">愛</div>
+  <div class="decor dot d2">꒰ঌ ໒꒱</div>
+  <div class="decor leaf d3">(˶˃⤙ ˂˶) </div>
+
+  <div class="slide-inner split reverse">
+
+```
+<div class="col-art">
+
+  <canvas
+    id="cvChargeState"
+    width="600"
+    height="600"
+  ></canvas>
+
+  <div class="toggle-row">
+
+    <button
+      class="chip"
+      data-cs="lose"
+    >
+      สูญเสียอิเล็กตรอน
+    </button>
+
+    <button
+      class="chip active"
+      data-cs="neutral"
+    >
+      ปกติ
+    </button>
+
+    <button
+      class="chip"
+      data-cs="gain"
+    >
+      ได้รับอิเล็กตรอน
+    </button>
+
+  </div>
+
+</div>
+
+<div class="col-text">
+
+  <div class="num-mark">
+    2.2.1 — IV
+  </div>
+
+  <span class="eyebrow">
+    สภาพทางไฟฟ้าของวัตถุ
+  </span>
+
+  <h2>
+    สูญเสียอิเล็กตรอน
+    = ประจุบวก
+  </h2>
+
+  <p>
+    วัตถุปกติมีโปรตอนเท่ากับอิเล็กตรอน
+    (เป็นกลาง)
+    หากสูญเสียอิเล็กตรอนจะกลายเป็นบวก
+    หากได้รับเพิ่มจะกลายเป็นลบ
+  </p>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     6 : ELECTRIC FIELD
+===================================================== -->
+
+<section class="slide" data-anim="field">
+
+  <div class="decor plus d1">⊹ᡣ𐭩₊⋆</div>
+  <div class="decor minus d2">ꪆৎ</div>
+  <div class="decor flower d4">✿</div>
+
+  <div class="slide-inner split">
+
+```
+<div class="col-text">
+
+  <div class="num-mark">
+    2.2.1 — V
+  </div>
+
+  <span class="eyebrow">
+    สนามไฟฟ้า (Electric Field)
+  </span>
+
+  <h2>
+    บริเวณรอบประจุ
+    ที่ส่งแรงออกไปได้
+  </h2>
+
+  <p>
+    เส้นสนามไฟฟ้าพุ่ง<b>ออก</b>
+    จากประจุบวก
+    และพุ่ง<b>เข้า</b>หาประจุลบ
+    ทิศทางคือทิศที่ประจุทดสอบ
+    +q จะถูกผลัก
+  </p>
+
+</div>
+
+<div class="col-art">
+
+  <canvas
+    id="cvField"
+    width="600"
+    height="600"
+  ></canvas>
+
+  <div class="toggle-row">
+
+    <button
+      class="chip active"
+      data-charge="pos"
+    >
+      ประจุบวก
+    </button>
+
+    <button
+      class="chip"
+      data-charge="neg"
+    >
+      ประจุลบ
+    </button>
+
+  </div>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     7 : FIELD PAIR
+===================================================== -->
+
+<section class="slide" data-anim="field-pair">
+
+  <div class="decor star d1">ᯓ★</div>
+  <div class="decor leaf d2">˖ ݁♬⋆.˚𝄞</div>
+  <div class="decor plus d3">𐙚</div>
+  <div class="decor minus d4">⭑.ᐟ</div>
+
+  <div class="slide-inner split reverse">
+
+```
+<div class="col-art">
+
+  <canvas
+    id="cvFieldPair"
+    width="600"
+    height="600"
+  ></canvas>
+
+  <div class="toggle-row">
+
+    <button
+      class="chip active"
+      data-pair="diff"
+    >
+      ต่างชนิด (ดึงดูด)
+    </button>
+
+    <button
+      class="chip"
+      data-pair="same"
+    >
+      ชนิดเดียวกัน (ผลัก)
+    </button>
+
+  </div>
+
+</div>
+
+<div class="col-text">
+
+  <div class="num-mark">
+    2.2.1 — VI
+  </div>
+
+  <span class="eyebrow">
+    เส้นสนามไฟฟ้าของคู่ประจุ
+  </span>
+
+  <h2>
+    เส้นโค้งเล่าเรื่อง
+    แรงที่มองไม่เห็น
+  </h2>
+
+  <p>
+    ประจุต่างชนิด
+    เส้นสนามลู่เข้าหากัน ·
+    ประจุชนิดเดียวกัน
+    เส้นสนามเบนออกจากกัน
+  </p>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     8 : PARABOLA
+===================================================== -->
+
+<section class="slide" data-anim="parabola">
+
+  <div class="decor star d1">⋆｡𖦹 ˚ 𓇼 ˚｡⋆</div>
+  <div class="decor plus d2"> ⋆˚꩜｡</div>
+  <div class="decor minus d3">݁ ˖Ი𐑼⋆</div>
+
+  <div class="slide-inner split">
+
+```
+<div class="col-text">
+
+  <div class="num-mark">
+    2.2.2
+  </div>
+
+  <span class="eyebrow">
+    แรงไฟฟ้าต่ออนุภาคที่มีประจุ
+  </span>
+
+  <h2>
+    วิ่งเข้าสนามด้วยความเร็วต้น
+    = โค้งพาราโบลา
+  </h2>
+
+  <p>
+    ประจุบวกเบนแบบพาราโบลาคว่ำ
+    (ตามสนาม)
+    ส่วนประจุลบเบนแบบพาราโบลาหงาย
+    (ทวนสนาม)
+    — คล้ายการเคลื่อนที่แบบโพรเจกไทล์
+  </p>
+
+</div>
+
+<div class="col-art">
+
+  <canvas
+    id="cvParabola"
+    width="600"
+    height="600"
+  ></canvas>
+
+  <div class="toggle-row">
+
+    <button
+      class="chip"
+      id="btnFire"
+    >
+      ▶ ปล่อยอนุภาค
+    </button>
+
+  </div>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     9 : COPIER
+===================================================== -->
+
+<section class="slide" data-anim="copier">
+
+  <div class="decor flower d1">✿</div>
+  <div class="decor leaf d2">🎹𝄞⨾𓍢ִ໋</div>
+  <div class="decor star d4">૮₍ ´ ꒳ `₎ა</div>
+
+  <div class="slide-inner split reverse">
+
+```
+<div class="col-art">
+
+  <canvas
+    id="cvCopier"
+    width="600"
+    height="600"
+  ></canvas>
+
+</div>
+
+<div class="col-text">
+
+  <div class="num-mark">
+    2.2.3 — I
+  </div>
+
+  <span class="eyebrow">
+    ประโยชน์ของแรงไฟฟ้า
+  </span>
+
+  <h2>
+    เครื่องถ่ายเอกสาร
+  </h2>
+
+  <p>
+    ลูกกลิ้งมีประจุบวก
+    แสงที่สะท้อนจากบริเวณสีขาว
+    ทำให้ประจุหายไป
+    เหลือประจุบวกเฉพาะลายเส้น
+    ผงหมึกประจุลบจึงเกาะติดตามลาย
+    แล้วถูกกดลงกระดาษ
+    และอบด้วยความร้อน
+  </p>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     10 : LIGHTNING
+===================================================== -->
+
+<section class="slide" data-anim="lightning">
+
+  <div class="decor plus d1">‪‪❤︎‬</div>
+  <div class="decor star d2">✦</div>
+  <div class="decor minus d3">﹒⋆</div>
+
+  <div class="slide-inner split">
+
+```
+<div class="col-text">
+
+  <div class="num-mark">
+    2.2.3 — II
+  </div>
+
+  <span class="eyebrow">
+    ปรากฏการณ์ทางธรรมชาติ
+  </span>
+
+  <h2>
+    ฟ้าแลบ และ ฟ้าผ่า
+  </h2>
+
+  <p>
+    การเสียดสีของหยดน้ำและฝุ่น
+    ในก้อนเมฆสะสมประจุ
+    จนเกิดความต่างศักย์สูงมาก
+    แล้วถ่ายโอนประจุผ่านอากาศ —
+    <b>ฟ้าแลบ</b> คือเมฆสู่เมฆ
+    ส่วน <b>ฟ้าผ่า</b>
+    คือเมฆสู่พื้นดิน
+  </p>
+
+</div>
+
+<div class="col-art">
+
+  <canvas
+    id="cvLightning"
+    width="600"
+    height="600"
+  ></canvas>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     11 : LIGHTNING ROD
+===================================================== -->
+
+<section class="slide" data-anim="rod">
+
+  <div class="decor leaf d1"></div>
+  <div class="decor flower d2">✿</div>
+  <div class="decor plus d4">+</div>
+
+  <div class="slide-inner split reverse">
+
+    
+<div class="col-art">
+
+  <canvas
+    id="cvRod"
+    width="600"
+    height="600"
+  ></canvas>
+
+</div>
+
+<div class="col-text">
+
+  <div class="num-mark">
+    2.2.3 — III
+  </div>
+
+  <span class="eyebrow">
+    การป้องกัน
+  </span>
+
+  <h2>
+    สายล่อฟ้า
+    (Lightning Rod)
+  </h2>
+
+  <p>
+    ปลายแหลมบนยอดอาคาร
+    รวบรวมประจุจากฟ้าผ่า
+    แล้วนำลงสู่พื้นดิน
+    ผ่านสายไฟและแผ่นโลหะที่ฝังดิน
+    ป้องกันความเสียหายต่อตัวอาคาร
+  </p>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     12 : SUMMARY
+===================================================== -->
+
+<section class="slide" data-anim="summary">
+
+  <div class="decor star d1">（´∇｀''）</div>
+  <div class="decor flower d2">✿</div>
+  <div class="decor plus d3">ᢉ𐭩⋆.˚</div>
+  <div class="decor minus d4">٠࣪⭑</div>
+  <div class="decor leaf d5">ᶻ 𝗓 𐰁</div>
+
+  <div class="slide-inner center">
+
+```
+<span class="eyebrow">
+  สรุป
+</span>
+
+<h2 class="mega small">
+  แรงที่มองไม่เห็น
+  แต่กำหนดโลกรอบตัวเรา
+</h2>
+
+<div class="virtues">
+
+  <div class="virtue">
+
+    <div class="num-mark">
+      I.
+    </div>
+
+    <p>
+      ประจุเหมือนกันผลัก
+      ต่างกันดึงดูด
+    </p>
+
+  </div>
+
+  <div class="virtue">
+
+    <div class="num-mark">
+      II.
+    </div>
+
+    <p>
+      สนามไฟฟ้าคือแรงต่อหน่วยประจุ
+      มีทิศทาง
+    </p>
+
+  </div>
+
+  <div class="virtue">
+
+    <div class="num-mark">
+      III.
+    </div>
+
+    <p>
+      ตั้งแต่เครื่องถ่ายเอกสารถึงสายฟ้า
+      ล้วนอธิบายได้ด้วยหลักเดียวกัน
+    </p>
+
+  </div>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- =====================================================
+     13 : MEMBERS
+===================================================== -->
+
+<section class="slide" data-anim="members">
+
+  <div class="hero-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="decor star d1">⋆˚꩜｡</div>
+  <div class="decor flower d2">✿</div>
+  <div class="decor plus d3">˙⋆✮</div>
+  <div class="decor minus d4"> ˙𐃷˙</div>
+  <div class="decor leaf d5">.☘︎ ݁˖</div>
+  <div class="decor dot d6">𓆝 𓆟 𓆞</div>
+
+  <div class="slide-inner center">
+
+```
+<span class="eyebrow">
+  จัดทำโดย
+</span>
+
+<h2 class="mega small">
+  รายชื่อสมาชิก
+</h2>
+
+<div class="member-list">
+
+  <div class="member">
+    <span class="member-num">04</span>
+    ศศิธร วงษ์สิน
+  </div>
+
+  <div class="member">
+    <span class="member-num">05</span>
+    ธันรดา คำแสน
+  </div>
+
+  <div class="member">
+    <span class="member-num">25</span>
+    ณิชตา แก้วกัณตา
+  </div>
+
+  <div class="member">
+    <span class="member-num">32</span>
+    ปุณณภา เชียงกา
+  </div>
+
+  <div class="member">
+    <span class="member-num">33</span>
+    ภวิษย์พร เชิดเชื้อ
+  </div>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+</div>
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<div class="nav-ui">
+
+<button
+class=“nav-btn”
+id=“prevBtn”
+aria-label=“ก่อนหน้า”
+
+
+
+```
+←
+```
+
+  </button>
+
+  <div
+    class="dots"
+    id="dots"
+  ></div>
+
+<button
+class=“nav-btn”
+id=“nextBtn”
+aria-label=“ถัดไป”
+
+
+
+```
+→
+```
+
+  </button>
+
+</div>
+
+<div
+  class="slide-count"
+  id="slideCount"
+></div>
+
+<script>
+
+/* =====================================================
+   PALETTE
+===================================================== */
+
+const C = {
+
+  bg:'#FFF9F0',
+
+  ink:'#5D443B',
+
+  oxblood:'#9A7667',
+
+  oxbloodDark:'#5D443B',
+
+  gold:'#D889A7',
+
+  goldBright:'#D889A7',
+
+  verdigris:'#B9DEC8',
+
+  verdigrisDark:'#6E9E7E'
+
+};
+
+const reduceMotion =
+  window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+
+
+/* =====================================================
+   SLIDE NAVIGATION
+===================================================== */
+
+const slides =
+  Array.from(
+    document.querySelectorAll('.slide')
+  );
+
+const dotsWrap =
+  document.getElementById('dots');
+
+const progressFill =
+  document.getElementById('progressFill');
+
+const slideCount =
+  document.getElementById('slideCount');
+
+let current = 0;
+
+let rafHandle = null;
+
+
+/* create dots */
+
+slides.forEach((s,i)=>{
+
+  const d =
+    document.createElement('div');
+
+  d.className = 'dot';
+
+  d.addEventListener(
+    'click',
+    ()=>go(i)
+  );
+
+  dotsWrap.appendChild(d);
+
+});
+
+const dots =
+  Array.from(dotsWrap.children);
+
+
+/* go to slide */
+
+function go(i,isInit){
+
+  if(
+    i < 0 ||
+    i >= slides.length
+  ){
+    return;
+  }
+
+  if(
+    i === current &&
+    !isInit
+  ){
+    return;
+  }
+
+  if(
+    rafHandle
+  ){
+    cancelAnimationFrame(
+      rafHandle
+    );
+  }
+
+  slides[current]
+    .classList
+    .remove('active');
+
+  current =
+    Math.max(
+      0,
+      Math.min(
+        slides.length - 1,
+        i
+      )
+    );
+
+  slides[current]
+    .classList
+    .add('active');
+
+  dots.forEach(
+    (d,idx)=>{
+      d.classList.toggle(
+        'active',
+        idx === current
+      );
+    }
+  );
+
+  progressFill.style.width =
+    (
+      (current + 1) /
+      slides.length *
+      100
+    ) + '%';
+
+  slideCount.textContent =
+    (current + 1) +
+    ' / ' +
+    slides.length;
+
+  startAnim(
+    slides[current]
+      .dataset
+      .anim
+  );
+}
+
+
+/* buttons */
+
+document
+  .getElementById('nextBtn')
+  .addEventListener(
+    'click',
+    ()=>go(current + 1)
+  );
+
+document
+  .getElementById('prevBtn')
+  .addEventListener(
+    'click',
+    ()=>go(current - 1)
+  );
+
+
+/* keyboard */
+
+window.addEventListener(
+  'keydown',
+  e=>{
+
+    if(
+      e.key === 'ArrowRight' ||
+      e.key === ' '
+    ){
+      e.preventDefault();
+      go(current + 1);
+    }
+
+    if(
+      e.key === 'ArrowLeft'
+    ){
+      e.preventDefault();
+      go(current - 1);
+    }
+
+  }
+);
+
+
+/* touch */
+
+let touchX = null;
+
+window.addEventListener(
+  'touchstart',
+  e=>{
+    touchX =
+      e.touches[0].clientX;
+  }
+);
+
+window.addEventListener(
+  'touchend',
+  e=>{
+
+    if(touchX === null){
+      return;
+    }
+
+    const dx =
+      e.changedTouches[0].clientX -
+      touchX;
+
+    if(dx < -40){
+      go(current + 1);
+    }
+
+    if(dx > 40){
+      go(current - 1);
+    }
+
+    touchX = null;
+  }
+);
+
+
+/* =====================================================
+   AMBIENT DUST
+===================================================== */
+
+(function dust(){
+
+  const canvas =
+    document.getElementById('dust');
+
+  const ctx =
+    canvas.getContext('2d');
+
+  let W,H,particles=[];
+
+  function resize(){
+
+    W =
+      canvas.width =
+      innerWidth;
+
+    H =
+      canvas.height =
+      innerHeight;
+
+  }
+
+  resize();
+
+  addEventListener(
+    'resize',
+    resize
+  );
+
+  const n =
+    reduceMotion
+      ? 0
+      : 36;
+
+  particles =
+    Array.from(
+      {length:n},
+      ()=>({
+
+        x:Math.random()*W,
+
+        y:Math.random()*H,
+
+        r:
+          Math.random()*1.4+.3,
+
+        speed:
+          Math.random()*.25+.06,
+
+        alpha:
+          Math.random()*.4+.1
+
+      })
+    );
+
+  function tick(){
+
+    ctx.clearRect(
+      0,
+      0,
+      W,
+      H
+    );
+
+    ctx.fillStyle =
+      '#D889A7';
+
+    particles.forEach(
+      p=>{
+
+        ctx.globalAlpha =
+          p.alpha;
+
+        ctx.beginPath();
+
+        ctx.arc(
+          p.x,
+          p.y,
+          p.r,
+          0,
+          Math.PI*2
+        );
+
+        ctx.fill();
+
+        p.y -= p.speed;
+
+        if(p.y < -5){
+
+          p.y = H + 5;
+
+          p.x =
+            Math.random()*W;
+
+        }
+
+      }
+    );
+
+    ctx.globalAlpha = 1;
+
+    if(n){
+
+      requestAnimationFrame(
+        tick
+      );
+
+    }
+
+  }
+
+  requestAnimationFrame(
+    tick
+  );
+
+})();
+
+
+/* =====================================================
+   CANVAS SETUP
+===================================================== */
+
+function setupCanvas(id){
+
+  const cv =
+    document.getElementById(id);
+
+  if(!cv){
+    return null;
+  }
+
+  const dpr =
+    Math.min(
+      window.devicePixelRatio || 1,
+      2
+    );
+
+  const size =
+    cv.getBoundingClientRect()
+      .width || 420;
+
+  cv.width =
+    size * dpr;
+
+  cv.height =
+    size * dpr;
+
+  const ctx =
+    cv.getContext('2d');
+
+  ctx.scale(
+    dpr,
+    dpr
+  );
+
+  return {
+    cv,
+    ctx,
+    size
+  };
+
+}
+
+
+/* =====================================================
+   CHARGE
+===================================================== */
+
+function drawCharge(
+  ctx,
+  x,
+  y,
+  r,
+  positive
+){
+
+  const grad =
+    ctx.createRadialGradient(
+      x-r*.3,
+      y-r*.3,
+      r*.1,
+      x,
+      y,
+      r
+    );
+
+  if(positive){
+
+    grad.addColorStop(
+      0,
+      '#F3B7CC'
+    );
+
+    grad.addColorStop(
+      1,
+      '#C97898'
+    );
+
+  }else{
+
+    grad.addColorStop(
+      0,
+      '#E7F6EC'
+    );
+
+    grad.addColorStop(
+      1,
+      '#78A98A'
+    );
+
+  }
+
+  ctx.beginPath();
+
+  ctx.arc(
+    x,
+    y,
+    r,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fillStyle =
+    grad;
+
+  ctx.fill();
+
+  ctx.strokeStyle =
+    '#FFFFFF';
+
+  ctx.lineWidth =
+    2;
+
+  ctx.stroke();
+
+  ctx.fillStyle =
+    '#FFFFFF';
+
+  ctx.font =
+    `700 ${r*.9}px Prompt, sans-serif`;
+
+  ctx.textAlign =
+    'center';
+
+  ctx.textBaseline =
+    'middle';
+
+  ctx.fillText(
+    positive ? '+' : '−',
+    x,
+    y+1
+  );
+
+}
+
+
+/* =====================================================
+   ARROW
+===================================================== */
+
+function arrow(
+  ctx,
+  x1,
+  y1,
+  x2,
+  y2,
+  color
+){
+
+  ctx.strokeStyle =
+    color;
+
+  ctx.fillStyle =
+    color;
+
+  ctx.lineWidth =
+    2;
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    x1,
+    y1
+  );
+
+  ctx.lineTo(
+    x2,
+    y2
+  );
+
+  ctx.stroke();
+
+  const ang =
+    Math.atan2(
+      y2-y1,
+      x2-x1
+    );
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    x2,
+    y2
+  );
+
+  ctx.lineTo(
+    x2 -
+      9 *
+      Math.cos(
+        ang-.4
+      ),
+    y2 -
+      9 *
+      Math.sin(
+        ang-.4
+      )
+  );
+
+  ctx.lineTo(
+    x2 -
+      9 *
+      Math.cos(
+        ang+.4
+      ),
+    y2 -
+      9 *
+      Math.sin(
+        ang+.4
+      )
+  );
+
+  ctx.closePath();
+
+  ctx.fill();
+
+}
+
+
+/* =====================================================
+   ANIMATIONS
+===================================================== */
+
+const anims = {};
+
+
+/* =========================
+   HISTORY
+========================= */
+
+anims.history = ()=>{
+
+  const s =
+    setupCanvas(
+      'cvHistory'
+    );
+
+  if(!s){
+    return;
+  }
+
+  const {
+    ctx,
+    size
+  } = s;
+
+  let t = 0;
+
+  function frame(){
+
+    t += .02;
+
+    ctx.clearRect(
+      0,
+      0,
+      size,
+      size
+    );
+
+    const cx =
+      size/2;
+
+    const cy =
+      size/2;
+
+
+    /* amber */
+
+    ctx.save();
+
+    ctx.translate(
+      cx,
+      cy
+    );
+
+    ctx.rotate(-.15);
+
+    const grad =
+      ctx.createLinearGradient(
+        -90,
+        0,
+        90,
+        0
+      );
+
+    grad.addColorStop(
+      0,
+      '#B88457'
+    );
+
+    grad.addColorStop(
+      .5,
+      '#E6BE94'
+    );
+
+    grad.addColorStop(
+      1,
+      '#B88457'
+    );
+
+    ctx.fillStyle =
+      grad;
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+      -90,
+      -10,
+      180,
+      20,
+      10
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+
+
+    /* cloth */
+
+    const clothX =
+      cx +
+      Math.sin(t*3)*70;
+
+    ctx.fillStyle =
+      'rgba(255,255,255,.95)';
+
+    ctx.strokeStyle =
+      'rgba(110,158,126,.5)';
+
+    ctx.lineWidth =
+      1.5;
+
+    ctx.save();
+
+    ctx.translate(
+      clothX,
+      cy-4
+    );
+
+    ctx.rotate(-.15);
+
+    ctx.fillRect(
+      -22,
+      -16,
+      44,
+      32
+    );
+
+    ctx.strokeRect(
+      -22,
+      -16,
+      44,
+      32
+    );
+
+    ctx.restore();
+
+
+    /* attracted particles */
+
+    for(
+      let i=0;
+      i<8;
+      i++
+    ){
+
+      const bx =
+        cx +
+        90 +
+        Math.cos(
+          t*1.3+i
+        )*18;
+
+      const by =
+        cy +
+        Math.sin(
+          t*2+i
+        )*40;
+
+      ctx.fillStyle =
+        '#D889A7';
+
+      ctx.globalAlpha =
+        .65;
+
+      ctx.beginPath();
+
+      ctx.arc(
+        bx,
+        by,
+        2.5,
+        0,
+        Math.PI*2
+      );
+
+      ctx.fill();
+
+      ctx.globalAlpha =
+        1;
+
+    }
+
+    rafHandle =
+      requestAnimationFrame(
+        frame
+      );
+
+  }
+
+  frame();
+
+};
+
+
+/* =========================
+   BASIC FORCE
+========================= */
+
+anims.basic = ()=>{
+
+  const s =
+    setupCanvas(
+      'cvForce'
+    );
+
+  if(!s){
+    return;
+  }
+
+  const {
+    ctx,
+    size
+  } = s;
+
+  let t = 0;
+
+  let mode =
+    'repel';
+
+  document
+    .querySelectorAll(
+      '[data-mode]'
+    )
+    .forEach(
+      btn=>{
+
+        btn.onclick =
+          ()=>{
+
+            document
+              .querySelectorAll(
+                '[data-mode]'
+              )
+              .forEach(
+                b=>
+                  b.classList
+                    .remove(
+                      'active'
+                    )
+              );
+
+            btn.classList
+              .add('active');
+
+            mode =
+              btn.dataset.mode;
+
+          };
+
+      }
+    );
+
+
+  function frame(){
+
+    t += .03;
+
+    ctx.clearRect(
+      0,
+      0,
+      size,
+      size
+    );
+
+    const cy =
+      size/2;
+
+    const wobble =
+      Math.sin(t)*10;
+
+    const gap =
+      mode === 'repel'
+        ? 70+wobble
+        : 40-Math.abs(
+            wobble*.5
+          );
+
+    const cx =
+      size/2;
+
+    const x1 =
+      cx-gap;
+
+    const x2 =
+      cx+gap;
+
+
+    drawCharge(
+      ctx,
+      x1,
+      cy,
+      32,
+      true
+    );
+
+    drawCharge(
+      ctx,
+      x2,
+      cy,
+      32,
+      mode === 'repel'
+    );
+
+
+    if(mode === 'repel'){
+
+      arrow(
+        ctx,
+        x1-40,
+        cy,
+        x1-75,
+        cy,
+        '#D889A7'
+      );
+
+      arrow(
+        ctx,
+        x2+40,
+        cy,
+        x2+75,
+        cy,
+        '#D889A7'
+      );
+
+    }else{
+
+      arrow(
+        ctx,
+        x1+40,
+        cy,
+        x1+68,
+        cy,
+        '#6E9E7E'
+      );
+
+      arrow(
+        ctx,
+        x2-40,
+        cy,
+        x2-68,
+        cy,
+        '#6E9E7E'
+      );
+
+    }
+
+
+    rafHandle =
+      requestAnimationFrame(
+        frame
+      );
+
+  }
+
+  frame();
+
+};
+
+
+/* =========================
+   FACTORS
+========================= */
+
+anims.factors = ()=>{
+
+  const s =
+    setupCanvas(
+      'cvFactors'
+    );
+
+  if(!s){
+    return;
+  }
+
+  const {
+    ctx,
+    size
+  } = s;
+
+  const slider =
+    document.getElementById(
+      'distSlider'
+    );
+
+
+  function draw(){
+
+    ctx.clearRect(
+      0,
+      0,
+      size,
+      size
+    );
+
+    const cy =
+      size/2;
+
+    const cx =
+      size/2;
+
+    const gap =
+      parseInt(
+        slider.value,
+        10
+      );
+
+    const strength =
+      Math.max(
+        .15,
+        1 -
+        (gap-30)/70
+      );
+
+
+    drawCharge(
+      ctx,
+      cx-gap,
+      cy,
+      30,
+      true
+    );
+
+    drawCharge(
+      ctx,
+      cx+gap,
+      cy,
+      30,
+      false
+    );
+
+
+    ctx.strokeStyle =
+      '#D889A7';
+
+    ctx.lineWidth =
+      1 +
+      strength*8;
+
+    ctx.globalAlpha =
+      .5 +
+      strength*.5;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      cx-gap+34,
+      cy
+    );
+
+    ctx.lineTo(
+      cx+gap-34,
+      cy
+    );
+
+    ctx.stroke();
+
+    ctx.globalAlpha =
+      1;
+
+
+    ctx.fillStyle =
+      'rgba(93,68,59,.7)';
+
+    ctx.font =
+      '600 13px Prompt';
+
+    ctx.textAlign =
+      'center';
+
+    ctx.fillText(
+      'แรง ≈ ' +
+      Math.round(
+        strength*100
+      ) +
+      '%',
+      cx,
+      cy+60
+    );
+
+  }
+
+
+  slider.oninput =
+    draw;
+
+  draw();
+
+};
+
+
+/* =========================
+   ATOM
+========================= */
+
+anims.atom = ()=>{
+
+  const s =
+    setupCanvas(
+      'cvAtom'
+    );
+
+  if(!s){
+    return;
+  }
+
+  const {
+    ctx,
+    size
+  } = s;
+
+  let t = 0;
+
+  const cx =
+    size/2;
+
+  const cy =
+    size/2;
+
+
+  function frame(){
+
+    t += .015;
+
+    ctx.clearRect(
+      0,
+      0,
+      size,
+      size
+    );
+
+
+    const nucleus = [
+
+      [-8,-6,true],
+
+      [8,-6,true],
+
+      [0,8,false],
+
+      [-10,10,true],
+
+      [10,10,false]
+
+    ];
+
+
+    nucleus.forEach(
+      ([dx,dy,pos])=>
+        drawCharge(
+          ctx,
+          cx+dx,
+          cy+dy,
+          13,
+          pos
+        )
+    );
+
+
+    for(
+      let i=0;
+      i<3;
+      i++
+    ){
+
+      const rx =
+        70+i*32;
+
+      const ry =
+        40+i*20;
+
+      ctx.strokeStyle =
+        'rgba(110,158,126,.35)';
+
+      ctx.lineWidth =
+        1.5;
+
+      ctx.save();
+
+      ctx.translate(
+        cx,
+        cy
+      );
+
+      ctx.rotate(
+        i*.7
+      );
+
+      ctx.beginPath();
+
+      ctx.ellipse(
+        0,
+        0,
+        rx,
+        ry,
+        0,
+        0,
+        Math.PI*2
+      );
+
+      ctx.stroke();
+
+      const a =
+        t *
+        (1.2+i*.4);
+
+      const ex =
+        Math.cos(a)*rx;
+
+      const ey =
+        Math.sin(a)*ry;
+
+      drawCharge(
+        ctx,
+        ex,
+        ey,
+        8,
+        false
+      );
+
+      ctx.restore();
+
+    }
+
+
+    ctx.fillStyle =
+      'rgba(93,68,59,.65)';
+
+    ctx.font =
+      '600 12px Prompt';
+
+    ctx.textAlign =
+      'center';
+
+    ctx.fillText(
+      'นิวเคลียส (โปรตอน+นิวตรอน) · วงนอก = อิเล็กตรอน',
+      cx,
+      size-16
+    );
+
+
+    rafHandle =
+      requestAnimationFrame(
+        frame
+      );
+
+  }
+
+  frame();
+
+};
+
+
+/* =========================
+   CHARGE STATE
+========================= */
+
+anims['charge-state'] = ()=>{
+
+  const s =
+    setupCanvas(
+      'cvChargeState'
+    );
+
+  if(!s){
+    return;
+  }
+
+  const {
+    ctx,
+    size
+  } = s;
+
+  const cx =
+    size/2;
+
+  const cy =
+    size/2;
+
+  let state =
+    'neutral';
+
+
+  document
+    .querySelectorAll(
+      '[data-cs]'
+    )
+    .forEach(
+      btn=>{
+
+        btn.onclick =
+          ()=>{
+
+            document
+              .querySelectorAll(
+                '[data-cs]'
+              )
+              .forEach(
+                b=>
+                  b.classList
+                    .remove(
+                      'active'
+                    )
+              );
+
+            btn.classList
+              .add('active');
+
+            state =
+              btn.dataset.cs;
+
+            draw();
+
+          };
+
+      }
+    );
+
+
+  function draw(){
+
+    ctx.clearRect(
+      0,
+      0,
+      size,
+      size
+    );
+
+
+    const baseE = 4;
+
+    const eCount =
+      state === 'lose'
+        ? baseE-1
+        : state === 'gain'
+          ? baseE+1
+          : baseE;
+
+
+    const label =
+      state === 'lose'
+        ? 'ประจุสุทธิ = บวก'
+        : state === 'gain'
+          ? 'ประจุสุทธิ = ลบ'
+          : 'ประจุสุทธิ = 0 (เป็นกลาง)';
+
+
+    for(
+      let i=0;
+      i<baseE;
+      i++
+    ){
+
+      const a =
+        i/baseE *
+        Math.PI*2;
+
+      drawCharge(
+        ctx,
+        cx+
+          Math.cos(a)*16,
+        cy+
+          Math.sin(a)*16,
+        11,
+        true
+      );
+
+    }
+
+
+    for(
+      let i=0;
+      i<eCount;
+      i++
+    ){
+
+      const a =
+        i/
+        Math.max(
+          eCount,
+          1
+        ) *
+        Math.PI*2 +
+        .4;
+
+      drawCharge(
+        ctx,
+        cx+
+          Math.cos(a)*80,
+        cy+
+          Math.sin(a)*80,
+        12,
+        false
+      );
+
+    }
+
+
+    ctx.fillStyle =
+      state === 'neutral'
+        ? 'rgba(93,68,59,.7)'
+        : '#D889A7';
+
+    ctx.font =
+      '700 14px Prompt';
+
+    ctx.textAlign =
+      'center';
+
+    ctx.fillText(
+      label,
+      cx,
+      size-20
+    );
+
+  }
+
+  draw();
+
+};
+
+
+/* =========================
+   FIELD
+========================= */
+
+anims.field = ()=>{
+
+  const s =
+    setupCanvas(
+      'cvField'
+    );
+
+  if(!s){
+    return;
+  }
+
+  const {
+    ctx,
+    size
+  } = s;
+
+  const cx =
+    size/2;
+
+  const cy =
+    size/2;
+
+  let charge =
+    'pos';
+
+  let t = 0;
+
+
+  document
+    .querySelectorAll(
+      '[data-charge]'
+    )
+    .forEach(
+      btn=>{
+
+        btn.onclick =
+          ()=>{
+
+            document
+              .querySelectorAll(
+                '[data-charge]'
+              )
+              .forEach(
+                b=>
+                  b.classList
+                    .remove(
+                      'active'
+                    )
+              );
+
+            btn.classList
+              .add('active');
+
+            charge =
+              btn.dataset.charge;
+
+          };
+
+      }
+    );
+
+
+  function frame(){
+
+    t += .02;
+
+    ctx.clearRect(
+      0,
+      0,
+      size,
+      size
+    );
+
+
+    const n = 12;
+
+    const positive =
+      charge === 'pos';
+
+
+    for(
+      let i=0;
+      i<n;
+      i++
+    ){
+
+      const a =
+        i/n *
+        Math.PI*2;
+
+      const pulse =
+        (t*40)%106;
+
+      const rr =
+        positive
+          ? 44+pulse
+          : 150-pulse;
+
+      const rr2 =
+        positive
+          ? rr+14
+          : rr-14;
+
+
+      const x1 =
+        cx +
+        Math.cos(a)*rr;
+
+      const y1 =
+        cy +
+        Math.sin(a)*rr;
+
+      const x2 =
+        cx +
+        Math.cos(a)*rr2;
+
+      const y2 =
+        cy +
+        Math.sin(a)*rr2;
+
+
+      arrow(
+        ctx,
+        x1,
+        y1,
+        x2,
+        y2,
+        'rgba(110,158,126,.65)'
+      );
+
+    }
+
+
+    drawCharge(
+      ctx,
+      cx,
+      cy,
+      34,
+      positive
+    );
+
+
+    rafHandle =
+      requestAnimationFrame(
+        frame
+      );
+
+  }
+
+  frame();
+
+};
+
+
+/* =========================
+   FIELD PAIR
+========================= */
+
+anims['field-pair'] = ()=>{
+
+  const s =
+    setupCanvas(
+      'cvFieldPair'
+    );
+
+  if(!s){
+    return;
+  }
+
+  const {
+    ctx,
+    size
+  } = s;
+
+  const cx =
+    size/2;
+
+  const cy =
+    size/2;
+
+  let pair =
+    'diff';
+
+
+  document
+    .querySelectorAll(
+      '[data-pair]'
+    )
+    .forEach(
+      btn=>{
+
+        btn.onclick =
+          ()=>{
+
+            document
+              .querySelectorAll(
+                '[data-pair]'
+              )
+              .forEach(
+                b=>
+                  b.classList
+                    .remove(
+                      'active'
+                    )
+              );
+
+            btn.classList
+              .add('active');
+
+            pair =
+              btn.dataset.pair;
+
+            draw();
+
+          };
+
+      }
+    );
+
+
+  function draw(){
+
+    ctx.clearRect(
+      0,
+      0,
+      size,
+      size
+    );
+
+    const gap =
+      90;
+
+    const x1 =
+      cx-gap;
+
+    const x2 =
+      cx+gap;
+
+
+    const posA =
+      true;
+
+    const posB =
+      pair === 'diff'
+        ? false
+        : true;
+
+
+    ctx.strokeStyle =
+      'rgba(110,158,126,.55)';
+
+    ctx.lineWidth =
+      2;
+
+
+    for(
+      let i=-3;
+      i<=3;
+      i++
+    ){
+
+      if(i === 0){
+        continue;
+      }
+
+      const off =
+        i*18;
+
+      ctx.beginPath();
+
+      if(pair === 'diff'){
+
+        ctx.moveTo(
+          x1,
+          cy+off*.3
+        );
+
+        ctx.quadraticCurveTo(
+          cx,
+          cy+off*1.6,
+          x2,
+          cy+off*.3
+        );
+
+      }else{
+
+        ctx.moveTo(
+          x1+40,
+          cy+off
+        );
+
+        ctx.quadraticCurveTo(
+          cx,
+          cy+off*2.6,
+          x2-40,
+          cy+off
+        );
+
+      }
+
+      ctx.stroke();
+
+    }
+
+
+    drawCharge(
+      ctx,
+      x1,
+      cy,
+      30,
+      posA
+    );
+
+    drawCharge(
+      ctx,
+      x2,
+      cy,
+      30,
+      posB
+    );
+
+  }
+
+  draw();
+
+};
+
+
+/* =========================
+   PARABOLA
+========================= */
+
+anims.parabola = ()=>{
+
+  const s =
+    setupCanvas(
+      'cvParabola'
+    );
+
+  if(!s){
+    return;
+  }
+
+  const {
+    ctx,
+    size
+  } = s;
+
+  let particles = [];
+
+
+  document
+    .getElementById(
+      'btnFire'
+    )
+    .onclick =
+      ()=>{
+
+        particles.push({
+
+          x:40,
+
+          y:size/2,
+
+          vx:3.2,
+
+          vy:0,
+
+          positive:
+            particles.length%2===0,
+
+          trail:[]
+
+        });
+
+      };
+
+
+  function frame(){
+
+    ctx.clearRect(
+      0,
+      0,
+      size,
+      size
+    );
+
+
+    /* field arrows */
+
+    ctx.strokeStyle =
+      'rgba(110,158,126,.3)';
+
+    for(
+      let x=60;
+      x<size-40;
+      x+=60
+    ){
+
+      arrow(
+        ctx,
+        x,
+        30,
+        x,
+        60,
+        'rgba(110,158,126,.35)'
+      );
+
+    }
+
+
+    ctx.fillStyle =
+      'rgba(93,68,59,.55)';
+
+    ctx.font =
+      '600 12px Prompt';
+
+    ctx.textAlign =
+      'center';
+
+    ctx.fillText(
+      'สนามไฟฟ้าทิศลง',
+      size/2,
+      20
+    );
+
+
+    particles.forEach(
+      p=>{
+
+        const g =
+          p.positive
+            ? .12
+            : -.12;
+
+        p.vy += g;
+
+        p.x += p.vx;
+
+        p.y += p.vy;
+
+        p.trail.push({
+          x:p.x,
+          y:p.y
+        });
+
+        if(
+          p.trail.length > 60
+        ){
+
+          p.trail.shift();
+
+        }
+
+      }
+    );
+
+
+    particles =
+      particles.filter(
+        p=>
+          p.x<size+20 &&
+          p.y>-20 &&
+          p.y<size+20
+      );
+
+
+    particles.forEach(
+      p=>{
+
+        ctx.beginPath();
+
+        p.trail.forEach(
+          (pt,i)=>{
+
+            if(i === 0){
+
+              ctx.moveTo(
+                pt.x,
+                pt.y
+              );
+
+            }else{
+
+              ctx.lineTo(
+                pt.x,
+                pt.y
+              );
+
+            }
+
+          }
+        );
+
+
+        ctx.strokeStyle =
+          p.positive
+            ? 'rgba(216,137,167,.65)'
+            : 'rgba(110,158,126,.65)';
+
+        ctx.lineWidth = 2;
+
+        ctx.stroke();
+
+
+        drawCharge(
+          ctx,
+          p.x,
+          p.y,
+          12,
+          p.positive
+        );
+
+      }
+    );
+
+
+    rafHandle =
+      requestAnimationFrame(
+        frame
+      );
+
+  }
+
+  frame();
+
+};
+
+
+/* =========================
+   COPIER
+========================= */
+
+anims.copier = ()=>{
+
+  const s =
+    setupCanvas(
+      'cvCopier'
+    );
+
+  if(!s){
+    return;
+  }
+
+  const {
+    ctx,
+    size
+  } = s;
+
+  let t = 0;
+
+  const cx =
+    size/2;
+
+  const cy =
+    size/2;
+
+
+  function frame(){
+
+    t += .02;
+
+    ctx.clearRect(
+      0,
+      0,
+      size,
+      size
+    );
+
+
+    const stage =
+      Math.floor(t/2)%4;
+
+
+    /* drum */
+
+    ctx.save();
+
+    ctx.translate(
+      cx,
+      cy
+    );
+
+
+    ctx.strokeStyle =
+      '#D889A7';
+
+    ctx.lineWidth =
+      3;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      0,
+      0,
+      70,
+      0,
+      Math.PI*2
+    );
+
+    ctx.stroke();
+
+
+    ctx.fillStyle =
+      stage === 0
+        ? 'rgba(216,137,167,.45)'
+        : 'rgba(216,137,167,.13)';
+
+    ctx.beginPath();
+
+    ctx.arc(
+      0,
+      0,
+      70,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* light */
+
+    ctx.fillStyle =
+      stage === 1
+        ? '#F8E5A8'
+        : 'rgba(248,229,168,.4)';
+
+    ctx.beginPath();
+
+    ctx.arc(
+      -120,
+      -40,
+      14,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.font =
+      '600 11px Prompt';
+
+    ctx.fillStyle =
+      'rgba(93,68,59,.65)';
+
+    ctx.textAlign =
+      'center';
+
+    ctx.fillText(
+      'หลอดไฟ',
+      -120,
+      -60
+    );
+
+
+    /* toner */
+
+    ctx.fillStyle =
+      stage === 2
+        ? '#B9DEC8'
+        : 'rgba(185,222,200,.35)';
+
+    ctx.beginPath();
+
+    ctx.arc(
+      120,
+      -10,
+      14,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.fillText(
+      'ผงหมึก (−)',
+      120,
+      -32
+    );
+
+
+    /* paper */
+
+    ctx.fillStyle =
+      stage === 3
+        ? 'rgba(93,68,59,.9)'
+        : 'rgba(93,68,59,.35)';
+
+    ctx.fillRect(
+      -30,
+      90,
+      60,
+      50
+    );
+
+
+    ctx.fillStyle =
+      'rgba(93,68,59,.65)';
+
+    ctx.fillText(
+      'กระดาษ',
+      0,
+      160
+    );
+
+
+    ctx.restore();
+
+
+    const labels = [
+
+      '1. ประจุบวกทั่วดรัม',
+
+      '2. แสงลบประจุบริเวณขาว',
+
+      '3. ผงหมึกลบเกาะลายเส้น',
+
+      '4. กดติดกระดาษ+ความร้อน'
+
+    ];
+
+
+    ctx.fillStyle =
+      '#D889A7';
+
+    ctx.font =
+      '700 13px Prompt';
+
+    ctx.textAlign =
+      'center';
+
+    ctx.fillText(
+      labels[stage],
+      cx,
+      size-20
+    );
+
+
+    rafHandle =
+      requestAnimationFrame(
+        frame
+      );
+
+  }
+
+  frame();
+
+};
+
+
+/* =========================
+   LIGHTNING
+========================= */
+
+anims.lightning = ()=>{
+
+  const s =
+    setupCanvas(
+      'cvLightning'
+    );
+
+  if(!s){
+    return;
+  }
+
+  const {
+    ctx,
+    size
+  } = s;
+
+  let t = 0;
+
+
+  function boltPath(
+    x,
+    y
+  ){
+
+    return [
+
+      [x,y],
+
+      [x-14,y+40],
+
+      [x+6,y+40],
+
+      [x-20,y+95],
+
+      [x+22,y+48],
+
+      [x+2,y+48],
+
+      [x+16,y]
+
+    ];
+
+  }
+
+
+  function frame(){
+
+    t += .03;
+
+    ctx.clearRect(
+      0,
+      0,
+      size,
+      size
+    );
+
+
+    /* clouds */
+
+    ctx.fillStyle =
+      'rgba(110,158,126,.22)';
+
+    [
+      [-40,-10],
+      [40,-20],
+      [110,0]
+    ].forEach(
+      ([dx,dy])=>{
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+          size/2+dx,
+          90+dy,
+          70,
+          34,
+          0,
+          0,
+          Math.PI*2
+        );
+
+        ctx.fill();
+
+      }
+    );
+
+
+    const flash =
+      (Math.sin(t*3)+1)/2;
+
+    const active =
+      Math.floor(t)%3 === 0;
+
+
+    if(active){
+
+      ctx.save();
+
+      ctx.globalAlpha =
+        .15+
+        flash*.2;
+
+      ctx.fillStyle =
+        '#F8E5A8';
+
+      ctx.fillRect(
+        0,
+        0,
+        size,
+        size
+      );
+
+      ctx.restore();
+
+
+      ctx.beginPath();
+
+      const pts =
+        boltPath(
+          size/2,
+          110
+        );
+
+
+      pts.forEach(
+        (p,i)=>
+          i === 0
+            ? ctx.moveTo(
+                p[0],
+                p[1]
+              )
+            : ctx.lineTo(
+                p[0],
+                p[1]
+              )
+      );
+
+
+      ctx.strokeStyle =
+        '#D889A7';
+
+      ctx.lineWidth =
+        4;
+
+      ctx.lineJoin =
+        'round';
+
+      ctx.stroke();
+
+
+      ctx.shadowColor =
+        '#D889A7';
+
+      ctx.shadowBlur =
+        18;
+
+      ctx.stroke();
+
+      ctx.shadowBlur =
+        0;
+
+    }
+
+
+    ctx.fillStyle =
+      'rgba(93,68,59,.55)';
+
+    ctx.font =
+      '600 12px Prompt';
+
+    ctx.textAlign =
+      'center';
+
+    ctx.fillText(
+      'ประจุถ่ายโอนผ่านอากาศ',
+      size/2,
+      size-20
+    );
+
+
+    rafHandle =
+      requestAnimationFrame(
+        frame
+      );
+
+  }
+
+  frame();
+
+};
+
+
+/* =========================
+   ROD
+========================= */
+
+anims.rod = ()=>{
+
+  const s =
+    setupCanvas(
+      'cvRod'
+    );
+
+  if(!s){
+    return;
+  }
+
+  const {
+    ctx,
+    size
+  } = s;
+
+  let t = 0;
+
+  const groundY =
+    size-60;
+
+  const roofY =
+    120;
+
+  const topX =
+    size/2;
+
+
+  function frame(){
+
+    t += .02;
+
+    ctx.clearRect(
+      0,
+      0,
+      size,
+      size
+    );
+
+
+    /* building */
+
+    ctx.fillStyle =
+      'rgba(110,158,126,.18)';
+
+    ctx.fillRect(
+      topX-70,
+      roofY,
+      140,
+      groundY-roofY
+    );
+
+
+    /* rod */
+
+    ctx.strokeStyle =
+      '#D889A7';
+
+    ctx.lineWidth =
+      4;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      topX,
+      roofY
+    );
+
+    ctx.lineTo(
+      topX,
+      roofY-50
+    );
+
+    ctx.stroke();
+
+
+    /* wire */
+
+    ctx.strokeStyle =
+      'rgba(110,158,126,.6)';
+
+    ctx.lineWidth =
+      3;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      topX,
+      roofY
+    );
+
+    ctx.lineTo(
+      topX+80,
+      groundY
+    );
+
+    ctx.stroke();
+
+
+    /* ground plate */
+
+    ctx.fillStyle =
+      'rgba(110,158,126,.5)';
+
+    ctx.fillRect(
+      topX+55,
+      groundY,
+      60,
+      8
+    );
+
+
+    /* traveling charge */
+
+    const p =
+      (t*.6)%1;
+
+    const cxp =
+      topX+p*80;
+
+    const cyp =
+      roofY+
+      p*(groundY-roofY);
+
+
+    drawCharge(
+      ctx,
+      cxp,
+      cyp,
+      9,
+      true
+    );
+
+
+    ctx.fillStyle =
+      'rgba(93,68,59,.6)';
+
+    ctx.font =
+      '600 12px Prompt';
+
+    ctx.textAlign =
+      'center';
+
+    ctx.fillText(
+      'ประจุไหลลงดินผ่านสายล่อฟ้า',
+      size/2,
+      size-16
+    );
+
+
+    rafHandle =
+      requestAnimationFrame(
+        frame
+      );
+
+  }
+
+  frame();
+
+};
+
+
+/* =====================================================
+   START ANIMATION
+===================================================== */
+
+function startAnim(name){
+
+  if(anims[name]){
+
+    anims[name]();
+
+  }
+
+}
+
+
+/* =====================================================
+   INIT
+===================================================== */
+
+go(
+  0,
+  true
+);
+
+</script>
+
+</body>
+</html>
 
