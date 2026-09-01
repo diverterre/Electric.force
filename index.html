@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>แรงไฟฟ้า — แรงในธรรมชาติ</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,29 +11,42 @@
 <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+
+/* =========================================================
+   PALETTE
+========================================================= */
+
 :root{
-  --pink:#F6C6D9;
-  --pink-light:#FCE8F0;
+  --pink:#F5C7D9;
+  --pink-light:#FCEAF1;
   --pink-deep:#D889A7;
 
-  --green:#B9DEC8;
-  --green-light:#E5F3EA;
-  --green-deep:#6E9E7E;
+  --blue:#C8E5F1;
+  --blue-light:#EDF8FC;
+  --blue-deep:#79AFC5;
 
-  --yellow:#F8E5A8;
-  --yellow-light:#FFF6D8;
+  --green:#C6E4D0;
+  --green-light:#EDF8F0;
+  --green-deep:#76A486;
 
-  --brown:#9A7667;
-  --brown-light:#C8A99B;
-  --brown-dark:#5D443B;
+  --yellow:#F7E6A9;
+  --yellow-light:#FFF8DE;
 
-  --cream:#FFF9F0;
-  --paper:#FFFDF8;
+  --brown:#A27E70;
+  --brown-light:#D5BDB3;
+  --brown-dark:#60483F;
+
+  --cream:#FFF9F1;
+  --paper:#FFFDF9;
   --white:#FFFFFF;
 
-  --shadow:rgba(93,68,59,.16);
-  --shadow-soft:rgba(93,68,59,.10);
+  --shadow:rgba(96,72,63,.14);
+  --shadow-soft:rgba(96,72,63,.08);
 }
+
+/* =========================================================
+   RESET
+========================================================= */
 
 *{
   margin:0;
@@ -49,121 +62,176 @@ body{
 }
 
 body{
-  background:
-    radial-gradient(circle at 10% 10%,rgba(246,198,217,.55),transparent 25%),
-    radial-gradient(circle at 90% 20%,rgba(185,222,200,.55),transparent 25%),
-    radial-gradient(circle at 50% 100%,rgba(248,229,168,.45),transparent 30%),
-    var(--cream);
+  font-family:'Prompt',sans-serif;
   color:var(--brown-dark);
-  font-family:'Prompt','Mali',sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 8% 10%,
+      rgba(245,199,217,.65),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 92% 15%,
+      rgba(200,229,241,.65),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 50% 105%,
+      rgba(198,228,208,.55),
+      transparent 30%
+    ),
+    var(--cream);
+
+  -webkit-tap-highlight-color:transparent;
 }
 
-/* =========================
-   GLOBAL DECORATION
-========================= */
+/* =========================================================
+   PAPER TEXTURE
+========================================================= */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+
+  opacity:.28;
+
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 31px,
+      rgba(162,126,112,.055) 32px
+    );
+}
+
+/* =========================================================
+   AMBIENT DUST
+========================================================= */
 
 #dust{
   position:fixed;
   inset:0;
+
+  width:100%;
+  height:100%;
+
   pointer-events:none;
-  z-index:1;
-  opacity:.7;
+  z-index:2;
+
+  opacity:.55;
 }
+
+/* =========================================================
+   DECORATIONS
+========================================================= */
 
 .decor{
   position:absolute;
+  z-index:1;
   pointer-events:none;
-  z-index:0;
+
+  font-family:'Mali',sans-serif;
+
+  user-select:none;
 }
 
 .decor.star{
-  width:18px;
-  height:18px;
-  color:var(--yellow);
-  font-family:'Mali';
-  font-weight:700;
-  font-size:1.2rem;
+  color:var(--pink-deep);
+  font-size:1.45rem;
+}
+
+.decor.flower{
+  color:var(--pink-deep);
+  font-size:1.55rem;
 }
 
 .decor.plus{
   color:var(--pink-deep);
-  font-family:'Prompt';
-  font-weight:700;
-  font-size:1.5rem;
+  font-size:1.45rem;
 }
 
 .decor.minus{
-  color:var(--green-deep);
-  font-family:'Prompt';
-  font-weight:700;
-  font-size:1.5rem;
-}
-
-.decor.dot{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:var(--pink);
+  color:var(--blue-deep);
+  font-size:1.4rem;
 }
 
 .decor.leaf{
-  width:22px;
-  height:12px;
-  background:var(--green);
-  border-radius:100% 0 100% 0;
-  transform:rotate(-25deg);
+  color:var(--green-deep);
+  font-size:1.3rem;
 }
 
-.decor.flower{
+.decor.note{
+  color:var(--brown-light);
   font-size:1.4rem;
-  color:var(--pink-deep);
-  font-family:'Mali';
 }
 
-.d1{top:13%;left:5%;}
-.d2{top:20%;right:7%;}
-.d3{bottom:18%;left:8%;}
-.d4{bottom:13%;right:8%;}
-.d5{top:38%;left:3%;}
-.d6{top:50%;right:4%;}
+.d1{top:8%;left:5%}
+.d2{top:13%;right:7%}
+.d3{bottom:15%;left:7%}
+.d4{bottom:11%;right:7%}
+.d5{top:43%;left:3%}
+.d6{top:50%;right:4%}
 
-/* =========================
+/* =========================================================
    PROGRESS
-========================= */
+========================================================= */
 
 .progress{
   position:fixed;
   top:0;
   left:0;
-  right:0;
+
+  width:100%;
   height:5px;
-  background:rgba(154,118,103,.12);
-  z-index:100;
+
+  z-index:500;
+
+  background:rgba(96,72,63,.08);
 }
 
 .progress-fill{
-  height:100%;
   width:0%;
-  background:linear-gradient(
-    90deg,
-    var(--pink-deep),
-    var(--green-deep),
-    var(--yellow)
-  );
-  transition:width .5s cubic-bezier(.2,.7,.1,1);
-  border-radius:0 5px 5px 0;
+  height:100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--pink-deep),
+      var(--blue-deep),
+      var(--green-deep),
+      var(--yellow)
+    );
+
+  border-radius:0 10px 10px 0;
+
+  transition:
+    width .6s cubic-bezier(.2,.7,.1,1);
 }
 
-/* =========================
-   DECK / SLIDES
-========================= */
+/* =========================================================
+   DECK
+========================================================= */
 
 .deck{
   position:relative;
+
   width:100vw;
   height:100vh;
+
   overflow:hidden;
+
+  z-index:3;
+
+  touch-action:pan-y;
 }
+
+/* =========================================================
+   SLIDES
+========================================================= */
 
 .slide{
   position:absolute;
@@ -174,174 +242,222 @@ body{
   justify-content:center;
 
   padding:
-    clamp(2rem,4vw,4.5rem)
-    clamp(1.5rem,5vw,5rem);
+    clamp(1.5rem,4vw,4rem)
+    clamp(1rem,5vw,5rem);
 
   opacity:0;
   visibility:hidden;
 
-  clip-path:polygon(
-    0 0,
-    0 0,
-    0 100%,
-    0 100%
-  );
+  pointer-events:none;
+
+  transform:translateX(25px) scale(.985);
 
   transition:
-    clip-path .85s cubic-bezier(.65,0,.35,1),
-    opacity .5s ease,
-    visibility 0s linear .85s;
-
-  pointer-events:none;
+    opacity .45s ease,
+    transform .6s cubic-bezier(.2,.75,.2,1),
+    visibility 0s linear .6s;
 }
 
 .slide.active{
   opacity:1;
   visibility:visible;
+  pointer-events:auto;
 
-  clip-path:polygon(
-    0 0,
-    100% 0,
-    100% 100%,
-    0 100%
-  );
+  transform:translateX(0) scale(1);
 
   transition:
-    clip-path .85s cubic-bezier(.65,0,.35,1),
-    opacity .3s ease;
-
-  pointer-events:auto;
+    opacity .4s ease,
+    transform .6s cubic-bezier(.2,.75,.2,1);
 }
 
-/* =========================
-   CONTENT CARD
-========================= */
+/* =========================================================
+   PAPER CARD
+========================================================= */
 
 .slide-inner{
   position:relative;
-  z-index:3;
+  z-index:5;
 
   width:100%;
-  max-width:1280px;
+  max-width:1250px;
+
+  max-height:calc(100vh - 5rem);
+
+  overflow:auto;
+
+  padding:
+    clamp(1.7rem,4vw,4rem);
 
   background:
     linear-gradient(
-      135deg,
-      rgba(255,255,255,.90),
-      rgba(255,249,240,.93)
+      180deg,
+      rgba(255,255,255,.97),
+      rgba(255,253,249,.97)
     );
 
-  border:2px solid rgba(200,169,155,.42);
-  border-radius:32px;
+  border:
+    2px solid
+    rgba(213,189,179,.65);
+
+  border-radius:30px;
 
   box-shadow:
     0 22px 55px var(--shadow),
-    inset 0 0 0 7px rgba(255,255,255,.35);
+    0 4px 0 rgba(255,255,255,.8) inset;
 
-  padding:clamp(2rem,4vw,4rem);
+  scrollbar-width:thin;
 
-  overflow:hidden;
+  scrollbar-color:
+    var(--pink)
+    transparent;
 }
+
+/* paper corners */
 
 .slide-inner::before{
   content:"";
+
   position:absolute;
-  width:180px;
-  height:180px;
+
+  width:160px;
+  height:160px;
+
+  top:-85px;
+  right:-75px;
+
   border-radius:50%;
+
   background:var(--pink-light);
-  right:-80px;
-  top:-80px;
-  opacity:.75;
+
+  opacity:.8;
+
+  pointer-events:none;
 }
 
 .slide-inner::after{
   content:"";
+
   position:absolute;
-  width:130px;
-  height:130px;
+
+  width:150px;
+  height:150px;
+
+  bottom:-80px;
+  left:-75px;
+
   border-radius:50%;
+
   background:var(--green-light);
-  left:-70px;
-  bottom:-70px;
+
   opacity:.8;
+
+  pointer-events:none;
 }
+
+/* little paper tape */
+
+.slide-inner.center::marker{
+  display:none;
+}
+
+.slide-inner.center::after{
+  opacity:.65;
+}
+
+/* =========================================================
+   TAPE
+========================================================= */
 
 .slide-inner.center{
   text-align:center;
+
   display:flex;
   flex-direction:column;
   align-items:center;
 }
 
+.slide-inner.center::before{
+  content:"";
+
+  width:95px;
+  height:25px;
+
+  top:-9px;
+  right:14%;
+
+  border-radius:4px;
+
+  background:
+    rgba(247,230,169,.75);
+
+  transform:rotate(4deg);
+
+  opacity:1;
+}
+
+.slide-inner.split::before{
+  content:"";
+
+  position:absolute;
+
+  width:100px;
+  height:24px;
+
+  top:-9px;
+  left:13%;
+
+  border-radius:4px;
+
+  background:
+    rgba(200,229,241,.78);
+
+  transform:rotate(-4deg);
+
+  opacity:1;
+}
+
+/* =========================================================
+   SPLIT LAYOUT
+========================================================= */
+
 .slide-inner.split{
   display:grid;
+
   grid-template-columns:1fr;
+
   gap:2rem;
+
   align-items:center;
 }
 
-@media(min-width:860px){
+@media(min-width:850px){
+
   .slide-inner.split{
     grid-template-columns:1fr 1fr;
-    gap:clamp(2rem,5vw,5rem);
+
+    gap:
+      clamp(2rem,5vw,5rem);
   }
 
   .slide-inner.split.reverse .col-art{
     order:2;
   }
+
 }
 
-/* =========================
+/* =========================================================
    TEXT
-========================= */
+========================================================= */
 
 .col-text{
   position:relative;
-  z-index:5;
-
-  text-align:center;
+  z-index:10;
 
   display:flex;
   flex-direction:column;
   align-items:center;
-}
 
-.col-text h2{
-  font-family:'Mali','Prompt',sans-serif;
-  font-weight:700;
-
-  color:var(--brown-dark);
-
-  font-size:clamp(
-    1.7rem,
-    3.4vw,
-    3rem
-  );
-
-  line-height:1.3;
-
-  margin-bottom:1rem;
-
-  max-width:22ch;
-
-  text-wrap:balance;
-}
-
-.col-text p{
-  font-size:clamp(
-    1rem,
-    1.4vw,
-    1.2rem
-  );
-
-  line-height:1.9;
-
-  color:var(--brown);
-
-  max-width:48ch;
-
-  text-wrap:pretty;
+  text-align:center;
 }
 
 h1,
@@ -349,13 +465,45 @@ h2,
 .mega,
 .eyebrow,
 .num-mark{
-  font-family:'Mali','Prompt',sans-serif;
+  font-family:'Mali',sans-serif;
 }
 
 h1,
 h2,
 .mega{
   font-weight:700;
+}
+
+.col-text h2{
+  color:var(--brown-dark);
+
+  font-size:
+    clamp(
+      1.65rem,
+      3.3vw,
+      3rem
+    );
+
+  line-height:1.35;
+
+  max-width:23ch;
+
+  margin-bottom:1rem;
+}
+
+.col-text p{
+  color:var(--brown);
+
+  font-size:
+    clamp(
+      .98rem,
+      1.35vw,
+      1.18rem
+    );
+
+  line-height:1.9;
+
+  max-width:49ch;
 }
 
 b{
@@ -366,167 +514,177 @@ b{
 .eyebrow{
   display:block;
 
-  letter-spacing:.08em;
-
-  font-size:clamp(
-    .78rem,
-    1vw,
-    1rem
-  );
+  margin-bottom:.65rem;
 
   color:var(--pink-deep);
 
+  font-size:
+    clamp(
+      .78rem,
+      1vw,
+      1rem
+    );
+
   font-weight:700;
 
-  margin-bottom:.7rem;
+  letter-spacing:.05em;
 }
 
 .num-mark{
-  font-weight:700;
+  margin-bottom:.35rem;
+
   color:var(--brown-light);
 
   font-size:.9rem;
 
-  letter-spacing:.04em;
-
-  margin-bottom:.4rem;
+  font-weight:700;
 }
 
-/* =========================
+/* =========================================================
    HERO
-========================= */
+========================================================= */
 
 .hero-blobs{
   position:absolute;
   inset:0;
+
   overflow:hidden;
-  z-index:0;
+
   pointer-events:none;
+
+  z-index:0;
 }
 
 .blob{
   position:absolute;
+
   border-radius:50%;
+
   filter:blur(35px);
 }
 
 .blob-1{
-  width:360px;
-  height:360px;
-
-  background:var(--pink);
+  width:350px;
+  height:350px;
 
   top:-120px;
   left:-80px;
 
-  opacity:.55;
-}
-
-.blob-2{
-  width:320px;
-  height:320px;
-
-  background:var(--green);
-
-  bottom:-100px;
-  right:-80px;
-
-  opacity:.55;
-}
-
-.blob-3{
-  width:200px;
-  height:200px;
-
-  background:var(--yellow);
-
-  bottom:20%;
-  left:8%;
+  background:var(--pink);
 
   opacity:.45;
 }
 
+.blob-2{
+  width:330px;
+  height:330px;
+
+  right:-90px;
+  bottom:-120px;
+
+  background:var(--blue);
+
+  opacity:.5;
+}
+
+.blob-3{
+  width:220px;
+  height:220px;
+
+  left:8%;
+  bottom:15%;
+
+  background:var(--yellow);
+
+  opacity:.35;
+}
+
 .mega{
   position:relative;
-  z-index:5;
-
-  font-size:clamp(
-    3.4rem,
-    9vw,
-    7rem
-  );
-
-  line-height:1.05;
+  z-index:10;
 
   color:var(--brown-dark);
 
+  font-size:
+    clamp(
+      3.2rem,
+      9vw,
+      7rem
+    );
+
+  line-height:1.05;
+
   text-shadow:
-    3px 4px 0 rgba(246,198,217,.65);
+    3px 4px 0
+    rgba(245,199,217,.65);
 }
 
 .mega.small{
-  font-size:clamp(
-    2rem,
-    5vw,
-    4rem
-  );
+  font-size:
+    clamp(
+      2rem,
+      5vw,
+      4rem
+    );
 
   max-width:20ch;
 }
 
 .lede{
   position:relative;
-  z-index:5;
+  z-index:10;
 
   margin-top:1rem;
 
   color:var(--brown);
 
-  font-size:clamp(
-    1rem,
-    1.5vw,
-    1.25rem
-  );
-
-  max-width:48ch;
+  font-size:
+    clamp(
+      .98rem,
+      1.5vw,
+      1.25rem
+    );
 
   line-height:1.8;
+
+  max-width:48ch;
 }
 
-/* =========================
+/* =========================================================
    LIGHTNING HERO
-========================= */
+========================================================= */
 
 .bolt-stage{
-  width:190px;
-  height:190px;
+  position:relative;
 
-  margin-top:2rem;
+  width:180px;
+  height:180px;
+
+  margin-top:1.5rem;
 
   display:flex;
   align-items:center;
   justify-content:center;
-
-  position:relative;
 }
 
 .bolt-glow{
   position:absolute;
 
-  width:190px;
-  height:190px;
+  width:180px;
+  height:180px;
 
   border-radius:50%;
 
   background:
     radial-gradient(
       circle,
-      rgba(248,229,168,.8),
-      rgba(246,198,217,.3),
+      rgba(247,230,169,.8),
+      rgba(245,199,217,.3),
       transparent 70%
     );
 
-  animation:boltPulse 2.6s ease-in-out infinite;
+  animation:
+    boltPulse 2.8s ease-in-out infinite;
 }
 
 .bolt-svg{
@@ -535,116 +693,136 @@ b{
   width:90px;
   height:120px;
 
-  animation:boltBounce 1.8s ease-in-out infinite;
+  animation:
+    boltBounce 1.9s ease-in-out infinite;
 
   filter:
     drop-shadow(
-      0 8px 12px rgba(93,68,59,.2)
+      0 8px 12px
+      rgba(96,72,63,.18)
     );
 }
 
 @keyframes boltPulse{
+
   0%,100%{
     transform:scale(1);
     opacity:.7;
   }
 
   50%{
-    transform:scale(1.12);
+    transform:scale(1.1);
     opacity:1;
   }
+
 }
 
 @keyframes boltBounce{
+
   0%,100%{
-    transform:translateY(0) rotate(-4deg);
+    transform:
+      translateY(0)
+      rotate(-4deg);
   }
 
   50%{
-    transform:translateY(-14px) rotate(4deg);
+    transform:
+      translateY(-12px)
+      rotate(4deg);
   }
+
 }
 
-/* =========================
+/* =========================================================
    CANVAS
-========================= */
+========================================================= */
 
 .col-art{
   position:relative;
-  z-index:5;
+  z-index:10;
+
+  min-width:0;
 
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:1.2rem;
 
-  min-width:0;
+  gap:1rem;
 }
 
 .col-art canvas{
   display:block;
 
   width:100%;
-  max-width:520px;
+  max-width:500px;
 
   aspect-ratio:1/1;
 
   background:
     radial-gradient(
       circle at 50% 40%,
-      rgba(185,222,200,.35),
-      rgba(246,198,217,.13),
+      rgba(198,228,208,.35),
+      rgba(200,229,241,.18),
       transparent 70%
     );
 
+  border:
+    2px dashed
+    rgba(162,126,112,.25);
+
   border-radius:28px;
 
-  border:2px dashed rgba(154,118,103,.25);
-
   box-shadow:
-    inset 0 0 30px rgba(255,255,255,.45);
+    inset 0 0 30px
+    rgba(255,255,255,.55);
 }
 
-/* =========================
-   BUTTONS
-========================= */
+/* =========================================================
+   CHIPS
+========================================================= */
 
 .toggle-row,
 .slider-row{
   position:relative;
-  z-index:10;
+  z-index:20;
 
   display:flex;
 
-  gap:.7rem;
+  justify-content:center;
+  align-items:center;
+
+  gap:.65rem;
 
   flex-wrap:wrap;
-
-  justify-content:center;
-
-  margin-top:.3rem;
 }
 
 .chip{
-  font-family:'Prompt',sans-serif;
+  appearance:none;
 
-  font-size:clamp(
-    .82rem,
-    1.2vw,
-    1rem
-  );
+  border:
+    2px solid
+    var(--brown-light);
 
-  font-weight:500;
+  background:
+    var(--paper);
 
-  background:var(--paper);
-
-  border:2px solid var(--brown-light);
-
-  color:var(--brown-dark);
-
-  padding:.65rem 1.15rem;
+  color:
+    var(--brown-dark);
 
   border-radius:999px;
+
+  padding:
+    .62rem
+    1rem;
+
+  font-family:'Prompt',sans-serif;
+
+  font-size:
+    clamp(
+      .78rem,
+      1.1vw,
+      .95rem
+    );
 
   cursor:pointer;
 
@@ -658,89 +836,95 @@ b{
 .chip:hover{
   transform:translateY(-2px);
 
-  border-color:var(--pink-deep);
+  border-color:
+    var(--pink-deep);
 
   box-shadow:
-    0 7px 14px var(--shadow-soft);
+    0 6px 14px
+    var(--shadow-soft);
 }
 
 .chip.active{
-  background:var(--pink);
+  background:var(--pink-light);
 
-  border-color:var(--pink-deep);
-
-  color:var(--brown-dark);
-
-  font-weight:700;
+  border-color:
+    var(--pink-deep);
 
   box-shadow:
-    0 5px 12px rgba(216,137,167,.25);
+    0 5px 13px
+    rgba(216,137,167,.2);
+
+  font-weight:700;
 }
 
 .slider-row label{
-  font-size:clamp(
-    .85rem,
-    1.2vw,
-    1rem
-  );
-
-  color:var(--brown);
-
   display:flex;
 
   align-items:center;
 
   gap:.7rem;
+
+  color:var(--brown);
+
+  font-size:.9rem;
 }
 
-.slider-row input[type=range]{
-  accent-color:var(--pink-deep);
+.slider-row input[type="range"]{
+  width:
+    clamp(
+      150px,
+      20vw,
+      240px
+    );
 
-  width:clamp(
-    160px,
-    20vw,
-    250px
-  );
+  accent-color:
+    var(--pink-deep);
 }
 
-/* =========================
-   SUMMARY
-========================= */
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
 
 .virtues{
   position:relative;
-  z-index:5;
+  z-index:10;
+
+  width:100%;
+  max-width:1000px;
 
   display:grid;
 
-  gap:1.5rem;
-
   grid-template-columns:1fr;
 
-  margin-top:2.5rem;
+  gap:1.2rem;
 
-  max-width:1000px;
+  margin-top:2.2rem;
 }
 
 @media(min-width:700px){
+
   .virtues{
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:
+      repeat(3,1fr);
   }
+
 }
 
 .virtue{
-  background:rgba(255,255,255,.65);
+  padding:1.3rem;
 
-  border:2px solid rgba(200,169,155,.35);
+  border:
+    2px solid
+    rgba(213,189,179,.5);
 
   border-radius:22px;
 
-  padding:1.4rem;
-
-  text-align:center;
+  background:
+    rgba(255,255,255,.75);
 
   box-shadow:
-    0 10px 20px var(--shadow-soft);
+    0 10px 20px
+    var(--shadow-soft);
 }
 
 .virtue:nth-child(1){
@@ -748,7 +932,7 @@ b{
 }
 
 .virtue:nth-child(2){
-  border-top:6px solid var(--green);
+  border-top:6px solid var(--blue);
 }
 
 .virtue:nth-child(3){
@@ -756,26 +940,30 @@ b{
 }
 
 .virtue p{
-  font-size:clamp(
-    .9rem,
-    1.2vw,
-    1.05rem
-  );
+  color:var(--brown);
+
+  font-size:
+    clamp(
+      .85rem,
+      1.15vw,
+      1rem
+    );
 
   line-height:1.8;
-
-  color:var(--brown);
 }
 
-/* =========================
+/* =========================================================
    MEMBERS
-========================= */
+========================================================= */
 
 .member-list{
   position:relative;
-  z-index:5;
+  z-index:10;
 
-  margin-top:2.5rem;
+  width:100%;
+  max-width:900px;
+
+  margin-top:2rem;
 
   display:flex;
 
@@ -783,9 +971,7 @@ b{
 
   justify-content:center;
 
-  gap:1rem;
-
-  max-width:900px;
+  gap:.85rem;
 }
 
 .member{
@@ -793,171 +979,156 @@ b{
 
   align-items:center;
 
-  gap:.7rem;
+  gap:.65rem;
 
-  font-family:'Mali',sans-serif;
+  padding:
+    .55rem
+    1.15rem
+    .55rem
+    .55rem;
 
-  font-weight:600;
-
-  font-size:clamp(
-    .95rem,
-    1.5vw,
-    1.2rem
-  );
-
-  background:rgba(255,255,255,.88);
-
-  border:2px solid var(--green);
+  border:
+    2px solid
+    var(--green);
 
   border-radius:999px;
 
-  padding:.65rem 1.3rem .65rem .65rem;
+  background:
+    rgba(255,255,255,.9);
 
   color:var(--brown-dark);
 
-  box-shadow:
-    0 8px 18px var(--shadow-soft);
+  font-family:'Mali',sans-serif;
 
-  animation:jiggle 2.4s ease-in-out infinite;
+  font-size:
+    clamp(
+      .9rem,
+      1.4vw,
+      1.15rem
+    );
+
+  font-weight:600;
+
+  box-shadow:
+    0 8px 18px
+    var(--shadow-soft);
+
+  animation:
+    jiggle 2.8s ease-in-out infinite;
 }
 
 .member:nth-child(1){
-  animation-delay:0s;
   border-color:var(--pink);
 }
 
 .member:nth-child(2){
+  border-color:var(--blue);
   animation-delay:.15s;
-  border-color:var(--green);
 }
 
 .member:nth-child(3){
-  animation-delay:.3s;
   border-color:var(--yellow);
+  animation-delay:.3s;
 }
 
 .member:nth-child(4){
+  border-color:var(--green);
   animation-delay:.45s;
-  border-color:var(--pink);
 }
 
 .member:nth-child(5){
+  border-color:var(--pink);
   animation-delay:.6s;
-  border-color:var(--green);
 }
 
 .member-num{
-  font-family:'Prompt',sans-serif;
-
-  font-size:.78rem;
-
-  font-weight:700;
-
-  color:var(--brown-dark);
-
-  background:var(--yellow);
-
-  border-radius:50%;
-
-  width:34px;
-  height:34px;
+  width:33px;
+  height:33px;
 
   display:flex;
-
   align-items:center;
   justify-content:center;
 
   flex-shrink:0;
-}
-
-@keyframes jiggle{
-  0%,100%{
-    transform:rotate(-3deg) translateY(0);
-  }
-
-  25%{
-    transform:rotate(3deg) translateY(-6px);
-  }
-
-  50%{
-    transform:rotate(-2deg) translateY(0);
-  }
-
-  75%{
-    transform:rotate(2deg) translateY(-3px);
-  }
-}
-
-/* =========================
-   NAVIGATION
-========================= */
-
-.nav-ui{
-  position:fixed;
-
-  bottom:1.3rem;
-  left:50%;
-
-  transform:translateX(-50%);
-
-  display:flex;
-
-  align-items:center;
-
-  gap:1rem;
-
-  z-index:200;
-
-  background:rgba(255,253,248,.9);
-
-  border:2px solid rgba(200,169,155,.3);
-
-  padding:.45rem .7rem;
-
-  border-radius:999px;
-
-  box-shadow:
-    0 8px 25px var(--shadow-soft);
-
-  backdrop-filter:blur(10px);
-}
-
-.nav-btn{
-  width:42px;
-  height:42px;
 
   border-radius:50%;
 
-  border:2px solid var(--brown-light);
+  background:
+    var(--yellow);
 
-  background:var(--paper);
+  color:
+    var(--brown-dark);
 
-  color:var(--brown-dark);
+  font-family:'Prompt',sans-serif;
 
-  font-size:1.1rem;
+  font-size:.75rem;
 
-  cursor:pointer;
-
-  transition:
-    transform .2s ease,
-    background .2s ease,
-    border-color .2s ease;
+  font-weight:700;
 }
 
-.nav-btn:hover{
-  transform:scale(1.08);
+@keyframes jiggle{
 
-  background:var(--pink);
+  0%,100%{
+    transform:rotate(-2deg);
+  }
 
-  border-color:var(--pink-deep);
+  50%{
+    transform:
+      rotate(2deg)
+      translateY(-3px);
+  }
+
+}
+
+/* =========================================================
+   PAGE INDICATOR
+   ไม่มีปุ่มกด
+========================================================= */
+
+.page-ui{
+  position:fixed;
+
+  left:50%;
+  bottom:1rem;
+
+  transform:translateX(-50%);
+
+  z-index:400;
+
+  display:flex;
+  align-items:center;
+  gap:.7rem;
+
+  padding:
+    .45rem
+    .75rem;
+
+  border:
+    2px solid
+    rgba(213,189,179,.45);
+
+  border-radius:999px;
+
+  background:
+    rgba(255,253,249,.88);
+
+  backdrop-filter:blur(12px);
+
+  box-shadow:
+    0 8px 24px
+    var(--shadow-soft);
+
+  pointer-events:none;
 }
 
 .dots{
   display:flex;
 
-  gap:.4rem;
+  align-items:center;
 
-  max-width:150px;
+  gap:.38rem;
+
+  max-width:230px;
 
   overflow:hidden;
 }
@@ -970,69 +1141,119 @@ b{
 
   border-radius:50%;
 
-  background:rgba(154,118,103,.3);
+  background:
+    rgba(162,126,112,.25);
 
-  cursor:pointer;
-
-  transition:all .25s ease;
+  transition:
+    width .25s ease,
+    background .25s ease;
 }
 
 .dot.active{
-  background:var(--pink-deep);
+  width:21px;
 
-  width:20px;
+  background:
+    var(--pink-deep);
 
-  border-radius:4px;
+  border-radius:5px;
 }
 
 .slide-count{
   position:fixed;
 
-  top:1rem;
-  right:1.5rem;
+  top:.85rem;
+  right:1rem;
 
-  z-index:200;
+  z-index:400;
 
-  font-family:'Mali',sans-serif;
+  padding:
+    .3rem
+    .7rem;
 
-  font-weight:700;
+  border-radius:999px;
+
+  border:
+    1px solid
+    rgba(213,189,179,.4);
+
+  background:
+    rgba(255,253,249,.88);
+
+  backdrop-filter:blur(10px);
 
   color:var(--brown);
 
-  font-size:.9rem;
+  font-family:'Mali',sans-serif;
 
-  background:rgba(255,253,248,.85);
+  font-size:.82rem;
 
-  border:1px solid rgba(200,169,155,.3);
+  font-weight:700;
 
-  padding:.3rem .7rem;
-
-  border-radius:999px;
+  pointer-events:none;
 }
 
-/* =========================
+/* =========================================================
+   SWIPE HINT
+========================================================= */
+
+.swipe-hint{
+  position:fixed;
+
+  left:50%;
+  bottom:4.5rem;
+
+  transform:translateX(-50%);
+
+  z-index:300;
+
+  color:var(--brown-light);
+
+  font-family:'Mali',sans-serif;
+
+  font-size:.72rem;
+
+  opacity:.65;
+
+  pointer-events:none;
+
+  animation:
+    hintFade 4s ease forwards;
+}
+
+@keyframes hintFade{
+
+  0%,55%{
+    opacity:.65;
+  }
+
+  100%{
+    opacity:0;
+  }
+
+}
+
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
 @media(max-width:700px){
 
   .slide{
     padding:
-      1.4rem
-      .9rem
-      5.8rem;
+      1.1rem
+      .7rem
+      4.7rem;
   }
 
   .slide-inner{
-    max-height:calc(100vh - 7rem);
-
-    overflow-y:auto;
+    max-height:
+      calc(100vh - 5.8rem);
 
     padding:
-      1.8rem
-      1.2rem;
+      1.6rem
+      1rem;
 
-    border-radius:25px;
+    border-radius:24px;
   }
 
   .slide-inner.split{
@@ -1040,46 +1261,51 @@ b{
   }
 
   .col-text h2{
-    font-size:clamp(
-      1.7rem,
-      7vw,
-      2.35rem
-    );
+    font-size:
+      clamp(
+        1.55rem,
+        7vw,
+        2.2rem
+      );
   }
 
   .col-text p{
-    font-size:1.05rem;
+    font-size:1rem;
     line-height:1.85;
   }
 
   .col-art canvas{
-    max-width:390px;
+    max-width:370px;
   }
 
   .mega{
-    font-size:clamp(
-      3.3rem,
-      16vw,
-      5rem
-    );
+    font-size:
+      clamp(
+        3.1rem,
+        16vw,
+        5rem
+      );
   }
 
   .mega.small{
-    font-size:clamp(
-      2rem,
-      10vw,
-      3rem
-    );
+    font-size:
+      clamp(
+        1.9rem,
+        9vw,
+        3rem
+      );
   }
 
   .lede{
-    font-size:1rem;
+    font-size:.95rem;
   }
 
   .chip{
-    font-size:.9rem;
+    padding:
+      .58rem
+      .85rem;
 
-    padding:.65rem .95rem;
+    font-size:.82rem;
   }
 
   .member{
@@ -1087,84 +1313,80 @@ b{
 
     justify-content:flex-start;
 
-    font-size:1rem;
+    font-size:.95rem;
   }
 
   .virtues{
-    margin-top:1.5rem;
+    margin-top:1.4rem;
   }
 
-  .nav-ui{
-    bottom:.7rem;
+  .page-ui{
+    bottom:.65rem;
 
-    gap:.6rem;
-
-    padding:.35rem .55rem;
-  }
-
-  .nav-btn{
-    width:40px;
-    height:40px;
+    padding:
+      .35rem
+      .6rem;
   }
 
   .dots{
-    max-width:90px;
+    max-width:130px;
   }
 
   .slide-count{
-    top:.7rem;
-    right:.7rem;
+    top:.6rem;
+    right:.6rem;
   }
+
+  .swipe-hint{
+    bottom:3.7rem;
+  }
+
 }
 
-/* =========================
-   IPAD / TABLET
-========================= */
+/* =========================================================
+   TABLET
+========================================================= */
 
-@media(min-width:701px) and (max-width:1200px){
+@media(
+  min-width:701px
+) and (
+  max-width:1200px
+){
 
   .slide{
     padding:
-      2rem
-      2rem
-      6rem;
+      1.6rem
+      1.4rem
+      4.5rem;
   }
 
   .slide-inner{
-    max-width:1100px;
+    max-height:
+      calc(100vh - 5.5rem);
 
     padding:
-      2.5rem
+      2.3rem
       2rem;
   }
 
   .col-text h2{
-    font-size:clamp(
-      2rem,
-      4vw,
-      3rem
-    );
+    font-size:
+      clamp(
+        1.8rem,
+        3.5vw,
+        2.7rem
+      );
   }
 
   .col-text p{
-    font-size:1.15rem;
-    line-height:1.9;
+    font-size:1.08rem;
   }
 
-  .col-art canvas{
-    max-width:500px;
-  }
-
-  .chip{
-    font-size:1rem;
-    padding:.75rem 1.2rem;
-  }
 }
 
-/* =========================
+/* =========================================================
    IPAD LANDSCAPE
-   NAV MOVES TO RIGHT
-========================= */
+========================================================= */
 
 @media(
   min-width:900px
@@ -1176,68 +1398,78 @@ b{
 
   .slide{
     padding:
-      1.3rem
-      6.2rem
-      1.3rem
-      1.5rem;
+      1rem
+      4.5rem
+      1rem
+      1rem;
   }
 
   .slide-inner{
-    max-height:calc(100vh - 2.6rem);
+    max-height:
+      calc(100vh - 2rem);
 
     padding:
-      1.6rem
-      2rem;
+      1.4rem
+      1.8rem;
+
+    border-radius:25px;
+  }
+
+  .slide-inner.split{
+    gap:2rem;
   }
 
   .col-text h2{
-    font-size:clamp(
-      1.8rem,
-      3vw,
-      2.5rem
-    );
+    font-size:
+      clamp(
+        1.6rem,
+        2.7vw,
+        2.3rem
+      );
   }
 
   .col-text p{
-    font-size:1rem;
+    font-size:.92rem;
     line-height:1.65;
   }
 
   .col-art{
-    gap:.7rem;
+    gap:.55rem;
   }
 
   .col-art canvas{
-    max-width:min(42vh,430px);
+    max-width:
+      min(42vh,390px);
   }
 
   /*
-    สำคัญ:
-    ย้ายปุ่มนำทางไปขวา
-    ไม่ให้ทับปุ่มประจุ / ปล่อยอนุภาค
+     ตัวบอกหน้าอยู่ด้านขวา
+     ไม่มีปุ่ม navigation
   */
 
-  .nav-ui{
+  .page-ui{
     left:auto;
-    right:.7rem;
+    right:.55rem;
 
     top:50%;
     bottom:auto;
 
-    transform:translateY(-50%);
+    transform:
+      translateY(-50%);
 
     flex-direction:column;
 
-    border-radius:24px;
+    padding:
+      .5rem
+      .35rem;
 
-    padding:.55rem .4rem;
-
-    gap:.55rem;
+    border-radius:20px;
   }
 
   .dots{
     flex-direction:column;
-    max-height:100px;
+
+    max-height:120px;
     max-width:none;
   }
 
@@ -1247,50 +1479,63 @@ b{
   }
 
   .slide-count{
-    top:.6rem;
-    right:3rem;
+    top:.5rem;
+    right:2.9rem;
   }
+
+  .swipe-hint{
+    display:none;
+  }
+
 }
 
-/* =========================
+/* =========================================================
    LARGE DESKTOP
-========================= */
+========================================================= */
 
 @media(min-width:1400px){
 
   .slide{
-    padding:4rem;
+    padding:3.5rem;
   }
 
   .slide-inner{
     max-width:1450px;
 
-    padding:4rem 5rem;
+    padding:
+      3.8rem
+      4.5rem;
   }
 
   .col-text h2{
-    font-size:3.1rem;
+    font-size:3rem;
   }
 
   .col-text p{
-    font-size:1.25rem;
+    font-size:1.2rem;
   }
 
   .col-art canvas{
-    max-width:600px;
+    max-width:570px;
   }
+
 }
 
-/* =========================
+/* =========================================================
    REDUCED MOTION
-========================= */
+========================================================= */
 
 @media(prefers-reduced-motion:reduce){
 
-  .slide{
-    transition:opacity .3s ease;
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto !important;
+  }
 
-    clip-path:none !important;
+  .slide{
+    transition:opacity .25s ease;
+    transform:none;
   }
 
   .bolt-svg,
@@ -1298,9 +1543,14 @@ b{
   .member{
     animation:none;
   }
-}
-</style>
 
+  .swipe-hint{
+    display:none;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
@@ -1308,8 +1558,16 @@ b{
 <canvas id="dust"></canvas>
 
 <div class="progress">
-  <div class="progress-fill" id="progressFill"></div>
+  <div
+    class="progress-fill"
+    id="progressFill"
+  ></div>
 </div>
+
+<div
+  class="slide-count"
+  id="slideCount"
+></div>
 
 <div class="deck" id="deck">
 
@@ -1317,7 +1575,7 @@ b{
      0 : TITLE
 ===================================================== -->
 
-<section class="slide" data-anim="title">
+<section class="slide active" data-anim="title">
 
   <div class="hero-blobs">
     <div class="blob blob-1"></div>
@@ -1325,58 +1583,74 @@ b{
     <div class="blob blob-3"></div>
   </div>
 
-  <div class="decor star d1">𓊆ྀི❤︎𓊇ྀི</div>
-  <div class="decor plus d2">⋆˚꩜｡ּ</div>
-  <div class="decor minus d3">𓏲๋࣭࣪˖🪼.ᐟ</div>
-  <div class="decor dot d4">˚⊱🪷⊰˚</div>
-  <div class="decor leaf d5">ㅤ♡ྀི ₊</div>
-  <div class="decor flower d6">✿</div>
+  <div class="decor star d1">
+    ⋆˚꩜｡
+  </div>
+
+  <div class="decor flower d2">
+    ⋆.𐙚 ̊
+  </div>
+
+  <div class="decor note d3">
+    ˖ ݁♬⋆.˚𝄞
+  </div>
+
+  <div class="decor plus d4">
+    ⊹ ࣪ ˖ ໒꒱
+  </div>
+
+  <div class="decor leaf d5">
+    ݁ ˖Ი𐑼⋆
+  </div>
+
+  <div class="decor flower d6">
+    ❤︎
+  </div>
 
   <div class="slide-inner center">
 
-```
-<span class="eyebrow">
-  บทที่ 2 · แรงในธรรมชาติ
-</span>
+    <span class="eyebrow">
+      บทที่ 2 · แรงในธรรมชาติ
+    </span>
 
-<h1 class="mega">
-  แรงไฟฟ้า
-</h1>
+    <h1 class="mega">
+      แรงไฟฟ้า
+    </h1>
 
-<p class="lede">
-  จากแท่งอำพันในกรีกโบราณ
-  สู่สนามไฟฟ้าที่มองไม่เห็น
-</p>
+    <p class="lede">
+      จากแท่งอำพันในกรีกโบราณ
+      สู่สนามไฟฟ้าที่มองไม่เห็น
+    </p>
 
-<div class="bolt-stage">
+    <div class="bolt-stage">
 
-  <div class="bolt-glow"></div>
+      <div class="bolt-glow"></div>
 
-  <svg
-    class="bolt-svg"
-    viewBox="0 0 70 100"
-    fill="none"
-  >
-    <path
-      d="M40 2 L10 55 L32 55 L26 98 L62 42 L38 42 Z"
-      fill="#D889A7"
-    />
+      <svg
+        class="bolt-svg"
+        viewBox="0 0 70 100"
+        fill="none"
+      >
+        <path
+          d="M40 2 L10 55 L32 55 L26 98 L62 42 L38 42 Z"
+          fill="#D889A7"
+        />
 
-    <path
-      d="M40 2 L10 55 L32 55 L26 98 L62 42 L38 42 Z"
-      fill="none"
-      stroke="#F8E5A8"
-      stroke-width="3"
-      stroke-linejoin="round"
-    />
-  </svg>
+        <path
+          d="M40 2 L10 55 L32 55 L26 98 L62 42 L38 42 Z"
+          fill="none"
+          stroke="#F7E6A9"
+          stroke-width="3"
+          stroke-linejoin="round"
+        />
+      </svg>
 
-</div>
-```
+    </div>
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      1 : HISTORY
@@ -1384,50 +1658,62 @@ b{
 
 <section class="slide" data-anim="history">
 
-  <div class="decor star d1">𓏲 ๋࣭ ࣪ ˖🎐</div>
-  <div class="decor plus d2">>ᴗ<</div>
-  <div class="decor leaf d3">𓏵‧₊˚ ┊</div>
-  <div class="decor dot d4">𖾕𖾝꙼ᩚ𛲕𖾟</div>
+  <div class="decor star d1">
+    𓏲 ๋࣭ ࣪ ˖🎐
+  </div>
+
+  <div class="decor flower d2">
+    ⋆.𐙚 ̊
+  </div>
+
+  <div class="decor leaf d3">
+    𓏵‧₊˚ ┊
+  </div>
+
+  <div class="decor plus d4">
+    ⊹ ࣪ ˖ ໒꒱
+  </div>
 
   <div class="slide-inner split">
 
-```
-<div class="col-text">
+    <div class="col-text">
 
-  <div class="num-mark">2.2</div>
+      <div class="num-mark">
+        2.2
+      </div>
 
-  <span class="eyebrow">
-    ความเป็นมา
-  </span>
+      <span class="eyebrow">
+        ความเป็นมา
+      </span>
 
-  <h2>
-    อำพันที่ถูกถู
-    แล้วดูดฟางเบา ๆ
-  </h2>
+      <h2>
+        อำพันที่ถูกถู
+        แล้วดูดฟางเบา ๆ
+      </h2>
 
-  <p>
-    ชาวกรีกโบราณสังเกตว่าแท่งอำพันที่ถูกถูด้วยผ้าขนสัตว์
-    สามารถดูดวัตถุเบา ๆ ได้
-    ต่อมาพบว่าแท่งแก้วและแท่งยางก็ทำแบบเดียวกัน —
-    นี่คือปรากฏการณ์แรกของ <b>แรงไฟฟ้า</b>
-  </p>
+      <p>
+        ชาวกรีกโบราณสังเกตว่าแท่งอำพันที่ถูกถูด้วยผ้าขนสัตว์
+        สามารถดูดวัตถุเบา ๆ ได้
+        ต่อมาพบว่าแท่งแก้วและแท่งยางก็ทำแบบเดียวกัน —
+        นี่คือปรากฏการณ์แรกของ <b>แรงไฟฟ้า</b>
+      </p>
 
-</div>
+    </div>
 
-<div class="col-art">
+    <div class="col-art">
 
-  <canvas
-    id="cvHistory"
-    width="600"
-    height="600"
-  ></canvas>
+      <canvas
+        id="cvHistory"
+        width="600"
+        height="600"
+      ></canvas>
 
-</div>
-```
+    </div>
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      2 : ELECTRIC FORCE
@@ -1435,68 +1721,75 @@ b{
 
 <section class="slide" data-anim="basic">
 
-  <div class="decor flower d1">✿</div>
-  <div class="decor minus d2">˚˖𓍢ִ໋🦢˚</div>
-  <div class="decor plus d3">಄</div>
+  <div class="decor flower d1">
+    ˚˖𓍢ִ໋❀
+  </div>
+
+  <div class="decor minus d2">
+    ݁ ˖Ი𐑼⋆
+  </div>
+
+  <div class="decor plus d3">
+    ❤︎
+  </div>
 
   <div class="slide-inner split">
 
-```
-<div class="col-text">
+    <div class="col-text">
 
-  <div class="num-mark">
-    2.2.1 — I
-  </div>
+      <div class="num-mark">
+        2.2.1 — I
+      </div>
 
-  <span class="eyebrow">
-    แรงไฟฟ้า (Electric Force)
-  </span>
+      <span class="eyebrow">
+        แรงไฟฟ้า (Electric Force)
+      </span>
 
-  <h2>
-    ผลัก หรือ ดึงดูด
-    ขึ้นอยู่กับชนิดประจุ
-  </h2>
+      <h2>
+        ผลัก หรือ ดึงดูด
+        ขึ้นอยู่กับชนิดประจุ
+      </h2>
 
-  <p>
-    ประจุชนิดเดียวกัน <b>ผลัก</b> กัน ·
-    ประจุต่างชนิดกัน <b>ดึงดูด</b> กัน —
-    ต่างจากแรงโน้มถ่วงที่ดึงดูดอย่างเดียว
-  </p>
+      <p>
+        ประจุชนิดเดียวกัน <b>ผลัก</b> กัน ·
+        ประจุต่างชนิดกัน <b>ดึงดูด</b> กัน —
+        ต่างจากแรงโน้มถ่วงที่ดึงดูดอย่างเดียว
+      </p>
 
-</div>
+    </div>
 
-<div class="col-art">
+    <div class="col-art">
 
-  <canvas
-    id="cvForce"
-    width="600"
-    height="600"
-  ></canvas>
+      <canvas
+        id="cvForce"
+        width="600"
+        height="600"
+      ></canvas>
 
-  <div class="toggle-row">
+      <div class="toggle-row">
 
-    <button
-      class="chip active"
-      data-mode="repel"
-    >
-      ประจุเหมือนกัน
-    </button>
+        <button
+          class="chip active"
+          data-mode="repel"
+        >
+          ประจุเหมือนกัน
+        </button>
 
-    <button
-      class="chip"
-      data-mode="attract"
-    >
-      ประจุต่างกัน
-    </button>
+        <button
+          class="chip"
+          data-mode="attract"
+        >
+          ประจุต่างกัน
+        </button>
 
-  </div>
+      </div>
 
-</div>
-```
+    </div>
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      3 : FACTORS
@@ -1504,69 +1797,76 @@ b{
 
 <section class="slide" data-anim="factors">
 
-  <div class="decor star d1"> ⋆. 𐙚</div>
-  <div class="decor leaf d2">-`♡´-</div>
-  <div class="decor plus d4">˚˖𓍢ִ໋❀</div>
+  <div class="decor star d1">
+    ⋆.𐙚 ̊
+  </div>
+
+  <div class="decor leaf d2">
+    ݁ ˖Ი𐑼⋆
+  </div>
+
+  <div class="decor flower d4">
+    ˚˖𓍢ִ໋❀
+  </div>
 
   <div class="slide-inner split reverse">
 
-```
-<div class="col-art">
+    <div class="col-art">
 
-  <canvas
-    id="cvFactors"
-    width="600"
-    height="600"
-  ></canvas>
+      <canvas
+        id="cvFactors"
+        width="600"
+        height="600"
+      ></canvas>
 
-  <div class="slider-row">
+      <div class="slider-row">
 
-    <label>
-      ระยะห่าง
+        <label>
+          ระยะห่าง
 
-      <input
-        type="range"
-        id="distSlider"
-        min="30"
-        max="100"
-        value="65"
-      >
+          <input
+            type="range"
+            id="distSlider"
+            min="30"
+            max="100"
+            value="65"
+          >
 
-    </label>
+        </label>
 
-  </div>
+      </div>
 
-</div>
+    </div>
 
-<div class="col-text">
+    <div class="col-text">
 
-  <div class="num-mark">
-    2.2.1 — II
-  </div>
+      <div class="num-mark">
+        2.2.1 — II
+      </div>
 
-  <span class="eyebrow">
-    ปัจจัยที่มีผลต่อแรงไฟฟ้า
-  </span>
+      <span class="eyebrow">
+        ปัจจัยที่มีผลต่อแรงไฟฟ้า
+      </span>
 
-  <h2>
-    ประจุมากขึ้น แรงมากขึ้น
-    · ระยะห่างมากขึ้น แรงลดลง
-  </h2>
+      <h2>
+        ประจุมากขึ้น แรงมากขึ้น
+        · ระยะห่างมากขึ้น แรงลดลง
+      </h2>
 
-  <p>
-    ลองลากแถบเลื่อนเพื่อดูว่า
-    ความแรงของแรงไฟฟ้า
-    (ความหนาของเส้น)
-    เปลี่ยนไปอย่างไร
-    เมื่อระยะห่างเปลี่ยน
-  </p>
+      <p>
+        ลองลากแถบเลื่อนเพื่อดูว่า
+        ความแรงของแรงไฟฟ้า
+        (ความหนาของเส้น)
+        เปลี่ยนไปอย่างไร
+        เมื่อระยะห่างเปลี่ยน
+      </p>
 
-</div>
-```
+    </div>
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      4 : ATOM
@@ -1574,52 +1874,59 @@ b{
 
 <section class="slide" data-anim="atom">
 
-  <div class="decor flower d1">✿</div>
-  <div class="decor plus d2">𓏵</div>
-  <div class="decor minus d3">૮₍˃̵֊ ˂̵ ₎ა</div>
+  <div class="decor flower d1">
+    ⋆˚꩜｡
+  </div>
+
+  <div class="decor plus d2">
+    ❤︎
+  </div>
+
+  <div class="decor minus d3">
+    𐔌՞ ܸ.ˬ.ܸ՞𐦯
+  </div>
 
   <div class="slide-inner split">
 
-```
-<div class="col-text">
+    <div class="col-text">
 
-  <div class="num-mark">
-    2.2.1 — III
-  </div>
+      <div class="num-mark">
+        2.2.1 — III
+      </div>
 
-  <span class="eyebrow">
-    อนุภาคย่อยของอะตอม
-  </span>
+      <span class="eyebrow">
+        อนุภาคย่อยของอะตอม
+      </span>
 
-  <h2>
-    โปรตอน นิวตรอน
-    อิเล็กตรอน
-  </h2>
+      <h2>
+        โปรตอน นิวตรอน
+        อิเล็กตรอน
+      </h2>
 
-  <p>
-    <b>โปรตอน</b> (+)
-    และ <b>นิวตรอน</b> (เป็นกลาง)
-    อยู่ในนิวเคลียส
-    ส่วน <b>อิเล็กตรอน</b> (−)
-    เคลื่อนที่อยู่รอบนอก
-  </p>
+      <p>
+        <b>โปรตอน</b> (+)
+        และ <b>นิวตรอน</b> (เป็นกลาง)
+        อยู่ในนิวเคลียส
+        ส่วน <b>อิเล็กตรอน</b> (−)
+        เคลื่อนที่อยู่รอบนอก
+      </p>
 
-</div>
+    </div>
 
-<div class="col-art">
+    <div class="col-art">
 
-  <canvas
-    id="cvAtom"
-    width="600"
-    height="600"
-  ></canvas>
+      <canvas
+        id="cvAtom"
+        width="600"
+        height="600"
+      ></canvas>
 
-</div>
-```
+    </div>
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      5 : CHARGE STATE
@@ -1627,76 +1934,83 @@ b{
 
 <section class="slide" data-anim="charge-state">
 
-  <div class="decor star d1">愛</div>
-  <div class="decor dot d2">꒰ঌ ໒꒱</div>
-  <div class="decor leaf d3">(˶˃⤙ ˂˶) </div>
+  <div class="decor star d1">
+    ✮⋆˙
+  </div>
+
+  <div class="decor flower d2">
+    ⊹ ࣪ ˖ ໒꒱
+  </div>
+
+  <div class="decor leaf d3">
+    𐔌՞ ܸ.ˬ.ܸ՞𐦯
+  </div>
 
   <div class="slide-inner split reverse">
 
-```
-<div class="col-art">
+    <div class="col-art">
 
-  <canvas
-    id="cvChargeState"
-    width="600"
-    height="600"
-  ></canvas>
+      <canvas
+        id="cvChargeState"
+        width="600"
+        height="600"
+      ></canvas>
 
-  <div class="toggle-row">
+      <div class="toggle-row">
 
-    <button
-      class="chip"
-      data-cs="lose"
-    >
-      สูญเสียอิเล็กตรอน
-    </button>
+        <button
+          class="chip"
+          data-cs="lose"
+        >
+          สูญเสียอิเล็กตรอน
+        </button>
 
-    <button
-      class="chip active"
-      data-cs="neutral"
-    >
-      ปกติ
-    </button>
+        <button
+          class="chip active"
+          data-cs="neutral"
+        >
+          ปกติ
+        </button>
 
-    <button
-      class="chip"
-      data-cs="gain"
-    >
-      ได้รับอิเล็กตรอน
-    </button>
+        <button
+          class="chip"
+          data-cs="gain"
+        >
+          ได้รับอิเล็กตรอน
+        </button>
 
-  </div>
+      </div>
 
-</div>
+    </div>
 
-<div class="col-text">
+    <div class="col-text">
 
-  <div class="num-mark">
-    2.2.1 — IV
-  </div>
+      <div class="num-mark">
+        2.2.1 — IV
+      </div>
 
-  <span class="eyebrow">
-    สภาพทางไฟฟ้าของวัตถุ
-  </span>
+      <span class="eyebrow">
+        สภาพทางไฟฟ้าของวัตถุ
+      </span>
 
-  <h2>
-    สูญเสียอิเล็กตรอน
-    = ประจุบวก
-  </h2>
+      <h2>
+        สูญเสียอิเล็กตรอน
+        = ประจุบวก
+      </h2>
 
-  <p>
-    วัตถุปกติมีโปรตอนเท่ากับอิเล็กตรอน
-    (เป็นกลาง)
-    หากสูญเสียอิเล็กตรอนจะกลายเป็นบวก
-    หากได้รับเพิ่มจะกลายเป็นลบ
-  </p>
+      <p>
+        วัตถุปกติมีโปรตอนเท่ากับอิเล็กตรอน
+        (เป็นกลาง)
+        หากสูญเสียอิเล็กตรอนจะกลายเป็นบวก
+        หากได้รับเพิ่มจะกลายเป็นลบ
+      </p>
 
-</div>
-```
+    </div>
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      6 : ELECTRIC FIELD
@@ -1704,70 +2018,77 @@ b{
 
 <section class="slide" data-anim="field">
 
-  <div class="decor plus d1">⊹ᡣ𐭩₊⋆</div>
-  <div class="decor minus d2">ꪆৎ</div>
-  <div class="decor flower d4">✿</div>
+  <div class="decor plus d1">
+    ⋆˚꩜｡
+  </div>
+
+  <div class="decor minus d2">
+    ݁ ˖Ი𐑼⋆
+  </div>
+
+  <div class="decor flower d4">
+    ˚˖𓍢ִ໋❀
+  </div>
 
   <div class="slide-inner split">
 
-```
-<div class="col-text">
+    <div class="col-text">
 
-  <div class="num-mark">
-    2.2.1 — V
-  </div>
+      <div class="num-mark">
+        2.2.1 — V
+      </div>
 
-  <span class="eyebrow">
-    สนามไฟฟ้า (Electric Field)
-  </span>
+      <span class="eyebrow">
+        สนามไฟฟ้า (Electric Field)
+      </span>
 
-  <h2>
-    บริเวณรอบประจุ
-    ที่ส่งแรงออกไปได้
-  </h2>
+      <h2>
+        บริเวณรอบประจุ
+        ที่ส่งแรงออกไปได้
+      </h2>
 
-  <p>
-    เส้นสนามไฟฟ้าพุ่ง<b>ออก</b>
-    จากประจุบวก
-    และพุ่ง<b>เข้า</b>หาประจุลบ
-    ทิศทางคือทิศที่ประจุทดสอบ
-    +q จะถูกผลัก
-  </p>
+      <p>
+        เส้นสนามไฟฟ้าพุ่ง<b>ออก</b>
+        จากประจุบวก
+        และพุ่ง<b>เข้า</b>หาประจุลบ
+        ทิศทางคือทิศที่ประจุทดสอบ
+        +q จะถูกผลัก
+      </p>
 
-</div>
+    </div>
 
-<div class="col-art">
+    <div class="col-art">
 
-  <canvas
-    id="cvField"
-    width="600"
-    height="600"
-  ></canvas>
+      <canvas
+        id="cvField"
+        width="600"
+        height="600"
+      ></canvas>
 
-  <div class="toggle-row">
+      <div class="toggle-row">
 
-    <button
-      class="chip active"
-      data-charge="pos"
-    >
-      ประจุบวก
-    </button>
+        <button
+          class="chip active"
+          data-charge="pos"
+        >
+          ประจุบวก
+        </button>
 
-    <button
-      class="chip"
-      data-charge="neg"
-    >
-      ประจุลบ
-    </button>
+        <button
+          class="chip"
+          data-charge="neg"
+        >
+          ประจุลบ
+        </button>
 
-  </div>
+      </div>
 
-</div>
-```
+    </div>
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      7 : FIELD PAIR
@@ -1775,70 +2096,80 @@ b{
 
 <section class="slide" data-anim="field-pair">
 
-  <div class="decor star d1">ᯓ★</div>
-  <div class="decor leaf d2">˖ ݁♬⋆.˚𝄞</div>
-  <div class="decor plus d3">𐙚</div>
-  <div class="decor minus d4">⭑.ᐟ</div>
+  <div class="decor star d1">
+    ᯓ★
+  </div>
+
+  <div class="decor note d2">
+    ˖ ݁♬⋆.˚𝄞
+  </div>
+
+  <div class="decor plus d3">
+    ⋆.𐙚 ̊
+  </div>
+
+  <div class="decor minus d4">
+    ✮⋆˙
+  </div>
 
   <div class="slide-inner split reverse">
 
-```
-<div class="col-art">
+    <div class="col-art">
 
-  <canvas
-    id="cvFieldPair"
-    width="600"
-    height="600"
-  ></canvas>
+      <canvas
+        id="cvFieldPair"
+        width="600"
+        height="600"
+      ></canvas>
 
-  <div class="toggle-row">
+      <div class="toggle-row">
 
-    <button
-      class="chip active"
-      data-pair="diff"
-    >
-      ต่างชนิด (ดึงดูด)
-    </button>
+        <button
+          class="chip active"
+          data-pair="diff"
+        >
+          ต่างชนิด (ดึงดูด)
+        </button>
 
-    <button
-      class="chip"
-      data-pair="same"
-    >
-      ชนิดเดียวกัน (ผลัก)
-    </button>
+        <button
+          class="chip"
+          data-pair="same"
+        >
+          ชนิดเดียวกัน (ผลัก)
+        </button>
 
-  </div>
+      </div>
 
-</div>
+    </div>
 
-<div class="col-text">
+    <div class="col-text">
 
-  <div class="num-mark">
-    2.2.1 — VI
-  </div>
+      <div class="num-mark">
+        2.2.1 — VI
+      </div>
 
-  <span class="eyebrow">
-    เส้นสนามไฟฟ้าของคู่ประจุ
-  </span>
+      <span class="eyebrow">
+        เส้นสนามไฟฟ้าของคู่ประจุ
+      </span>
 
-  <h2>
-    เส้นโค้งเล่าเรื่อง
-    แรงที่มองไม่เห็น
-  </h2>
+      <h2>
+        เส้นโค้งเล่าเรื่อง
+        แรงที่มองไม่เห็น
+      </h2>
 
-  <p>
-    ประจุต่างชนิด
-    เส้นสนามลู่เข้าหากัน ·
-    ประจุชนิดเดียวกัน
-    เส้นสนามเบนออกจากกัน
-  </p>
+      <p>
+        ประจุต่างชนิด
+        เส้นสนามลู่เข้าหากัน ·
+        ประจุชนิดเดียวกัน
+        เส้นสนามเบนออกจากกัน
+      </p>
 
-</div>
-```
+    </div>
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      8 : PARABOLA
@@ -1846,63 +2177,70 @@ b{
 
 <section class="slide" data-anim="parabola">
 
-  <div class="decor star d1">⋆｡𖦹 ˚ 𓇼 ˚｡⋆</div>
-  <div class="decor plus d2"> ⋆˚꩜｡</div>
-  <div class="decor minus d3">݁ ˖Ი𐑼⋆</div>
+  <div class="decor star d1">
+    ⋆˚꩜｡
+  </div>
+
+  <div class="decor plus d2">
+    ⋆.𐙚 ̊
+  </div>
+
+  <div class="decor minus d3">
+    ݁ ˖Ი𐑼⋆
+  </div>
 
   <div class="slide-inner split">
 
-```
-<div class="col-text">
+    <div class="col-text">
 
-  <div class="num-mark">
-    2.2.2
-  </div>
+      <div class="num-mark">
+        2.2.2
+      </div>
 
-  <span class="eyebrow">
-    แรงไฟฟ้าต่ออนุภาคที่มีประจุ
-  </span>
+      <span class="eyebrow">
+        แรงไฟฟ้าต่ออนุภาคที่มีประจุ
+      </span>
 
-  <h2>
-    วิ่งเข้าสนามด้วยความเร็วต้น
-    = โค้งพาราโบลา
-  </h2>
+      <h2>
+        วิ่งเข้าสนามด้วยความเร็วต้น
+        = โค้งพาราโบลา
+      </h2>
 
-  <p>
-    ประจุบวกเบนแบบพาราโบลาคว่ำ
-    (ตามสนาม)
-    ส่วนประจุลบเบนแบบพาราโบลาหงาย
-    (ทวนสนาม)
-    — คล้ายการเคลื่อนที่แบบโพรเจกไทล์
-  </p>
+      <p>
+        ประจุบวกเบนแบบพาราโบลาคว่ำ
+        (ตามสนาม)
+        ส่วนประจุลบเบนแบบพาราโบลาหงาย
+        (ทวนสนาม)
+        — คล้ายการเคลื่อนที่แบบโพรเจกไทล์
+      </p>
 
-</div>
+    </div>
 
-<div class="col-art">
+    <div class="col-art">
 
-  <canvas
-    id="cvParabola"
-    width="600"
-    height="600"
-  ></canvas>
+      <canvas
+        id="cvParabola"
+        width="600"
+        height="600"
+      ></canvas>
 
-  <div class="toggle-row">
+      <div class="toggle-row">
 
-    <button
-      class="chip"
-      id="btnFire"
-    >
-      ▶ ปล่อยอนุภาค
-    </button>
+        <button
+          class="chip"
+          id="btnFire"
+        >
+          ▶ ปล่อยอนุภาค
+        </button>
 
-  </div>
+      </div>
 
-</div>
-```
+    </div>
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      9 : COPIER
@@ -1910,53 +2248,60 @@ b{
 
 <section class="slide" data-anim="copier">
 
-  <div class="decor flower d1">✿</div>
-  <div class="decor leaf d2">🎹𝄞⨾𓍢ִ໋</div>
-  <div class="decor star d4">૮₍ ´ ꒳ `₎ა</div>
+  <div class="decor flower d1">
+    ˚˖𓍢ִ໋❀
+  </div>
+
+  <div class="decor note d2">
+    𝄞⋆ ݁♪ .
+  </div>
+
+  <div class="decor star d4">
+    ૮₍ ´ ꒳ `₎ა
+  </div>
 
   <div class="slide-inner split reverse">
 
-```
-<div class="col-art">
+    <div class="col-art">
 
-  <canvas
-    id="cvCopier"
-    width="600"
-    height="600"
-  ></canvas>
+      <canvas
+        id="cvCopier"
+        width="600"
+        height="600"
+      ></canvas>
 
-</div>
+    </div>
 
-<div class="col-text">
+    <div class="col-text">
 
-  <div class="num-mark">
-    2.2.3 — I
-  </div>
+      <div class="num-mark">
+        2.2.3 — I
+      </div>
 
-  <span class="eyebrow">
-    ประโยชน์ของแรงไฟฟ้า
-  </span>
+      <span class="eyebrow">
+        ประโยชน์ของแรงไฟฟ้า
+      </span>
 
-  <h2>
-    เครื่องถ่ายเอกสาร
-  </h2>
+      <h2>
+        เครื่องถ่ายเอกสาร
+      </h2>
 
-  <p>
-    ลูกกลิ้งมีประจุบวก
-    แสงที่สะท้อนจากบริเวณสีขาว
-    ทำให้ประจุหายไป
-    เหลือประจุบวกเฉพาะลายเส้น
-    ผงหมึกประจุลบจึงเกาะติดตามลาย
-    แล้วถูกกดลงกระดาษ
-    และอบด้วยความร้อน
-  </p>
+      <p>
+        ลูกกลิ้งมีประจุบวก
+        แสงที่สะท้อนจากบริเวณสีขาว
+        ทำให้ประจุหายไป
+        เหลือประจุบวกเฉพาะลายเส้น
+        ผงหมึกประจุลบจึงเกาะติดตามลาย
+        แล้วถูกกดลงกระดาษ
+        และอบด้วยความร้อน
+      </p>
 
-</div>
-```
+    </div>
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      10 : LIGHTNING
@@ -1964,53 +2309,60 @@ b{
 
 <section class="slide" data-anim="lightning">
 
-<div class="decor plus d1">૮ ․ ․ ྀིა</div>
-  <div class="decor star d2">✦</div>
-  <div class="decor minus d3">﹒⋆</div>
+  <div class="decor plus d1">
+    ⋆˚꩜｡
+  </div>
+
+  <div class="decor star d2">
+    ✮⋆˙
+  </div>
+
+  <div class="decor minus d3">
+    ݁ ˖Ი𐑼⋆
+  </div>
 
   <div class="slide-inner split">
 
-```
-<div class="col-text">
+    <div class="col-text">
 
-  <div class="num-mark">
-    2.2.3 — II
-  </div>
+      <div class="num-mark">
+        2.2.3 — II
+      </div>
 
-  <span class="eyebrow">
-    ปรากฏการณ์ทางธรรมชาติ
-  </span>
+      <span class="eyebrow">
+        ปรากฏการณ์ทางธรรมชาติ
+      </span>
 
-  <h2>
-    ฟ้าแลบ และ ฟ้าผ่า
-  </h2>
+      <h2>
+        ฟ้าแลบ และ ฟ้าผ่า
+      </h2>
 
-  <p>
-    การเสียดสีของหยดน้ำและฝุ่น
-    ในก้อนเมฆสะสมประจุ
-    จนเกิดความต่างศักย์สูงมาก
-    แล้วถ่ายโอนประจุผ่านอากาศ —
-    <b>ฟ้าแลบ</b> คือเมฆสู่เมฆ
-    ส่วน <b>ฟ้าผ่า</b>
-    คือเมฆสู่พื้นดิน
-  </p>
+      <p>
+        การเสียดสีของหยดน้ำและฝุ่น
+        ในก้อนเมฆสะสมประจุ
+        จนเกิดความต่างศักย์สูงมาก
+        แล้วถ่ายโอนประจุผ่านอากาศ —
+        <b>ฟ้าแลบ</b> คือเมฆสู่เมฆ
+        ส่วน <b>ฟ้าผ่า</b>
+        คือเมฆสู่พื้นดิน
+      </p>
 
-</div>
+    </div>
 
-<div class="col-art">
+    <div class="col-art">
 
-  <canvas
-    id="cvLightning"
-    width="600"
-    height="600"
-  ></canvas>
+      <canvas
+        id="cvLightning"
+        width="600"
+        height="600"
+      ></canvas>
 
-</div>
-```
+    </div>
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      11 : LIGHTNING ROD
@@ -2018,52 +2370,59 @@ b{
 
 <section class="slide" data-anim="rod">
 
-  <div class="decor leaf d1"></div>
-  <div class="decor flower d2">✿</div>
-  <div class="decor plus d4">+</div>
+  <div class="decor leaf d1">
+    ݁ ˖Ი𐑼⋆
+  </div>
+
+  <div class="decor flower d2">
+    ˚˖𓍢ִ໋❀
+  </div>
+
+  <div class="decor plus d4">
+    ❤︎
+  </div>
 
   <div class="slide-inner split reverse">
 
-    
-<div class="col-art">
+    <div class="col-art">
 
-  <canvas
-    id="cvRod"
-    width="600"
-    height="600"
-  ></canvas>
+      <canvas
+        id="cvRod"
+        width="600"
+        height="600"
+      ></canvas>
 
-</div>
+    </div>
 
-<div class="col-text">
+    <div class="col-text">
 
-  <div class="num-mark">
-    2.2.3 — III
-  </div>
+      <div class="num-mark">
+        2.2.3 — III
+      </div>
 
-  <span class="eyebrow">
-    การป้องกัน
-  </span>
+      <span class="eyebrow">
+        การป้องกัน
+      </span>
 
-  <h2>
-    สายล่อฟ้า
-    (Lightning Rod)
-  </h2>
+      <h2>
+        สายล่อฟ้า
+        (Lightning Rod)
+      </h2>
 
-  <p>
-    ปลายแหลมบนยอดอาคาร
-    รวบรวมประจุจากฟ้าผ่า
-    แล้วนำลงสู่พื้นดิน
-    ผ่านสายไฟและแผ่นโลหะที่ฝังดิน
-    ป้องกันความเสียหายต่อตัวอาคาร
-  </p>
+      <p>
+        ปลายแหลมบนยอดอาคาร
+        รวบรวมประจุจากฟ้าผ่า
+        แล้วนำลงสู่พื้นดิน
+        ผ่านสายไฟและแผ่นโลหะที่ฝังดิน
+        ป้องกันความเสียหายต่อตัวอาคาร
+      </p>
 
-</div>
-```
+    </div>
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      12 : SUMMARY
@@ -2071,71 +2430,84 @@ b{
 
 <section class="slide" data-anim="summary">
 
-  <div class="decor star d1">（´∇｀''）</div>
-  <div class="decor flower d2">✿</div>
-  <div class="decor plus d3">ᢉ𐭩⋆.˚</div>
-  <div class="decor minus d4">٠࣪⭑</div>
-  <div class="decor leaf d5">ᶻ 𝗓 𐰁</div>
+  <div class="decor star d1">
+    ⋆.𐙚 ̊
+  </div>
+
+  <div class="decor flower d2">
+    ˚˖𓍢ִ໋❀
+  </div>
+
+  <div class="decor plus d3">
+    ⊹ ࣪ ˖ ໒꒱
+  </div>
+
+  <div class="decor minus d4">
+    ݁ ˖Ი𐑼⋆
+  </div>
+
+  <div class="decor leaf d5">
+    𐔌՞ ܸ.ˬ.ܸ՞𐦯
+  </div>
 
   <div class="slide-inner center">
 
-```
-<span class="eyebrow">
-  สรุป
-</span>
+    <span class="eyebrow">
+      สรุป
+    </span>
 
-<h2 class="mega small">
-  แรงที่มองไม่เห็น
-  แต่กำหนดโลกรอบตัวเรา
-</h2>
+    <h2 class="mega small">
+      แรงที่มองไม่เห็น
+      แต่กำหนดโลกรอบตัวเรา
+    </h2>
 
-<div class="virtues">
+    <div class="virtues">
 
-  <div class="virtue">
+      <div class="virtue">
 
-    <div class="num-mark">
-      I.
+        <div class="num-mark">
+          I.
+        </div>
+
+        <p>
+          ประจุเหมือนกันผลัก
+          ต่างกันดึงดูด
+        </p>
+
+      </div>
+
+      <div class="virtue">
+
+        <div class="num-mark">
+          II.
+        </div>
+
+        <p>
+          สนามไฟฟ้าคือแรงต่อหน่วยประจุ
+          มีทิศทาง
+        </p>
+
+      </div>
+
+      <div class="virtue">
+
+        <div class="num-mark">
+          III.
+        </div>
+
+        <p>
+          ตั้งแต่เครื่องถ่ายเอกสารถึงสายฟ้า
+          ล้วนอธิบายได้ด้วยหลักเดียวกัน
+        </p>
+
+      </div>
+
     </div>
-
-    <p>
-      ประจุเหมือนกันผลัก
-      ต่างกันดึงดูด
-    </p>
-
-  </div>
-
-  <div class="virtue">
-
-    <div class="num-mark">
-      II.
-    </div>
-
-    <p>
-      สนามไฟฟ้าคือแรงต่อหน่วยประจุ
-      มีทิศทาง
-    </p>
-
-  </div>
-
-  <div class="virtue">
-
-    <div class="num-mark">
-      III.
-    </div>
-
-    <p>
-      ตั้งแต่เครื่องถ่ายเอกสารถึงสายฟ้า
-      ล้วนอธิบายได้ด้วยหลักเดียวกัน
-    </p>
-
-  </div>
-
-</div>
-```
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      13 : MEMBERS
@@ -2149,53 +2521,78 @@ b{
     <div class="blob blob-3"></div>
   </div>
 
-  <div class="decor star d1">⋆˚꩜｡</div>
-  <div class="decor flower d2">✿</div>
-  <div class="decor plus d3">˙⋆✮</div>
-  <div class="decor minus d4"> ˙𐃷˙</div>
-  <div class="decor leaf d5">.☘︎ ݁˖</div>
-  <div class="decor dot d6">𓆝 𓆟 𓆞</div>
+  <div class="decor star d1">
+    ⋆˚꩜｡
+  </div>
+
+  <div class="decor flower d2">
+    ⋆.𐙚 ̊
+  </div>
+
+  <div class="decor plus d3">
+    ✮⋆˙
+  </div>
+
+  <div class="decor minus d4">
+    ݁ ˖Ი𐑼⋆
+  </div>
+
+  <div class="decor leaf d5">
+    ૮₍ ´ ꒳ `₎ა
+  </div>
+
+  <div class="decor note d6">
+    ˖ ݁♬⋆.˚𝄞
+  </div>
 
   <div class="slide-inner center">
 
-```
-<span class="eyebrow">
-  จัดทำโดย
-</span>
+    <span class="eyebrow">
+      จัดทำโดย
+    </span>
 
-<h2 class="mega small">
-  รายชื่อสมาชิก
-</h2>
+    <h2 class="mega small">
+      รายชื่อสมาชิก
+    </h2>
 
-<div class="member-list">
+    <div class="member-list">
 
-  <div class="member">
-    <span class="member-num">04</span>
-    ศศิธร วงษ์สิน
-  </div>
+      <div class="member">
+        <span class="member-num">
+          04
+        </span>
+        ศศิธร วงษ์สิน
+      </div>
 
-  <div class="member">
-    <span class="member-num">05</span>
-    ธันรดา คำแสน
-  </div>
+      <div class="member">
+        <span class="member-num">
+          05
+        </span>
+        ธันรดา คำแสน
+      </div>
 
-  <div class="member">
-    <span class="member-num">25</span>
-    ณิชตา แก้วกัณตา
-  </div>
+      <div class="member">
+        <span class="member-num">
+          25
+        </span>
+        ณิชตา แก้วกัณตา
+      </div>
 
-  <div class="member">
-    <span class="member-num">32</span>
-    ปุณณภา เชียงกา
-  </div>
+      <div class="member">
+        <span class="member-num">
+          32
+        </span>
+        ปุณณภา เชียงกา
+      </div>
 
-  <div class="member">
-    <span class="member-num">33</span>
-    ภวิษย์พร เชิดเชื้อ
-  </div>
+      <div class="member">
+        <span class="member-num">
+          33
+        </span>
+        ภวิษย์พร เชิดเชื้อ
+      </div>
 
-</div>
-```
+    </div>
 
   </div>
 
@@ -2203,73 +2600,50 @@ b{
 
 </div>
 
+
 <!-- =====================================================
-     NAVIGATION
+     PAGE INDICATOR
 ===================================================== -->
 
-<div class="nav-ui">
-
-<button
-class=“nav-btn”
-id=“prevBtn”
-aria-label=“ก่อนหน้า”
-
-
-
-```
-←
-```
-
-  </button>
+<div class="page-ui">
 
   <div
     class="dots"
     id="dots"
   ></div>
 
-<button
-class=“nav-btn”
-id=“nextBtn”
-aria-label=“ถัดไป”
-
-
-
-```
-→
-```
-
-  </button>
-
 </div>
 
-<div
-  class="slide-count"
-  id="slideCount"
-></div>
+<div class="swipe-hint">
+  ปัดซ้าย / ขวา เพื่อเปลี่ยนหน้า
+</div>
+
 
 <script>
 
-/* =====================================================
-   PALETTE
-===================================================== */
+/* =========================================================
+   PALETTE FOR CANVAS
+========================================================= */
 
 const C = {
 
-  bg:'#FFF9F0',
+  bg:'#FFF9F1',
 
-  ink:'#5D443B',
+  ink:'#60483F',
 
-  oxblood:'#9A7667',
+  brown:'#A27E70',
 
-  oxbloodDark:'#5D443B',
+  pink:'#D889A7',
 
-  gold:'#D889A7',
+  pinkLight:'#F5C7D9',
 
-  goldBright:'#D889A7',
+  blue:'#79AFC5',
 
-  verdigris:'#B9DEC8',
+  green:'#76A486',
 
-  verdigrisDark:'#6E9E7E'
+  greenLight:'#C6E4D0',
+
+  yellow:'#F7E6A9'
 
 };
 
@@ -2279,9 +2653,9 @@ const reduceMotion =
   ).matches;
 
 
-/* =====================================================
-   SLIDE NAVIGATION
-===================================================== */
+/* =========================================================
+   SLIDES
+========================================================= */
 
 const slides =
   Array.from(
@@ -2299,79 +2673,70 @@ const slideCount =
 
 let current = 0;
 
-let rafHandle = null;
+let animationFrame = null;
 
 
-/* create dots */
+/* =========================================================
+   DOTS
+   แค่บอกหน้า — ไม่สามารถกดเปลี่ยนหน้า
+========================================================= */
 
-slides.forEach((s,i)=>{
+slides.forEach(()=>{
+  const dot =
+    document.createElement('span');
 
-  const d =
-    document.createElement('div');
+  dot.className = 'dot';
 
-  d.className = 'dot';
-
-  d.addEventListener(
-    'click',
-    ()=>go(i)
-  );
-
-  dotsWrap.appendChild(d);
-
+  dotsWrap.appendChild(dot);
 });
 
 const dots =
-  Array.from(dotsWrap.children);
+  Array.from(
+    dotsWrap.children
+  );
 
 
-/* go to slide */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-function go(i,isInit){
+function go(index){
 
-  if(
-    i < 0 ||
-    i >= slides.length
-  ){
+  if(index < 0){
     return;
   }
 
-  if(
-    i === current &&
-    !isInit
-  ){
+  if(index >= slides.length){
     return;
   }
 
-  if(
-    rafHandle
-  ){
+  if(index === current){
+    return;
+  }
+
+  if(animationFrame){
     cancelAnimationFrame(
-      rafHandle
+      animationFrame
     );
+
+    animationFrame = null;
   }
 
   slides[current]
     .classList
     .remove('active');
 
-  current =
-    Math.max(
-      0,
-      Math.min(
-        slides.length - 1,
-        i
-      )
-    );
+  current = index;
 
   slides[current]
     .classList
     .add('active');
 
   dots.forEach(
-    (d,idx)=>{
-      d.classList.toggle(
+    (dot,i)=>{
+      dot.classList.toggle(
         'active',
-        idx === current
+        i === current
       );
     }
   );
@@ -2384,222 +2749,130 @@ function go(i,isInit){
     ) + '%';
 
   slideCount.textContent =
-    (current + 1) +
-    ' / ' +
-    slides.length;
+    `${current + 1} / ${slides.length}`;
 
   startAnim(
     slides[current]
       .dataset
       .anim
   );
+
 }
 
 
-/* buttons */
+/* =========================================================
+   FIRST PAGE
+========================================================= */
 
-document
-  .getElementById('nextBtn')
-  .addEventListener(
-    'click',
-    ()=>go(current + 1)
-  );
+dots[0].classList.add('active');
 
-document
-  .getElementById('prevBtn')
-  .addEventListener(
-    'click',
-    ()=>go(current - 1)
-  );
+progressFill.style.width =
+  (1 / slides.length * 100) + '%';
+
+slideCount.textContent =
+  `1 / ${slides.length}`;
 
 
-/* keyboard */
+/* =========================================================
+   SWIPE ONLY
+========================================================= */
 
-window.addEventListener(
-  'keydown',
-  e=>{
+let touchStartX = null;
+let touchStartY = null;
+let touchStartTime = 0;
 
-    if(
-      e.key === 'ArrowRight' ||
-      e.key === ' '
-    ){
-      e.preventDefault();
-      go(current + 1);
-    }
+const deck =
+  document.getElementById('deck');
 
-    if(
-      e.key === 'ArrowLeft'
-    ){
-      e.preventDefault();
-      go(current - 1);
-    }
-
-  }
-);
-
-
-/* touch */
-
-let touchX = null;
-
-window.addEventListener(
+deck.addEventListener(
   'touchstart',
   e=>{
-    touchX =
-      e.touches[0].clientX;
-  }
-);
 
-window.addEventListener(
-  'touchend',
-  e=>{
-
-    if(touchX === null){
+    if(e.touches.length !== 1){
       return;
     }
 
+    touchStartX =
+      e.touches[0].clientX;
+
+    touchStartY =
+      e.touches[0].clientY;
+
+    touchStartTime =
+      Date.now();
+
+  },
+  {passive:true}
+);
+
+deck.addEventListener(
+  'touchend',
+  e=>{
+
+    if(
+      touchStartX === null ||
+      touchStartY === null
+    ){
+      return;
+    }
+
+    const endX =
+      e.changedTouches[0].clientX;
+
+    const endY =
+      e.changedTouches[0].clientY;
+
     const dx =
-      e.changedTouches[0].clientX -
-      touchX;
+      endX - touchStartX;
 
-    if(dx < -40){
-      go(current + 1);
+    const dy =
+      endY - touchStartY;
+
+    const duration =
+      Date.now() -
+      touchStartTime;
+
+    const absX =
+      Math.abs(dx);
+
+    const absY =
+      Math.abs(dy);
+
+    /*
+      ต้องเป็นการปัดแนวนอนจริง ๆ
+      เพื่อไม่ให้การเลื่อน canvas/card
+      กลายเป็นการเปลี่ยนหน้า
+    */
+
+    if(
+      absX > 50 &&
+      absX > absY * 1.25 &&
+      duration < 900
+    ){
+
+      if(dx < 0){
+
+        go(current + 1);
+
+      }else{
+
+        go(current - 1);
+
+      }
+
     }
 
-    if(dx > 40){
-      go(current - 1);
-    }
+    touchStartX = null;
+    touchStartY = null;
 
-    touchX = null;
-  }
+  },
+  {passive:true}
 );
 
 
-/* =====================================================
-   AMBIENT DUST
-===================================================== */
-
-(function dust(){
-
-  const canvas =
-    document.getElementById('dust');
-
-  const ctx =
-    canvas.getContext('2d');
-
-  let W,H,particles=[];
-
-  function resize(){
-
-    W =
-      canvas.width =
-      innerWidth;
-
-    H =
-      canvas.height =
-      innerHeight;
-
-  }
-
-  resize();
-
-  addEventListener(
-    'resize',
-    resize
-  );
-
-  const n =
-    reduceMotion
-      ? 0
-      : 36;
-
-  particles =
-    Array.from(
-      {length:n},
-      ()=>({
-
-        x:Math.random()*W,
-
-        y:Math.random()*H,
-
-        r:
-          Math.random()*1.4+.3,
-
-        speed:
-          Math.random()*.25+.06,
-
-        alpha:
-          Math.random()*.4+.1
-
-      })
-    );
-
-  function tick(){
-
-    ctx.clearRect(
-      0,
-      0,
-      W,
-      H
-    );
-
-    ctx.fillStyle =
-      '#D889A7';
-
-    particles.forEach(
-      p=>{
-
-        ctx.globalAlpha =
-          p.alpha;
-
-        ctx.beginPath();
-
-        ctx.arc(
-          p.x,
-          p.y,
-          p.r,
-          0,
-          Math.PI*2
-        );
-
-        ctx.fill();
-
-        p.y -= p.speed;
-
-        if(p.y < -5){
-
-          p.y = H + 5;
-
-          p.x =
-            Math.random()*W;
-
-        }
-
-      }
-    );
-
-    ctx.globalAlpha = 1;
-
-    if(n){
-
-      requestAnimationFrame(
-        tick
-      );
-
-    }
-
-  }
-
-  requestAnimationFrame(
-    tick
-  );
-
-})();
-
-
-/* =====================================================
+/* =========================================================
    CANVAS SETUP
-===================================================== */
+========================================================= */
 
 function setupCanvas(id){
 
@@ -2610,28 +2883,38 @@ function setupCanvas(id){
     return null;
   }
 
+  const rect =
+    cv.getBoundingClientRect();
+
+  const size =
+    rect.width || 420;
+
   const dpr =
     Math.min(
       window.devicePixelRatio || 1,
       2
     );
 
-  const size =
-    cv.getBoundingClientRect()
-      .width || 420;
-
   cv.width =
-    size * dpr;
+    Math.round(
+      size * dpr
+    );
 
   cv.height =
-    size * dpr;
+    Math.round(
+      size * dpr
+    );
 
   const ctx =
     cv.getContext('2d');
 
-  ctx.scale(
+  ctx.setTransform(
     dpr,
-    dpr
+    0,
+    0,
+    dpr,
+    0,
+    0
   );
 
   return {
@@ -2643,9 +2926,9 @@ function setupCanvas(id){
 }
 
 
-/* =====================================================
+/* =========================================================
    CHARGE
-===================================================== */
+========================================================= */
 
 function drawCharge(
   ctx,
@@ -2669,7 +2952,7 @@ function drawCharge(
 
     grad.addColorStop(
       0,
-      '#F3B7CC'
+      '#F4C4D5'
     );
 
     grad.addColorStop(
@@ -2681,7 +2964,7 @@ function drawCharge(
 
     grad.addColorStop(
       0,
-      '#E7F6EC'
+      '#E8F6EC'
     );
 
     grad.addColorStop(
@@ -2698,19 +2981,16 @@ function drawCharge(
     y,
     r,
     0,
-    Math.PI*2
+    Math.PI * 2
   );
 
-  ctx.fillStyle =
-    grad;
-
+  ctx.fillStyle = grad;
   ctx.fill();
 
   ctx.strokeStyle =
     '#FFFFFF';
 
-  ctx.lineWidth =
-    2;
+  ctx.lineWidth = 2;
 
   ctx.stroke();
 
@@ -2729,15 +3009,15 @@ function drawCharge(
   ctx.fillText(
     positive ? '+' : '−',
     x,
-    y+1
+    y + 1
   );
 
 }
 
 
-/* =====================================================
+/* =========================================================
    ARROW
-===================================================== */
+========================================================= */
 
 function arrow(
   ctx,
@@ -2748,30 +3028,19 @@ function arrow(
   color
 ){
 
-  ctx.strokeStyle =
-    color;
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
 
-  ctx.fillStyle =
-    color;
-
-  ctx.lineWidth =
-    2;
+  ctx.lineWidth = 2;
 
   ctx.beginPath();
 
-  ctx.moveTo(
-    x1,
-    y1
-  );
-
-  ctx.lineTo(
-    x2,
-    y2
-  );
+  ctx.moveTo(x1,y1);
+  ctx.lineTo(x2,y2);
 
   ctx.stroke();
 
-  const ang =
+  const angle =
     Math.atan2(
       y2-y1,
       x2-x1
@@ -2785,29 +3054,13 @@ function arrow(
   );
 
   ctx.lineTo(
-    x2 -
-      9 *
-      Math.cos(
-        ang-.4
-      ),
-    y2 -
-      9 *
-      Math.sin(
-        ang-.4
-      )
+    x2 - 9*Math.cos(angle-.4),
+    y2 - 9*Math.sin(angle-.4)
   );
 
   ctx.lineTo(
-    x2 -
-      9 *
-      Math.cos(
-        ang+.4
-      ),
-    y2 -
-      9 *
-      Math.sin(
-        ang+.4
-      )
+    x2 - 9*Math.cos(angle+.4),
+    y2 - 9*Math.sin(angle+.4)
   );
 
   ctx.closePath();
@@ -2817,32 +3070,25 @@ function arrow(
 }
 
 
-/* =====================================================
+/* =========================================================
    ANIMATIONS
-===================================================== */
+========================================================= */
 
 const anims = {};
 
 
-/* =========================
+/* =========================================================
    HISTORY
-========================= */
+========================================================= */
 
 anims.history = ()=>{
 
   const s =
-    setupCanvas(
-      'cvHistory'
-    );
+    setupCanvas('cvHistory');
 
-  if(!s){
-    return;
-  }
+  if(!s) return;
 
-  const {
-    ctx,
-    size
-  } = s;
+  const {ctx,size} = s;
 
   let t = 0;
 
@@ -2857,22 +3103,15 @@ anims.history = ()=>{
       size
     );
 
-    const cx =
-      size/2;
-
-    const cy =
-      size/2;
+    const cx = size/2;
+    const cy = size/2;
 
 
     /* amber */
 
     ctx.save();
 
-    ctx.translate(
-      cx,
-      cy
-    );
-
+    ctx.translate(cx,cy);
     ctx.rotate(-.15);
 
     const grad =
@@ -2898,8 +3137,7 @@ anims.history = ()=>{
       '#B88457'
     );
 
-    ctx.fillStyle =
-      grad;
+    ctx.fillStyle = grad;
 
     ctx.beginPath();
 
@@ -2928,8 +3166,7 @@ anims.history = ()=>{
     ctx.strokeStyle =
       'rgba(110,158,126,.5)';
 
-    ctx.lineWidth =
-      1.5;
+    ctx.lineWidth = 1.5;
 
     ctx.save();
 
@@ -2957,32 +3194,23 @@ anims.history = ()=>{
     ctx.restore();
 
 
-    /* attracted particles */
+    /* particles */
 
-    for(
-      let i=0;
-      i<8;
-      i++
-    ){
+    for(let i=0;i<8;i++){
 
       const bx =
         cx +
         90 +
-        Math.cos(
-          t*1.3+i
-        )*18;
+        Math.cos(t*1.3+i)*18;
 
       const by =
         cy +
-        Math.sin(
-          t*2+i
-        )*40;
+        Math.sin(t*2+i)*40;
 
       ctx.fillStyle =
-        '#D889A7';
+        C.pink;
 
-      ctx.globalAlpha =
-        .65;
+      ctx.globalAlpha = .65;
 
       ctx.beginPath();
 
@@ -2996,15 +3224,12 @@ anims.history = ()=>{
 
       ctx.fill();
 
-      ctx.globalAlpha =
-        1;
+      ctx.globalAlpha = 1;
 
     }
 
-    rafHandle =
-      requestAnimationFrame(
-        frame
-      );
+    animationFrame =
+      requestAnimationFrame(frame);
 
   }
 
@@ -3013,63 +3238,43 @@ anims.history = ()=>{
 };
 
 
-/* =========================
+/* =========================================================
    BASIC FORCE
-========================= */
+========================================================= */
 
 anims.basic = ()=>{
 
   const s =
-    setupCanvas(
-      'cvForce'
-    );
+    setupCanvas('cvForce');
 
-  if(!s){
-    return;
-  }
+  if(!s) return;
 
-  const {
-    ctx,
-    size
-  } = s;
+  const {ctx,size} = s;
 
   let t = 0;
-
-  let mode =
-    'repel';
+  let mode = 'repel';
 
   document
-    .querySelectorAll(
-      '[data-mode]'
-    )
-    .forEach(
-      btn=>{
+    .querySelectorAll('[data-mode]')
+    .forEach(btn=>{
 
-        btn.onclick =
-          ()=>{
+      btn.onclick = ()=>{
 
-            document
-              .querySelectorAll(
-                '[data-mode]'
-              )
-              .forEach(
-                b=>
-                  b.classList
-                    .remove(
-                      'active'
-                    )
-              );
+        document
+          .querySelectorAll('[data-mode]')
+          .forEach(
+            b =>
+              b.classList.remove('active')
+          );
 
-            btn.classList
-              .add('active');
+        btn.classList.add('active');
 
-            mode =
-              btn.dataset.mode;
+        mode =
+          btn.dataset.mode;
 
-          };
+      };
 
-      }
-    );
+    });
 
 
   function frame(){
@@ -3086,18 +3291,16 @@ anims.basic = ()=>{
     const cy =
       size/2;
 
+    const cx =
+      size/2;
+
     const wobble =
       Math.sin(t)*10;
 
     const gap =
       mode === 'repel'
         ? 70+wobble
-        : 40-Math.abs(
-            wobble*.5
-          );
-
-    const cx =
-      size/2;
+        : 40-Math.abs(wobble*.5);
 
     const x1 =
       cx-gap;
@@ -3131,7 +3334,7 @@ anims.basic = ()=>{
         cy,
         x1-75,
         cy,
-        '#D889A7'
+        C.pink
       );
 
       arrow(
@@ -3140,7 +3343,7 @@ anims.basic = ()=>{
         cy,
         x2+75,
         cy,
-        '#D889A7'
+        C.pink
       );
 
     }else{
@@ -3151,7 +3354,7 @@ anims.basic = ()=>{
         cy,
         x1+68,
         cy,
-        '#6E9E7E'
+        C.green
       );
 
       arrow(
@@ -3160,16 +3363,14 @@ anims.basic = ()=>{
         cy,
         x2-68,
         cy,
-        '#6E9E7E'
+        C.green
       );
 
     }
 
 
-    rafHandle =
-      requestAnimationFrame(
-        frame
-      );
+    animationFrame =
+      requestAnimationFrame(frame);
 
   }
 
@@ -3178,31 +3379,23 @@ anims.basic = ()=>{
 };
 
 
-/* =========================
+/* =========================================================
    FACTORS
-========================= */
+========================================================= */
 
 anims.factors = ()=>{
 
   const s =
-    setupCanvas(
-      'cvFactors'
-    );
+    setupCanvas('cvFactors');
 
-  if(!s){
-    return;
-  }
+  if(!s) return;
 
-  const {
-    ctx,
-    size
-  } = s;
+  const {ctx,size} = s;
 
   const slider =
     document.getElementById(
       'distSlider'
     );
-
 
   function draw(){
 
@@ -3251,7 +3444,7 @@ anims.factors = ()=>{
 
 
     ctx.strokeStyle =
-      '#D889A7';
+      C.pink;
 
     ctx.lineWidth =
       1 +
@@ -3275,12 +3468,11 @@ anims.factors = ()=>{
 
     ctx.stroke();
 
-    ctx.globalAlpha =
-      1;
+    ctx.globalAlpha = 1;
 
 
     ctx.fillStyle =
-      'rgba(93,68,59,.7)';
+      'rgba(96,72,63,.7)';
 
     ctx.font =
       '600 13px Prompt';
@@ -3300,42 +3492,30 @@ anims.factors = ()=>{
 
   }
 
-
-  slider.oninput =
-    draw;
+  slider.oninput = draw;
 
   draw();
 
 };
 
 
-/* =========================
+/* =========================================================
    ATOM
-========================= */
+========================================================= */
 
 anims.atom = ()=>{
 
   const s =
-    setupCanvas(
-      'cvAtom'
-    );
+    setupCanvas('cvAtom');
 
-  if(!s){
-    return;
-  }
+  if(!s) return;
 
-  const {
-    ctx,
-    size
-  } = s;
+  const {ctx,size} = s;
 
   let t = 0;
 
-  const cx =
-    size/2;
-
-  const cy =
-    size/2;
+  const cx = size/2;
+  const cy = size/2;
 
 
   function frame(){
@@ -3353,20 +3533,16 @@ anims.atom = ()=>{
     const nucleus = [
 
       [-8,-6,true],
-
       [8,-6,true],
-
       [0,8,false],
-
       [-10,10,true],
-
       [10,10,false]
 
     ];
 
 
     nucleus.forEach(
-      ([dx,dy,pos])=>
+      ([dx,dy,pos]) =>
         drawCharge(
           ctx,
           cx+dx,
@@ -3377,11 +3553,7 @@ anims.atom = ()=>{
     );
 
 
-    for(
-      let i=0;
-      i<3;
-      i++
-    ){
+    for(let i=0;i<3;i++){
 
       const rx =
         70+i*32;
@@ -3392,19 +3564,13 @@ anims.atom = ()=>{
       ctx.strokeStyle =
         'rgba(110,158,126,.35)';
 
-      ctx.lineWidth =
-        1.5;
+      ctx.lineWidth = 1.5;
 
       ctx.save();
 
-      ctx.translate(
-        cx,
-        cy
-      );
+      ctx.translate(cx,cy);
 
-      ctx.rotate(
-        i*.7
-      );
+      ctx.rotate(i*.7);
 
       ctx.beginPath();
 
@@ -3421,8 +3587,7 @@ anims.atom = ()=>{
       ctx.stroke();
 
       const a =
-        t *
-        (1.2+i*.4);
+        t*(1.2+i*.4);
 
       const ex =
         Math.cos(a)*rx;
@@ -3444,7 +3609,7 @@ anims.atom = ()=>{
 
 
     ctx.fillStyle =
-      'rgba(93,68,59,.65)';
+      'rgba(96,72,63,.65)';
 
     ctx.font =
       '600 12px Prompt';
@@ -3459,10 +3624,8 @@ anims.atom = ()=>{
     );
 
 
-    rafHandle =
-      requestAnimationFrame(
-        frame
-      );
+    animationFrame =
+      requestAnimationFrame(frame);
 
   }
 
@@ -3471,70 +3634,48 @@ anims.atom = ()=>{
 };
 
 
-/* =========================
+/* =========================================================
    CHARGE STATE
-========================= */
+========================================================= */
 
 anims['charge-state'] = ()=>{
 
   const s =
-    setupCanvas(
-      'cvChargeState'
-    );
+    setupCanvas('cvChargeState');
 
-  if(!s){
-    return;
-  }
+  if(!s) return;
 
-  const {
-    ctx,
-    size
-  } = s;
+  const {ctx,size} = s;
 
-  const cx =
-    size/2;
+  const cx = size/2;
+  const cy = size/2;
 
-  const cy =
-    size/2;
-
-  let state =
-    'neutral';
+  let state = 'neutral';
 
 
   document
-    .querySelectorAll(
-      '[data-cs]'
-    )
-    .forEach(
-      btn=>{
+    .querySelectorAll('[data-cs]')
+    .forEach(btn=>{
 
-        btn.onclick =
-          ()=>{
+      btn.onclick = ()=>{
 
-            document
-              .querySelectorAll(
-                '[data-cs]'
-              )
-              .forEach(
-                b=>
-                  b.classList
-                    .remove(
-                      'active'
-                    )
-              );
+        document
+          .querySelectorAll('[data-cs]')
+          .forEach(
+            b =>
+              b.classList.remove('active')
+          );
 
-            btn.classList
-              .add('active');
+        btn.classList.add('active');
 
-            state =
-              btn.dataset.cs;
+        state =
+          btn.dataset.cs;
 
-            draw();
+        draw();
 
-          };
+      };
 
-      }
-    );
+    });
 
 
   function draw(){
@@ -3546,7 +3687,6 @@ anims['charge-state'] = ()=>{
       size
     );
 
-
     const baseE = 4;
 
     const eCount =
@@ -3556,7 +3696,6 @@ anims['charge-state'] = ()=>{
           ? baseE+1
           : baseE;
 
-
     const label =
       state === 'lose'
         ? 'ประจุสุทธิ = บวก'
@@ -3565,11 +3704,7 @@ anims['charge-state'] = ()=>{
           : 'ประจุสุทธิ = 0 (เป็นกลาง)';
 
 
-    for(
-      let i=0;
-      i<baseE;
-      i++
-    ){
+    for(let i=0;i<baseE;i++){
 
       const a =
         i/baseE *
@@ -3577,10 +3712,8 @@ anims['charge-state'] = ()=>{
 
       drawCharge(
         ctx,
-        cx+
-          Math.cos(a)*16,
-        cy+
-          Math.sin(a)*16,
+        cx+Math.cos(a)*16,
+        cy+Math.sin(a)*16,
         11,
         true
       );
@@ -3588,27 +3721,18 @@ anims['charge-state'] = ()=>{
     }
 
 
-    for(
-      let i=0;
-      i<eCount;
-      i++
-    ){
+    for(let i=0;i<eCount;i++){
 
       const a =
         i/
-        Math.max(
-          eCount,
-          1
-        ) *
+        Math.max(eCount,1) *
         Math.PI*2 +
         .4;
 
       drawCharge(
         ctx,
-        cx+
-          Math.cos(a)*80,
-        cy+
-          Math.sin(a)*80,
+        cx+Math.cos(a)*80,
+        cy+Math.sin(a)*80,
         12,
         false
       );
@@ -3618,8 +3742,8 @@ anims['charge-state'] = ()=>{
 
     ctx.fillStyle =
       state === 'neutral'
-        ? 'rgba(93,68,59,.7)'
-        : '#D889A7';
+        ? 'rgba(96,72,63,.7)'
+        : C.pink;
 
     ctx.font =
       '700 14px Prompt';
@@ -3640,70 +3764,47 @@ anims['charge-state'] = ()=>{
 };
 
 
-/* =========================
+/* =========================================================
    FIELD
-========================= */
+========================================================= */
 
 anims.field = ()=>{
 
   const s =
-    setupCanvas(
-      'cvField'
-    );
+    setupCanvas('cvField');
 
-  if(!s){
-    return;
-  }
+  if(!s) return;
 
-  const {
-    ctx,
-    size
-  } = s;
+  const {ctx,size} = s;
 
-  const cx =
-    size/2;
+  const cx = size/2;
+  const cy = size/2;
 
-  const cy =
-    size/2;
-
-  let charge =
-    'pos';
-
+  let charge = 'pos';
   let t = 0;
 
 
   document
-    .querySelectorAll(
-      '[data-charge]'
-    )
-    .forEach(
-      btn=>{
+    .querySelectorAll('[data-charge]')
+    .forEach(btn=>{
 
-        btn.onclick =
-          ()=>{
+      btn.onclick = ()=>{
 
-            document
-              .querySelectorAll(
-                '[data-charge]'
-              )
-              .forEach(
-                b=>
-                  b.classList
-                    .remove(
-                      'active'
-                    )
-              );
+        document
+          .querySelectorAll('[data-charge]')
+          .forEach(
+            b =>
+              b.classList.remove('active')
+          );
 
-            btn.classList
-              .add('active');
+        btn.classList.add('active');
 
-            charge =
-              btn.dataset.charge;
+        charge =
+          btn.dataset.charge;
 
-          };
+      };
 
-      }
-    );
+    });
 
 
   function frame(){
@@ -3717,18 +3818,13 @@ anims.field = ()=>{
       size
     );
 
-
     const n = 12;
 
     const positive =
       charge === 'pos';
 
 
-    for(
-      let i=0;
-      i<n;
-      i++
-    ){
+    for(let i=0;i<n;i++){
 
       const a =
         i/n *
@@ -3747,23 +3843,21 @@ anims.field = ()=>{
           ? rr+14
           : rr-14;
 
-
       const x1 =
-        cx +
+        cx+
         Math.cos(a)*rr;
 
       const y1 =
-        cy +
+        cy+
         Math.sin(a)*rr;
 
       const x2 =
-        cx +
+        cx+
         Math.cos(a)*rr2;
 
       const y2 =
-        cy +
+        cy+
         Math.sin(a)*rr2;
-
 
       arrow(
         ctx,
@@ -3786,10 +3880,8 @@ anims.field = ()=>{
     );
 
 
-    rafHandle =
-      requestAnimationFrame(
-        frame
-      );
+    animationFrame =
+      requestAnimationFrame(frame);
 
   }
 
@@ -3798,70 +3890,48 @@ anims.field = ()=>{
 };
 
 
-/* =========================
+/* =========================================================
    FIELD PAIR
-========================= */
+========================================================= */
 
 anims['field-pair'] = ()=>{
 
   const s =
-    setupCanvas(
-      'cvFieldPair'
-    );
+    setupCanvas('cvFieldPair');
 
-  if(!s){
-    return;
-  }
+  if(!s) return;
 
-  const {
-    ctx,
-    size
-  } = s;
+  const {ctx,size} = s;
 
-  const cx =
-    size/2;
+  const cx = size/2;
+  const cy = size/2;
 
-  const cy =
-    size/2;
-
-  let pair =
-    'diff';
+  let pair = 'diff';
 
 
   document
-    .querySelectorAll(
-      '[data-pair]'
-    )
-    .forEach(
-      btn=>{
+    .querySelectorAll('[data-pair]')
+    .forEach(btn=>{
 
-        btn.onclick =
-          ()=>{
+      btn.onclick = ()=>{
 
-            document
-              .querySelectorAll(
-                '[data-pair]'
-              )
-              .forEach(
-                b=>
-                  b.classList
-                    .remove(
-                      'active'
-                    )
-              );
+        document
+          .querySelectorAll('[data-pair]')
+          .forEach(
+            b =>
+              b.classList.remove('active')
+          );
 
-            btn.classList
-              .add('active');
+        btn.classList.add('active');
 
-            pair =
-              btn.dataset.pair;
+        pair =
+          btn.dataset.pair;
 
-            draw();
+        draw();
 
-          };
+      };
 
-      }
-    );
+    });
 
 
   function draw(){
@@ -3873,18 +3943,12 @@ anims['field-pair'] = ()=>{
       size
     );
 
-    const gap =
-      90;
+    const gap = 90;
 
-    const x1 =
-      cx-gap;
+    const x1 = cx-gap;
+    const x2 = cx+gap;
 
-    const x2 =
-      cx+gap;
-
-
-    const posA =
-      true;
+    const posA = true;
 
     const posB =
       pair === 'diff'
@@ -3895,8 +3959,7 @@ anims['field-pair'] = ()=>{
     ctx.strokeStyle =
       'rgba(110,158,126,.55)';
 
-    ctx.lineWidth =
-      2;
+    ctx.lineWidth = 2;
 
 
     for(
@@ -3972,54 +4035,47 @@ anims['field-pair'] = ()=>{
 };
 
 
-/* =========================
+/* =========================================================
    PARABOLA
-========================= */
+========================================================= */
 
 anims.parabola = ()=>{
 
   const s =
-    setupCanvas(
-      'cvParabola'
-    );
+    setupCanvas('cvParabola');
 
-  if(!s){
-    return;
-  }
+  if(!s) return;
 
-  const {
-    ctx,
-    size
-  } = s;
+  const {ctx,size} = s;
 
   let particles = [];
 
 
-  document
-    .getElementById(
+  const fire =
+    document.getElementById(
       'btnFire'
-    )
-    .onclick =
-      ()=>{
+    );
 
-        particles.push({
+  fire.onclick = ()=>{
 
-          x:40,
+    particles.push({
 
-          y:size/2,
+      x:40,
 
-          vx:3.2,
+      y:size/2,
 
-          vy:0,
+      vx:3.2,
 
-          positive:
-            particles.length%2===0,
+      vy:0,
 
-          trail:[]
+      positive:
+        particles.length % 2 === 0,
 
-        });
+      trail:[]
 
-      };
+    });
+
+  };
 
 
   function frame(){
@@ -4031,8 +4087,6 @@ anims.parabola = ()=>{
       size
     );
 
-
-    /* field arrows */
 
     ctx.strokeStyle =
       'rgba(110,158,126,.3)';
@@ -4056,7 +4110,7 @@ anims.parabola = ()=>{
 
 
     ctx.fillStyle =
-      'rgba(93,68,59,.55)';
+      'rgba(96,72,63,.55)';
 
     ctx.font =
       '600 12px Prompt';
@@ -4071,100 +4125,92 @@ anims.parabola = ()=>{
     );
 
 
-    particles.forEach(
-      p=>{
+    particles.forEach(p=>{
 
-        const g =
-          p.positive
-            ? .12
-            : -.12;
+      const g =
+        p.positive
+          ? .12
+          : -.12;
 
-        p.vy += g;
+      p.vy += g;
 
-        p.x += p.vx;
+      p.x += p.vx;
 
-        p.y += p.vy;
+      p.y += p.vy;
 
-        p.trail.push({
-          x:p.x,
-          y:p.y
-        });
+      p.trail.push({
+        x:p.x,
+        y:p.y
+      });
 
-        if(
-          p.trail.length > 60
-        ){
-
-          p.trail.shift();
-
-        }
-
+      if(
+        p.trail.length > 60
+      ){
+        p.trail.shift();
       }
-    );
+
+    });
 
 
     particles =
       particles.filter(
-        p=>
+        p =>
           p.x<size+20 &&
           p.y>-20 &&
           p.y<size+20
       );
 
 
-    particles.forEach(
-      p=>{
+    particles.forEach(p=>{
 
-        ctx.beginPath();
+      ctx.beginPath();
 
-        p.trail.forEach(
-          (pt,i)=>{
+      p.trail.forEach(
+        (pt,i)=>{
 
-            if(i === 0){
+          if(i === 0){
 
-              ctx.moveTo(
-                pt.x,
-                pt.y
-              );
+            ctx.moveTo(
+              pt.x,
+              pt.y
+            );
 
-            }else{
+          }else{
 
-              ctx.lineTo(
-                pt.x,
-                pt.y
-              );
-
-            }
+            ctx.lineTo(
+              pt.x,
+              pt.y
+            );
 
           }
-        );
 
-
-        ctx.strokeStyle =
-          p.positive
-            ? 'rgba(216,137,167,.65)'
-            : 'rgba(110,158,126,.65)';
-
-        ctx.lineWidth = 2;
-
-        ctx.stroke();
-
-
-        drawCharge(
-          ctx,
-          p.x,
-          p.y,
-          12,
-          p.positive
-        );
-
-      }
-    );
-
-
-    rafHandle =
-      requestAnimationFrame(
-        frame
+        }
       );
+
+
+      ctx.strokeStyle =
+        p.positive
+          ? 'rgba(216,137,167,.65)'
+          : 'rgba(110,158,126,.65)';
+
+      ctx.lineWidth = 2;
+
+      ctx.stroke();
+
+
+      drawCharge(
+        ctx,
+        p.x,
+        p.y,
+        12,
+        p.positive
+      );
+
+    });
+
+
+    animationFrame =
+      requestAnimationFrame(frame);
 
   }
 
@@ -4173,33 +4219,23 @@ anims.parabola = ()=>{
 };
 
 
-/* =========================
+/* =========================================================
    COPIER
-========================= */
+========================================================= */
 
 anims.copier = ()=>{
 
   const s =
-    setupCanvas(
-      'cvCopier'
-    );
+    setupCanvas('cvCopier');
 
-  if(!s){
-    return;
-  }
+  if(!s) return;
 
-  const {
-    ctx,
-    size
-  } = s;
+  const {ctx,size} = s;
 
   let t = 0;
 
-  const cx =
-    size/2;
-
-  const cy =
-    size/2;
+  const cx = size/2;
+  const cy = size/2;
 
 
   function frame(){
@@ -4213,12 +4249,9 @@ anims.copier = ()=>{
       size
     );
 
-
     const stage =
       Math.floor(t/2)%4;
 
-
-    /* drum */
 
     ctx.save();
 
@@ -4228,11 +4261,12 @@ anims.copier = ()=>{
     );
 
 
-    ctx.strokeStyle =
-      '#D889A7';
+    /* drum */
 
-    ctx.lineWidth =
-      3;
+    ctx.strokeStyle =
+      C.pink;
+
+    ctx.lineWidth = 3;
 
     ctx.beginPath();
 
@@ -4245,7 +4279,6 @@ anims.copier = ()=>{
     );
 
     ctx.stroke();
-
 
     ctx.fillStyle =
       stage === 0
@@ -4269,8 +4302,8 @@ anims.copier = ()=>{
 
     ctx.fillStyle =
       stage === 1
-        ? '#F8E5A8'
-        : 'rgba(248,229,168,.4)';
+        ? C.yellow
+        : 'rgba(247,230,169,.4)';
 
     ctx.beginPath();
 
@@ -4289,7 +4322,7 @@ anims.copier = ()=>{
       '600 11px Prompt';
 
     ctx.fillStyle =
-      'rgba(93,68,59,.65)';
+      'rgba(96,72,63,.65)';
 
     ctx.textAlign =
       'center';
@@ -4305,8 +4338,8 @@ anims.copier = ()=>{
 
     ctx.fillStyle =
       stage === 2
-        ? '#B9DEC8'
-        : 'rgba(185,222,200,.35)';
+        ? C.greenLight
+        : 'rgba(198,228,208,.35)';
 
     ctx.beginPath();
 
@@ -4320,7 +4353,6 @@ anims.copier = ()=>{
 
     ctx.fill();
 
-
     ctx.fillText(
       'ผงหมึก (−)',
       120,
@@ -4332,8 +4364,8 @@ anims.copier = ()=>{
 
     ctx.fillStyle =
       stage === 3
-        ? 'rgba(93,68,59,.9)'
-        : 'rgba(93,68,59,.35)';
+        ? 'rgba(96,72,63,.9)'
+        : 'rgba(96,72,63,.35)';
 
     ctx.fillRect(
       -30,
@@ -4342,16 +4374,14 @@ anims.copier = ()=>{
       50
     );
 
-
     ctx.fillStyle =
-      'rgba(93,68,59,.65)';
+      'rgba(96,72,63,.65)';
 
     ctx.fillText(
       'กระดาษ',
       0,
       160
     );
-
 
     ctx.restore();
 
@@ -4370,7 +4400,7 @@ anims.copier = ()=>{
 
 
     ctx.fillStyle =
-      '#D889A7';
+      C.pink;
 
     ctx.font =
       '700 13px Prompt';
@@ -4385,10 +4415,8 @@ anims.copier = ()=>{
     );
 
 
-    rafHandle =
-      requestAnimationFrame(
-        frame
-      );
+    animationFrame =
+      requestAnimationFrame(frame);
 
   }
 
@@ -4397,33 +4425,23 @@ anims.copier = ()=>{
 };
 
 
-/* =========================
+/* =========================================================
    LIGHTNING
-========================= */
+========================================================= */
 
 anims.lightning = ()=>{
 
   const s =
-    setupCanvas(
-      'cvLightning'
-    );
+    setupCanvas('cvLightning');
 
-  if(!s){
-    return;
-  }
+  if(!s) return;
 
-  const {
-    ctx,
-    size
-  } = s;
+  const {ctx,size} = s;
 
   let t = 0;
 
 
-  function boltPath(
-    x,
-    y
-  ){
+  function boltPath(x,y){
 
     return [
 
@@ -4504,7 +4522,7 @@ anims.lightning = ()=>{
         flash*.2;
 
       ctx.fillStyle =
-        '#F8E5A8';
+        C.yellow;
 
       ctx.fillRect(
         0,
@@ -4524,7 +4542,6 @@ anims.lightning = ()=>{
           110
         );
 
-
       pts.forEach(
         (p,i)=>
           i === 0
@@ -4540,33 +4557,29 @@ anims.lightning = ()=>{
 
 
       ctx.strokeStyle =
-        '#D889A7';
+        C.pink;
 
-      ctx.lineWidth =
-        4;
+      ctx.lineWidth = 4;
 
       ctx.lineJoin =
         'round';
 
       ctx.stroke();
 
-
       ctx.shadowColor =
-        '#D889A7';
+        C.pink;
 
-      ctx.shadowBlur =
-        18;
+      ctx.shadowBlur = 18;
 
       ctx.stroke();
 
-      ctx.shadowBlur =
-        0;
+      ctx.shadowBlur = 0;
 
     }
 
 
     ctx.fillStyle =
-      'rgba(93,68,59,.55)';
+      'rgba(96,72,63,.55)';
 
     ctx.font =
       '600 12px Prompt';
@@ -4581,10 +4594,8 @@ anims.lightning = ()=>{
     );
 
 
-    rafHandle =
-      requestAnimationFrame(
-        frame
-      );
+    animationFrame =
+      requestAnimationFrame(frame);
 
   }
 
@@ -4593,25 +4604,18 @@ anims.lightning = ()=>{
 };
 
 
-/* =========================
+/* =========================================================
    ROD
-========================= */
+========================================================= */
 
 anims.rod = ()=>{
 
   const s =
-    setupCanvas(
-      'cvRod'
-    );
+    setupCanvas('cvRod');
 
-  if(!s){
-    return;
-  }
+  if(!s) return;
 
-  const {
-    ctx,
-    size
-  } = s;
+  const {ctx,size} = s;
 
   let t = 0;
 
@@ -4653,10 +4657,9 @@ anims.rod = ()=>{
     /* rod */
 
     ctx.strokeStyle =
-      '#D889A7';
+      C.pink;
 
-    ctx.lineWidth =
-      4;
+    ctx.lineWidth = 4;
 
     ctx.beginPath();
 
@@ -4678,8 +4681,7 @@ anims.rod = ()=>{
     ctx.strokeStyle =
       'rgba(110,158,126,.6)';
 
-    ctx.lineWidth =
-      3;
+    ctx.lineWidth = 3;
 
     ctx.beginPath();
 
@@ -4732,7 +4734,7 @@ anims.rod = ()=>{
 
 
     ctx.fillStyle =
-      'rgba(93,68,59,.6)';
+      'rgba(96,72,63,.6)';
 
     ctx.font =
       '600 12px Prompt';
@@ -4747,10 +4749,8 @@ anims.rod = ()=>{
     );
 
 
-    rafHandle =
-      requestAnimationFrame(
-        frame
-      );
+    animationFrame =
+      requestAnimationFrame(frame);
 
   }
 
@@ -4759,13 +4759,38 @@ anims.rod = ()=>{
 };
 
 
-/* =====================================================
+/* =========================================================
    START ANIMATION
-===================================================== */
+========================================================= */
 
 function startAnim(name){
 
-  if(anims[name]){
+  if(animationFrame){
+
+    cancelAnimationFrame(
+      animationFrame
+    );
+
+    animationFrame = null;
+
+  }
+
+  if(
+    anims[name] &&
+    !reduceMotion
+  ){
+
+    anims[name]();
+
+  }else if(
+    anims[name] &&
+    reduceMotion
+  ){
+
+    /*
+      ยังวาดภาพแรกให้เห็น
+      แม้เปิด reduced motion
+    */
 
     anims[name]();
 
@@ -4774,17 +4799,197 @@ function startAnim(name){
 }
 
 
-/* =====================================================
-   INIT
-===================================================== */
+/* =========================================================
+   START
+========================================================= */
 
-go(
-  0,
-  true
+startAnim('title');
+
+
+/* =========================================================
+   AMBIENT DUST
+========================================================= */
+
+(function(){
+
+  const canvas =
+    document.getElementById(
+      'dust'
+    );
+
+  const ctx =
+    canvas.getContext('2d');
+
+  let W = 0;
+  let H = 0;
+
+  let particles = [];
+
+
+  function resize(){
+
+    W =
+      canvas.width =
+      window.innerWidth;
+
+    H =
+      canvas.height =
+      window.innerHeight;
+
+  }
+
+  resize();
+
+  window.addEventListener(
+    'resize',
+    resize
+  );
+
+
+  const count =
+    reduceMotion
+      ? 0
+      : 32;
+
+
+  particles =
+    Array.from(
+      {length:count},
+      ()=>({
+
+        x:Math.random()*W,
+
+        y:Math.random()*H,
+
+        r:
+          Math.random()*1.4+.3,
+
+        speed:
+          Math.random()*.25+.06,
+
+        alpha:
+          Math.random()*.35+.08
+
+      })
+    );
+
+
+  function tick(){
+
+    ctx.clearRect(
+      0,
+      0,
+      W,
+      H
+    );
+
+    ctx.fillStyle =
+      C.pink;
+
+    particles.forEach(p=>{
+
+      ctx.globalAlpha =
+        p.alpha;
+
+      ctx.beginPath();
+
+      ctx.arc(
+        p.x,
+        p.y,
+        p.r,
+        0,
+        Math.PI*2
+      );
+
+      ctx.fill();
+
+      p.y -= p.speed;
+
+      if(p.y < -5){
+
+        p.y = H+5;
+
+        p.x =
+          Math.random()*W;
+
+      }
+
+    });
+
+    ctx.globalAlpha = 1;
+
+    if(count){
+
+      requestAnimationFrame(
+        tick
+      );
+
+    }
+
+  }
+
+  if(count){
+    tick();
+  }
+
+})();
+
+
+/* =========================================================
+   RESIZE CANVAS WHEN DEVICE ROTATES
+========================================================= */
+
+let resizeTimer;
+
+window.addEventListener(
+  'resize',
+  ()=>{
+
+    clearTimeout(resizeTimer);
+
+    resizeTimer =
+      setTimeout(
+        ()=>{
+
+          /*
+            วาด animation ของหน้าปัจจุบันใหม่
+            เพื่อให้ canvas ไม่เบี้ยวหลังหมุน iPad
+          */
+
+          const currentAnim =
+            slides[current]
+              .dataset
+              .anim;
+
+          if(
+            currentAnim &&
+            anims[currentAnim]
+          ){
+
+            if(animationFrame){
+
+              cancelAnimationFrame(
+                animationFrame
+              );
+
+              animationFrame = null;
+
+            }
+
+            startAnim(
+              currentAnim
+            );
+
+          }
+
+        },
+        180
+      );
+
+  }
 );
 
 </script>
 
 </body>
 </html>
-
